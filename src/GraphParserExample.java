@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class GraphParserExample {
-
     public static void main(String[] args) {
         try {
             Parser parser = new Parser();
