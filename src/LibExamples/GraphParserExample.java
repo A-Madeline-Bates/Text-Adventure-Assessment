@@ -1,3 +1,5 @@
+package LibExamples;
+
 import com.alexmerz.graphviz.*;
 import com.alexmerz.graphviz.objects.*;
 import java.io.FileNotFoundException;

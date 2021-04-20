@@ -44,9 +44,11 @@ class StagServer
 
     private void processNextCommand(BufferedReader in, BufferedWriter out) throws IOException
     {
-        //first call a class to parse entityFilename and actionFilename and return entity Graph and actions
-        //all other classes will walk through these graphs and pull correct data. data will also be changed +
-        //manipulated in these structs to present changes
+        ParseActions actions = new ParseActions(actionFilename);
+        ParseEntities entities = new ParseEntities(entityFilename);
+        actions.getActions();
+        entities.getEntities();
+
         String line = in.readLine();
         out.write("You said... " + line + "\n");
     }
