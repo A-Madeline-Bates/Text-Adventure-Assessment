@@ -5,16 +5,37 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class GraphParserExample {
+
     public static void main(String[] args) {
+        new GraphParserExample(args[0]);
+        new JSONParserExperiment(args[1]);
+    }
+
+    public GraphParserExample(String file){
+        graphParse(file);
+    }
+
+    private void graphParse(String file){
         try {
             Parser parser = new Parser();
-            FileReader reader = new FileReader(args[0]);
+            FileReader reader = new FileReader(file);
             parser.parse(reader);
             ArrayList<Graph> graphs = parser.getGraphs();
             ArrayList<Graph> subGraphs = graphs.get(0).getSubgraphs(); //down level
-            for(Graph g : subGraphs){
-                System.out.printf("id = %s\n", g.getId().getId()); //"locations"
 
+            System.out.print("* " + subGraphs.get(0).getId().getId() + " * " + subGraphs.get(1).getId().getId() + "\n");
+            //subGraphs.get(0).getId().getId() = locations
+            //subGraphs.get(1).getId().getId() = paths
+            Graph location = subGraphs.get(0);
+            System.out.print("* " + location.getSubgraphs().get(0).getNodes(false).get(0) + "\n");
+            //location.getSubgraphs().get(0).getNodes(false).get(0) = start [description="An empty room"]
+            System.out.print("* " + location.getSubgraphs().get(0).getNodes(false).get(0).getId().getId() + "\n");
+            //location.getSubgraphs().get(0).getNodes(false).get(0).getId().getId() = start
+            System.out.print("* " + location.getSubgraphs().get(0).getNodes(false).get(0).getAttribute("description") + "\n");
+            //location.getSubgraphs().get(0).getNodes(false).get(0).getAttribute() = "An empty room"
+
+            for(Graph g : subGraphs){
+                System.out.printf("id = %s\n", g.getId().getId()); //"locations" then "paths"
                 ArrayList<Graph> subGraphs1 = g.getSubgraphs(); //down level
                 for (Graph g1 : subGraphs1){
                     ArrayList<Node> nodesLoc = g1.getNodes(false); //accessing node from subgraph level
