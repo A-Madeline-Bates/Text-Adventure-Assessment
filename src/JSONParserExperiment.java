@@ -1,11 +1,10 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.io.FileReader;
-import org.json.simple.parser.*;
-import org.json.simple.parser.ParseException;
+import java.util.Collection;
 
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
 public class JSONParserExperiment {
 	public JSONParserExperiment(String file2){
@@ -16,9 +15,27 @@ public class JSONParserExperiment {
 		try {
 			JSONParser parser = new JSONParser();
 			FileReader reader = new FileReader(file2);
-			Object actionObject = parser.parse(reader);
-			System.out.println("\n\n\n JSON PARSER");
+			JSONObject actionObject = (JSONObject) parser.parse(reader);
+			System.out.println("\n\n JSON PARSER");
+			JSONArray actions = (JSONArray) actionObject.get("actions");
 
+			System.out.println(actions); //gives everything past "actions:"
+			JSONObject firstAction = (JSONObject) actions.get(0);
+			System.out.println(firstAction); //gives all information attached to action one
+			System.out.println(firstAction.get("triggers")); //gives "["open","unlock"]"
+			JSONObject secondAction = (JSONObject) actions.get(1);
+			System.out.println(secondAction); //gives all information attached to action two
+			System.out.println(secondAction.get("triggers")); //gives "["chop","cut","cutdown"]"
+
+			for(Object action : actions){
+				JSONObject jsonAction = (JSONObject) action;
+				System.out.println(jsonAction.get("triggers"));
+
+//				if(jsonAction.get("triggers").equals("[drink]")){
+//					System.out.println("*");
+//					System.out.println(jsonAction.get("produced"));
+//				}
+			}
 		} catch (FileNotFoundException fnfe) {
 			System.out.println(fnfe);
 		} catch (ParseException parse){
