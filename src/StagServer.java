@@ -48,6 +48,32 @@ class StagServer
         ParseEntities entities = new ParseEntities(entityFilename);
         actions.getActions();
         entities.getEntities();
+        //find "start" location (This starting point is always the first location that is
+        // encountered when reading in the "entities" file.)
+
+        //need an instruction parser
+        //maybe create factory for
+          //"inventory" (or "inv" for short): lists all of the artefacts currently being carried by the player
+                //load up empty 'inventory' array to start
+          //"get": picks up a specified artefact from current location and puts it into player's inventory
+          //"drop": puts down an artefact from player's inventory and places it into the current location
+          //"goto": moves from one location to another (if there is a path between the two)
+          //"look": describes the entities in the current location and lists the paths to other locations
+          //there will also be ANOTHER class which will cross compare to see if something is a valid action (in the
+                //actions array) + whether the player has the correct furniture/artefacts and inventory to do it. This
+                //must check ALL instances of that action in the array before saying something is impossible. It will
+                //then shuffle items about or add paths based on the result
+
+
+        //each location has its own 'inventory' containing all artefacts + anything dropped by a player
+        //maybe load all artefacts/furniture to locations at the beginning so that the items aren't reset every time
+        //you visit a location. Or maybe edit entities graph itself? When item disappears it moves to 'unplaced'
+
+        //The skeleton StagServer class you have been given includes the code to deal with network communication.
+        //You will however be required to deal with reading and writing to the socket stream.
+
+        //For multiplayer, we might need to hold two inventories and two different variables to indicate where the
+        //players are?
 
         String line = in.readLine();
         out.write("You said... " + line + "\n");
