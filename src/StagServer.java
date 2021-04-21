@@ -75,6 +75,8 @@ class StagServer
         //For multiplayer, we might need to hold two inventories and two different variables to indicate where the
         //players are?
 
+        //STRATEGY design pattern
+
         String line = in.readLine();
         out.write("You said... " + line + "\n");
     }
