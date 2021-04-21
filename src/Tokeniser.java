@@ -4,19 +4,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Tokeniser {
-	final ArrayList<String> TokenList = new ArrayList<>();
-	private int ArrayPosition = 0;
+	final ArrayList<String> tokenList = new ArrayList<>();
+	//we always want to start to position one because position zero contains the username
+	private int ArrayPosition = 1;
 
 	public Tokeniser(String incomingCommand) {
-		TokenList.addAll(Arrays.asList(incomingCommand.split("\\s+")));
-		TokenList.removeAll(Arrays.asList("", null));
+		tokenList.addAll(Arrays.asList(incomingCommand.split("\\s+")));
+		tokenList.removeAll(Arrays.asList("", null));
 	}
 
 	public String nextToken() {
-		if (ArrayPosition < TokenList.size()) {
-			String Token = TokenList.get(ArrayPosition);
+		if (ArrayPosition < tokenList.size()) {
+			String token = tokenList.get(ArrayPosition);
 			ArrayPosition++;
-			return Token;
+			return token;
 		} else {
 			return null;
 		}

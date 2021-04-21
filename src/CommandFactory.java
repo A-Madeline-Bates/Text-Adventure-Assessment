@@ -42,7 +42,7 @@ public class CommandFactory {
 			for(int i=0; i<actionTriggers.size(); i++){
 				String trigger = (String) actionTriggers.get(i);
 				if(nextToken.equals(trigger)){
-					return new CMDAction();
+					return new CMDAction(trigger);
 				}
 			}
 		}

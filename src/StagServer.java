@@ -57,7 +57,7 @@ class StagServer
             CommandFactory factory = new CommandFactory();
             CMDType command = factory.createCMD(tokeniser, actions);
         } catch(ParseException exception){
-            System.out.println("oh no");
+            System.out.println(exception);
         }
     }
 }
