@@ -1,6 +1,6 @@
 package CMDClasses;
 
-public abstract class ExecutableCMD {
+public abstract class ExecutableCMD extends CMDState {
 
 	public ExecutableCMD(){
 		execute();

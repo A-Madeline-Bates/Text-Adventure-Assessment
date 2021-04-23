@@ -2,13 +2,24 @@ package CMDClasses;
 
 import Data.Actions;
 import Data.Entities;
+import com.alexmerz.graphviz.objects.Node;
 
-public class CMDLook implements CMDType{
+import java.util.ArrayList;
+
+public class CMDLook extends CMDState implements CMDType{
+	Entities entityClass;
+	Actions actionClass;
+
 	public CMDLook(Entities entityClass, Actions actionClass){
-		System.out.println("in CMDLook");
+		this.entityClass = entityClass;
+		this.actionClass = actionClass;
 	}
 
 	public String getExitMessage(){
-		return "in CMDAction";
+		Node location = entityClass.getLocationNode(currentLocation);
+		String exitMessage =
+				"You are in" + location.getAttribute("Description")
+			;
+		return exitMessage;
 	}
 }
