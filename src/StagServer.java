@@ -1,15 +1,20 @@
 import CMDClasses.CMDType;
+import Data.Actions;
+import Data.Entities;
 import ParseExceptions.ParseException;
+import com.alexmerz.graphviz.objects.Graph;
 import org.json.simple.JSONArray;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.util.ArrayList;
 
 class StagServer
 {
     String entityFilename;
     String actionFilename;
+    Actions actionClass;
+    Entities entityClass;
 
     public static void main(String args[])
     {
@@ -48,17 +53,28 @@ class StagServer
 
     private void processNextCommand(BufferedReader in, BufferedWriter out) throws IOException
     {
-        ParseActions actionObject = new ParseActions(actionFilename);
-        ParseEntities entities = new ParseEntities(entityFilename);
-        JSONArray actions = actionObject.getActions();
+        createActionClass();
+        createEntityClass();
         String line = in.readLine();
+        //parse instructions and create command class
         Tokeniser tokeniser = new Tokeniser(line);
         try {
-            CommandFactory factory = new CommandFactory();
-            CMDType command = factory.createCMD(tokeniser, actions);
+            CommandFactory factory = new CommandFactory(entityClass, actionClass);
+            CMDType command = factory.createCMD(tokeniser);
+            //command.getExitMessage();
         } catch(ParseException exception){
             System.out.println(exception);
         }
+    }
+
+    private void createActionClass(){
+        JSONArray actions = new ParseActions(actionFilename).getActions();
+        this.actionClass = new Actions(actions);
+    }
+
+    private void createEntityClass(){
+        ArrayList<Graph> entities = new ParseEntities(entityFilename).getEntities();
+        this.entityClass = new Entities(entities);
     }
 }
 
