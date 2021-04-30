@@ -22,7 +22,7 @@ public class Tokeniser {
 			return token;
 		}
 		else{
-			throw new CommandMissing();
+			throw new TokenMissing();
 		}
 	}
 
