@@ -2,9 +2,11 @@ package CMDClasses;
 
 import Data.Actions;
 import Data.Entities;
+import Data.Inventory;
+import Parse.MultiWordCMD;
 
 public class CMDDrop extends ExecutableCMD implements CMDType{
-	public CMDDrop(Entities entityClass, Actions actionClass){
+	public CMDDrop(MultiWordCMD parseTerm){
 		System.out.println("in CMDDrop");
 	}
 

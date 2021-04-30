@@ -1,7 +1,7 @@
 import CMDClasses.*;
-import Data.Actions;
-import Data.Entities;
-import Parse.SingleWordCMD;
+import Data.*;
+import Parse.ActionWordCMD;
+import Parse.MultiWordCMD;
 import ParseExceptions.*;
 import Tokeniser.Tokeniser;
 import org.json.simple.JSONArray;
@@ -10,10 +10,12 @@ import org.json.simple.JSONObject;
 public class CommandFactory {
 	Entities entityClass;
 	Actions actionClass;
+	Inventory inventory;
 
-	public CommandFactory(Entities entityClass, Actions actionClass){
+	public CommandFactory(Entities entityClass, Actions actionClass, Inventory inventory){
 		this.entityClass = entityClass;
 		this.actionClass = actionClass;
+		this.inventory = inventory;
 	}
 
 	//This will act as a factory for instances of CMDType
@@ -23,47 +25,37 @@ public class CommandFactory {
 			throw new CommandMissing();
 		}
 		else{
-			return commandSwitch(nextToken, tokeniser);
+			return singleCmdSwitch(nextToken, tokeniser);
 		}
 	}
 
-	private CMDType commandSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
+	private CMDType singleCmdSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
+		//This method looks all commands which only want one word of input
+		//checkForExtra() will throw an assert error if there is extra tokens in the input command
 		switch (nextToken.toUpperCase()) {
 			case "INVENTORY":
 			case "INV":
-				return createInvObject(tokeniser);
-			case "GET":
-				return createGetObject(tokeniser);
-			case "DROP":
-				return createDropObject(tokeniser);
-			case "GOTO":
-				return createGotoObject(tokeniser);
+				tokeniser.checkForExtra();
+				return new CMDInventory(inventory);
 			case "LOOK":
-				return createLookObject(tokeniser);
+				tokeniser.checkForExtra();
+				return new CMDLook(entityClass);
 			default:
-				return findCMDAction(nextToken);
+				return multiCmdSwitch(nextToken);
 		}
 	}
 
-	private CMDType createInvObject(Tokeniser tokeniser){
-		return new CMDInventory(entityClass, actionClass);
-	}
-
-	private CMDType createGetObject(Tokeniser tokeniser){
-		return new CMDGet(entityClass, actionClass);
-	}
-
-	private CMDType createDropObject(Tokeniser tokeniser){
-		return new CMDDrop(entityClass, actionClass);
-	}
-
-	private CMDType createGotoObject(Tokeniser tokeniser){
-		return new CMDGoto(entityClass, actionClass);
-	}
-
-	private CMDType createLookObject(Tokeniser tokeniser) throws ParseException{
-		new SingleWordCMD(tokeniser);
-		return new CMDLook(entityClass, actionClass);
+	private CMDType multiCmdSwitch(String nextToken) throws ParseException{
+		switch (nextToken.toUpperCase()) {
+			case "GET":
+				return new CMDGet(new MultiWordCMD(entityClass, inventory, "artefacts"));
+			case "DROP":
+				return new CMDDrop(new MultiWordCMD(entityClass, inventory, "inventory"));
+			case "GOTO":
+				return new CMDGoto(new MultiWordCMD(entityClass, inventory, "locations"));
+			default:
+				return findCMDAction(nextToken);
+		}
 	}
 
 	private CMDType findCMDAction(String nextToken) throws ParseException{
@@ -73,7 +65,8 @@ public class CommandFactory {
 			for (Object actionTrigger : actionTriggers) {
 				String trigger = (String) actionTrigger;
 				if (nextToken.equals(trigger)) {
-					return new CMDAction(trigger, entityClass, actionClass);
+					ActionWordCMD parseAction = new ActionWordCMD(entityClass, inventory);
+					return new CMDAction(trigger, parseAction);
 				}
 			}
 		}

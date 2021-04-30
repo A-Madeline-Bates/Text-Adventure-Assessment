@@ -1,10 +1,8 @@
 package CMDClasses;
-
-import Data.Actions;
-import Data.Entities;
+import Data.Inventory;
 
 public class CMDInventory extends CMDState implements CMDType{
-	public CMDInventory(Entities entityClass, Actions actionClass){
+	public CMDInventory(Inventory inventory){
 		System.out.println("in CMDInventory");
 	}
 

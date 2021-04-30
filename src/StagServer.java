@@ -1,6 +1,7 @@
 import CMDClasses.CMDType;
 import Data.Actions;
 import Data.Entities;
+import Data.Inventory;
 import ParseExceptions.ParseException;
 import Tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;
@@ -16,6 +17,7 @@ class StagServer
     String actionFilename;
     Actions actionClass;
     Entities entityClass;
+    Inventory inventory;
 
     public static void main(String args[])
     {
@@ -34,6 +36,7 @@ class StagServer
         } catch(IOException ioe) {
             System.err.println(ioe);
         }
+        createDatabases();
     }
 
     private void acceptNextConnection(ServerSocket ss)
@@ -54,13 +57,11 @@ class StagServer
 
     private void processNextCommand(BufferedReader in, BufferedWriter out) throws IOException
     {
-        createActionClass();
-        createEntityClass();
         String line = in.readLine();
         //parse instructions and create command class
         Tokeniser tokeniser = new Tokeniser(line);
         try {
-            CommandFactory factory = new CommandFactory(entityClass, actionClass);
+            CommandFactory factory = new CommandFactory(entityClass, actionClass, inventory);
             CMDType command = factory.createCMD(tokeniser);
             System.out.println(command.getExitMessage());
         } catch(ParseException exception){
@@ -69,6 +70,12 @@ class StagServer
     }
 
     //walk through and check the input for action command (it doesn't have to be the first word)
+
+    private void createDatabases(){
+        this.inventory = new Inventory();
+        createActionClass();
+        createEntityClass();
+    }
 
     private void createActionClass(){
         JSONArray actions = new ParseActions(actionFilename).getActions();
