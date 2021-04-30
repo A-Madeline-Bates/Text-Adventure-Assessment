@@ -1,7 +1,9 @@
 import CMDClasses.*;
 import Data.Actions;
 import Data.Entities;
+import Parse.SingleWordCMD;
 import ParseExceptions.*;
+import Tokeniser.Tokeniser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -21,26 +23,47 @@ public class CommandFactory {
 			throw new CommandMissing();
 		}
 		else{
-			return commandSwitch(nextToken);
+			return commandSwitch(nextToken, tokeniser);
 		}
 	}
 
-	private CMDType commandSwitch(String nextToken) throws ParseException{
+	private CMDType commandSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
 		switch (nextToken.toUpperCase()) {
 			case "INVENTORY":
 			case "INV":
-				return new CMDInventory(entityClass, actionClass);
+				return createInvObject(tokeniser);
 			case "GET":
-				return new CMDGet(entityClass, actionClass);
+				return createGetObject(tokeniser);
 			case "DROP":
-				return new CMDDrop(entityClass, actionClass);
+				return createDropObject(tokeniser);
 			case "GOTO":
-				return new CMDGoto(entityClass, actionClass);
+				return createGotoObject(tokeniser);
 			case "LOOK":
-				return new CMDLook(entityClass, actionClass);
+				return createLookObject(tokeniser);
 			default:
 				return findCMDAction(nextToken);
 		}
+	}
+
+	private CMDType createInvObject(Tokeniser tokeniser){
+		return new CMDInventory(entityClass, actionClass);
+	}
+
+	private CMDType createGetObject(Tokeniser tokeniser){
+		return new CMDGet(entityClass, actionClass);
+	}
+
+	private CMDType createDropObject(Tokeniser tokeniser){
+		return new CMDDrop(entityClass, actionClass);
+	}
+
+	private CMDType createGotoObject(Tokeniser tokeniser){
+		return new CMDGoto(entityClass, actionClass);
+	}
+
+	private CMDType createLookObject(Tokeniser tokeniser){
+		new SingleWordCMD(tokeniser);
+		return new CMDLook(entityClass, actionClass);
 	}
 
 	private CMDType findCMDAction(String nextToken) throws ParseException{

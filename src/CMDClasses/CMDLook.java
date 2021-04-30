@@ -4,8 +4,6 @@ import Data.Actions;
 import Data.Entities;
 import com.alexmerz.graphviz.objects.Node;
 
-import java.util.ArrayList;
-
 public class CMDLook extends CMDState implements CMDType{
 	Entities entityClass;
 	Actions actionClass;
@@ -18,7 +16,7 @@ public class CMDLook extends CMDState implements CMDType{
 	public String getExitMessage(){
 		Node location = entityClass.getLocationNode(currentLocation);
 		String exitMessage =
-				"You are in" + location.getAttribute("Description")
+				"You are in " + location.getAttribute("description")
 			;
 		return exitMessage;
 	}

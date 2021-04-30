@@ -2,6 +2,7 @@ import CMDClasses.CMDType;
 import Data.Actions;
 import Data.Entities;
 import ParseExceptions.ParseException;
+import Tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;
 import org.json.simple.JSONArray;
 
@@ -61,11 +62,13 @@ class StagServer
         try {
             CommandFactory factory = new CommandFactory(entityClass, actionClass);
             CMDType command = factory.createCMD(tokeniser);
-            //command.getExitMessage();
+            System.out.println(command.getExitMessage());
         } catch(ParseException exception){
             System.out.println(exception);
         }
     }
+
+    //walk through and check the input for action command (it doesn't have to be the first word)
 
     private void createActionClass(){
         JSONArray actions = new ParseActions(actionFilename).getActions();
