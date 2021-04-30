@@ -1,10 +1,7 @@
 package CMDClasses;
 
-import Data.Actions;
 import Data.Entities;
-import Data.Inventory;
 import Parse.CallInventoryCMD;
-import Parse.MultiWordCMD;
 
 public class CMDDrop extends ExecutableCMD implements CMDType{
 	Entities entities;

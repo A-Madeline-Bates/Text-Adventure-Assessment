@@ -1,12 +1,9 @@
 package CMDClasses;
 
-import Data.Actions;
-import Data.Entities;
-import Data.Inventory;
-import Parse.MultiWordCMD;
+import Parse.CallEntityCMD;
 
 public class CMDGet extends ExecutableCMD implements CMDType{
-	public CMDGet(MultiWordCMD parseTerm){
+	public CMDGet(CallEntityCMD parseTerm){
 		System.out.println("in CMDGet");
 	}
 

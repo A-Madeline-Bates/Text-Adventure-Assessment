@@ -1,7 +1,7 @@
 import CMDClasses.CMDType;
 import Data.Actions;
 import Data.Entities;
-import Data.Inventory;
+import Data.PlayerState;
 import ParseExceptions.ParseException;
 import Tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;
@@ -17,7 +17,7 @@ class StagServer
     String actionFilename;
     Actions actionClass;
     Entities entityClass;
-    Inventory inventory;
+    PlayerState playerState;
 
     public static void main(String args[])
     {
@@ -61,7 +61,7 @@ class StagServer
         //parse instructions and create command class
         Tokeniser tokeniser = new Tokeniser(line);
         try {
-            CommandFactory factory = new CommandFactory(entityClass, actionClass, inventory);
+            CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
             System.out.println(command.getExitMessage());
         } catch(ParseException exception){
@@ -72,7 +72,7 @@ class StagServer
     //walk through and check the input for action command (it doesn't have to be the first word)
 
     private void createDatabases(){
-        this.inventory = new Inventory();
+        this.playerState = new PlayerState();
         createActionClass();
         createEntityClass();
         new Test();
@@ -94,19 +94,19 @@ class StagServer
 
 //need an instruction parser
 //maybe create factory for
-//"inventory" (or "inv" for short): lists all of the artefacts currently being carried by the player
-//load up empty 'inventory' array to start
-//"get": picks up a specified artefact from current location and puts it into player's inventory
-//"drop": puts down an artefact from player's inventory and places it into the current location
+//"playerState" (or "inv" for short): lists all of the artefacts currently being carried by the player
+//load up empty 'playerState' array to start
+//"get": picks up a specified artefact from current location and puts it into player's playerState
+//"drop": puts down an artefact from player's playerState and places it into the current location
 //"goto": moves from one location to another (if there is a path between the two)
 //"look": describes the entities in the current location and lists the paths to other locations
 //there will also be ANOTHER class which will cross compare to see if something is a valid action (in the
-//actions array) + whether the player has the correct furniture/artefacts and inventory to do it. This
+//actions array) + whether the player has the correct furniture/artefacts and playerState to do it. This
 //must check ALL instances of that action in the array before saying something is impossible. It will
 //then shuffle items about or add paths based on the result
 
 
-//each location has its own 'inventory' containing all artefacts + anything dropped by a player
+//each location has its own 'playerState' containing all artefacts + anything dropped by a player
 //maybe load all artefacts/furniture to locations at the beginning so that the items aren't reset every time
 //you visit a location. Or maybe edit entities graph itself? When item disappears it moves to 'unplaced'
 

@@ -1,8 +1,8 @@
 package CMDClasses;
-import Data.Inventory;
+import Data.PlayerState;
 
 public class CMDInventory extends CMDState implements CMDType{
-	public CMDInventory(Inventory inventory){
+	public CMDInventory(PlayerState playerState){
 		System.out.println("in CMDInventory");
 	}
 

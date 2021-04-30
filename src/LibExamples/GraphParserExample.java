@@ -25,6 +25,20 @@ public class GraphParserExample {
             ArrayList<Graph> graphs = parser.getGraphs();
             ArrayList<Graph> subGraphs = graphs.get(0).getSubgraphs(); //down level
 
+//            System.out.println(subGraphs.get(0).getSubgraphs().get(1 /*location*/).getSubgraphs().get(0) +"\n\n\n");
+
+            ArrayList<Graph> myLocationGraphs = subGraphs.get(0).getSubgraphs().get(0 /*location*/).getSubgraphs();
+            for(int i=0; i<myLocationGraphs.size(); i++){
+                if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
+                    ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
+                    for(int j=0; j<artefactArray.size(); j++) {
+                        if(!artefactArray.get(i).getId().getId().equals("node")) {
+                            System.out.println(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description"));
+                        }
+                    }
+                }
+            }
+
             System.out.print("* " + subGraphs.get(0).getId().getId() + " * " + subGraphs.get(1).getId().getId() + "\n");
             //subGraphs.get(0).getId().getId() = locations
             //subGraphs.get(1).getId().getId() = paths

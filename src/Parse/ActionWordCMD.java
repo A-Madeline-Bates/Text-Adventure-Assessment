@@ -1,10 +1,10 @@
 package Parse;
 
 import Data.Entities;
-import Data.Inventory;
+import Data.PlayerState;
 
 public class ActionWordCMD {
-	public ActionWordCMD(Entities entityClass, Inventory inventory){
+	public ActionWordCMD(Entities entityClass, PlayerState playerState){
 
 	}
 }

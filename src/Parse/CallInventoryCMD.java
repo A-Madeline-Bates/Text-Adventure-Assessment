@@ -1,6 +1,6 @@
 package Parse;
 
-import Data.Inventory;
+import Data.PlayerState;
 import ParseExceptions.NotInInventory;
 import ParseExceptions.ParseException;
 import Tokeniser.Tokeniser;
@@ -8,13 +8,13 @@ import Tokeniser.Tokeniser;
 public class CallInventoryCMD {
 	String inventoryObject;
 
-	public CallInventoryCMD(Inventory inventory, Tokeniser tokeniser) throws ParseException {
+	public CallInventoryCMD(PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
-		searchInventory(inventory, commandEnd);
+		searchInventory(playerState, commandEnd);
 	}
 
-	private void searchInventory(Inventory inventory, String commandEnd) throws ParseException {
-		if(inventory.isInInventory(commandEnd)){
+	private void searchInventory(PlayerState playerState, String commandEnd) throws ParseException {
+		if(playerState.isInInventory(commandEnd)){
 			this.inventoryObject = commandEnd;
 		}
 		else{

@@ -9,12 +9,12 @@ import org.json.simple.JSONObject;
 public class CommandFactory {
 	Entities entityClass;
 	Actions actionClass;
-	Inventory inventory;
+	PlayerState playerState;
 
-	public CommandFactory(Entities entityClass, Actions actionClass, Inventory inventory){
+	public CommandFactory(Entities entityClass, Actions actionClass, PlayerState playerState){
 		this.entityClass = entityClass;
 		this.actionClass = actionClass;
-		this.inventory = inventory;
+		this.playerState = playerState;
 	}
 
 	//This will act as a factory for instances of CMDType
@@ -35,10 +35,10 @@ public class CommandFactory {
 			case "INVENTORY":
 			case "INV":
 				tokeniser.checkForExtra();
-				return new CMDInventory(inventory);
+				return new CMDInventory(playerState);
 			case "LOOK":
 				tokeniser.checkForExtra();
-				return new CMDLook(entityClass);
+				return new CMDLook(entityClass, playerState);
 			default:
 				return multiCmdSwitch(nextToken, tokeniser);
 		}
@@ -47,11 +47,11 @@ public class CommandFactory {
 	private CMDType multiCmdSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
 		switch (nextToken.toUpperCase()) {
 			case "DROP":
-				return new CMDDrop(entityClass, new CallInventoryCMD(inventory, tokeniser));
+				return new CMDDrop(entityClass, new CallInventoryCMD(playerState, tokeniser));
 			case "GET":
-				return new CMDGet(new MultiWordCMD(entityClass, inventory, "artefacts", tokeniser));
+				return new CMDGet(new CallEntityCMD(entityClass, playerState, tokeniser));
 			case "GOTO":
-				return new CMDGoto(new MultiWordCMD(entityClass, inventory, "locations", tokeniser));
+//				return new CMDGoto(new CallLocationCMD(entityClass, tokeniser));
 			default:
 				return findCMDAction(nextToken);
 		}
@@ -64,7 +64,7 @@ public class CommandFactory {
 			for (Object actionTrigger : actionTriggers) {
 				String trigger = (String) actionTrigger;
 				if (nextToken.equals(trigger)) {
-					ActionWordCMD parseAction = new ActionWordCMD(entityClass, inventory);
+					ActionWordCMD parseAction = new ActionWordCMD(entityClass, playerState);
 					return new CMDAction(trigger, parseAction);
 				}
 			}
