@@ -14,14 +14,30 @@ public class Tokeniser {
 		tokenList.removeAll(Arrays.asList("", null));
 	}
 
-	public String nextToken() throws ParseException {
-		if(ArrayPosition < tokenList.size()) {
-			//This will throw an exception if there's not enough words in the command to fulfill what we need
-			String token = tokenList.get(ArrayPosition);
+	public String getNextToken() throws ParseException {
+		testArrayPosition();
+		//This will throw an exception if there's not enough words in the command to fulfill what we need
+		String token = tokenList.get(ArrayPosition);
+		ArrayPosition++;
+		return token;
+	}
+
+	public String getRemainingTokens() throws ParseException {
+		testArrayPosition();
+		String compositeToken = "";
+		while (ArrayPosition < tokenList.size()) {
+			compositeToken += tokenList.get(ArrayPosition);
+			//Add a space into the string, unless it's our final token
+			if(ArrayPosition != tokenList.size() - 1){
+				compositeToken += " ";
+			}
 			ArrayPosition++;
-			return token;
 		}
-		else{
+		return compositeToken;
+	}
+
+	private void testArrayPosition() throws ParseException{
+		if(ArrayPosition >= tokenList.size()) {
 			throw new TokenMissing();
 		}
 	}

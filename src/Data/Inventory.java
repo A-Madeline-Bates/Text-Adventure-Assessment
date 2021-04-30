@@ -11,7 +11,7 @@ public class Inventory {
 
 	public boolean isInInventory(String object){
 		for (String searchObject : inventoryList) {
-			if (searchObject.equals(object)) {
+			if (searchObject.equalsIgnoreCase(object)) {
 				return true;
 			}
 		}
@@ -20,7 +20,7 @@ public class Inventory {
 
 	public boolean consumedFromInventory(String object){
 		for (int i=0; i<inventoryList.size(); i++) {
-			if (inventoryList.get(i).equals(object)) {
+			if (inventoryList.get(i).equalsIgnoreCase(object)) {
 				inventoryList.remove(i);
 				return true;
 			}

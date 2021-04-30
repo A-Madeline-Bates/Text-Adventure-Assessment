@@ -75,6 +75,7 @@ class StagServer
         this.inventory = new Inventory();
         createActionClass();
         createEntityClass();
+        new Test();
     }
 
     private void createActionClass(){

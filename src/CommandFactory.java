@@ -1,7 +1,6 @@
 import CMDClasses.*;
 import Data.*;
-import Parse.ActionWordCMD;
-import Parse.MultiWordCMD;
+import Parse.*;
 import ParseExceptions.*;
 import Tokeniser.Tokeniser;
 import org.json.simple.JSONArray;
@@ -20,7 +19,7 @@ public class CommandFactory {
 
 	//This will act as a factory for instances of CMDType
 	public CMDType createCMD(Tokeniser tokeniser) throws ParseException{
-		String nextToken = tokeniser.nextToken();
+		String nextToken = tokeniser.getNextToken();
 		if(nextToken == null){
 			throw new CommandMissing();
 		}
@@ -41,18 +40,18 @@ public class CommandFactory {
 				tokeniser.checkForExtra();
 				return new CMDLook(entityClass);
 			default:
-				return multiCmdSwitch(nextToken);
+				return multiCmdSwitch(nextToken, tokeniser);
 		}
 	}
 
-	private CMDType multiCmdSwitch(String nextToken) throws ParseException{
+	private CMDType multiCmdSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
 		switch (nextToken.toUpperCase()) {
-			case "GET":
-				return new CMDGet(new MultiWordCMD(entityClass, inventory, "artefacts"));
 			case "DROP":
-				return new CMDDrop(new MultiWordCMD(entityClass, inventory, "inventory"));
+				return new CMDDrop(entityClass, new CallInventoryCMD(inventory, tokeniser));
+			case "GET":
+				return new CMDGet(new MultiWordCMD(entityClass, inventory, "artefacts", tokeniser));
 			case "GOTO":
-				return new CMDGoto(new MultiWordCMD(entityClass, inventory, "locations"));
+				return new CMDGoto(new MultiWordCMD(entityClass, inventory, "locations", tokeniser));
 			default:
 				return findCMDAction(nextToken);
 		}
