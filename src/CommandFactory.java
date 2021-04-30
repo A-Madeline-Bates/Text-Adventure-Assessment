@@ -61,7 +61,7 @@ public class CommandFactory {
 		return new CMDGoto(entityClass, actionClass);
 	}
 
-	private CMDType createLookObject(Tokeniser tokeniser){
+	private CMDType createLookObject(Tokeniser tokeniser) throws ParseException{
 		new SingleWordCMD(tokeniser);
 		return new CMDLook(entityClass, actionClass);
 	}

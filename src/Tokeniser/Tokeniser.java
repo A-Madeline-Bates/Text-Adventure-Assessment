@@ -1,5 +1,6 @@
 package Tokeniser;
 
+import ParseExceptions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,17 +14,23 @@ public class Tokeniser {
 		tokenList.removeAll(Arrays.asList("", null));
 	}
 
-	public String nextToken() {
-		//This will throw an assertion error if there's not enough words in the command to fulfill what we need
-		assert (ArrayPosition < tokenList.size());
-		String token = tokenList.get(ArrayPosition);
-		ArrayPosition++;
-		return token;
+	public String nextToken() throws ParseException {
+		if(ArrayPosition < tokenList.size()) {
+			//This will throw an exception if there's not enough words in the command to fulfill what we need
+			String token = tokenList.get(ArrayPosition);
+			ArrayPosition++;
+			return token;
+		}
+		else{
+			throw new CommandMissing();
+		}
 	}
 
-	public void checkForExtra(){
+	public void checkForExtra() throws ParseException{
 		//This is called when a string should be complete- if the ArrayPosition was still less than tokenList.size()
 		//that would indicate that the incomingCommand is longer than it should be
-		assert(ArrayPosition >= tokenList.size());
+		if(ArrayPosition < tokenList.size()){
+			throw new ExtraCommand();
+		}
 	}
 }
