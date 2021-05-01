@@ -29,6 +29,7 @@ class StagServer
     {
         this.entityFilename = entityFilename;
         this.actionFilename = actionFilename;
+        createDatabases();
         try {
             ServerSocket ss = new ServerSocket(portNumber);
             System.out.println("Server Listening");
@@ -36,7 +37,6 @@ class StagServer
         } catch(IOException ioe) {
             System.err.println(ioe);
         }
-        createDatabases();
     }
 
     private void acceptNextConnection(ServerSocket ss)

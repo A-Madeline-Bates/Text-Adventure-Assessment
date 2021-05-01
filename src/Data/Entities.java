@@ -17,17 +17,23 @@ public class Entities {
 	}
 
 	public int returnArtefactPosition(String comparisonString, int location){
-//		ArrayList<Graph> myLocationGraphs = subGraphs.get(0).getSubgraphs().get(0 /*location*/).getSubgraphs();
-//		for(int i=0; i<myLocationGraphs.size(); i++){
-//			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
-//				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
-//				for(int j=0; j<artefactArray.size(); j++) {
-//					if(!artefactArray.get(i).getId().getId().equals("node")) {
-//						System.out.println(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description"));
-//					}
-//				}
-//			}
-//		}
-		return 2;
+		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
+		for(int i=0; i<myLocationGraphs.size(); i++){
+			System.out.println("hello- started looking in location");
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
+				System.out.println("hello- found artefacts");
+				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
+				for(int j=0; j<artefactArray.size(); j++) {
+					if(!artefactArray.get(i).getId().getId().equals("node")) {
+						System.out.println("hello- found artefacts not node");
+						if(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)){
+							System.out.println("hello- found specific artefact");
+							return j;
+						}
+					}
+				}
+			}
+		}
+		return -1;
 	}
 }

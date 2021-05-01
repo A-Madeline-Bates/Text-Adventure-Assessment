@@ -8,6 +8,7 @@ import Tokeniser.Tokeniser;
 
 public class CallEntityCMD {
 	int artefactPosition;
+	String artefactName;
 
 	public CallEntityCMD(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
@@ -15,9 +16,12 @@ public class CallEntityCMD {
 	}
 
 	private void searchDot(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
-		if(entityClass.returnArtefactPosition(commandEnd, playerState.getCurrentLocation()) != -1){
+		int loc = playerState.getCurrentLocation();
+		int searchPosition = entityClass.returnArtefactPosition(commandEnd, loc);
+		if(searchPosition != -1){
 			//This returns the array position of the artefact we are trying to find.
-			this.artefactPosition = entityClass.returnArtefactPosition(commandEnd, playerState.getCurrentLocation());
+			this.artefactPosition = searchPosition;
+			this.artefactName = commandEnd;
 		} else{
 			throw new ArtefactDoesNotExist(commandEnd);
 		}
@@ -25,5 +29,9 @@ public class CallEntityCMD {
 
 	public int getArtefactPosition(){
 		return artefactPosition;
+	}
+
+	public String getArtefactName(){
+		return artefactName;
 	}
 }
