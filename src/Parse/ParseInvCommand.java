@@ -5,10 +5,10 @@ import ParseExceptions.NotInInventory;
 import ParseExceptions.ParseException;
 import Tokeniser.Tokeniser;
 
-public class CallInventoryCMD {
+public class ParseInvCommand {
 	String inventoryObject;
 
-	public CallInventoryCMD(PlayerState playerState, Tokeniser tokeniser) throws ParseException {
+	public ParseInvCommand(PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
 		searchInventory(playerState, commandEnd);
 	}

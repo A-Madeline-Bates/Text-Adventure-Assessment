@@ -1,13 +1,13 @@
 package CMDClasses;
 
 import Data.Entities;
-import Parse.CallInventoryCMD;
+import Parse.ParseInvCommand;
 
 public class CMDDrop extends ExecutableCMD implements CMDType{
 	Entities entities;
-	CallInventoryCMD parsedInventory;
+	ParseInvCommand parsedInventory;
 
-	public CMDDrop(Entities entities, CallInventoryCMD parsedInventory){
+	public CMDDrop(Entities entities, ParseInvCommand parsedInventory){
 		this.entities = entities;
 		this.parsedInventory = parsedInventory;
 	}

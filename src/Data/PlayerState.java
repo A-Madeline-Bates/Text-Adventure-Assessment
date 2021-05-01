@@ -6,9 +6,12 @@ public class PlayerState {
 	ArrayList<String> inventoryList = new ArrayList<String>();
 	//following the logic that initial location is always 0- this might be worth changing
 	int currentLocation;
+	String currentLocationName;
 
+	//These are both based on big assumptions and need fixing!!
 	public PlayerState(){
 		this.currentLocation = 0;
+		this.currentLocationName = "start";
 	}
 
 	public void addToInventory(String object){
@@ -44,5 +47,13 @@ public class PlayerState {
 
 	public void setCurrentLocation(int currentLocation){
 		this.currentLocation = currentLocation;
+	}
+
+	public String getCurrentLocationName(){
+		return currentLocationName;
+	}
+
+	public void setCurrentLocationName(String currentLocationName){
+		this.currentLocationName = currentLocationName;
 	}
 }

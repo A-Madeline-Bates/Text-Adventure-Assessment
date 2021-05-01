@@ -1,9 +1,8 @@
 package CMDClasses;
-import Data.*;
-import Parse.ActionWordCMD;
+import Parse.ParseActionCommand;
 
 public class CMDAction extends ExecutableCMD implements CMDType {
-	public CMDAction(String trigger, ActionWordCMD parseAction){
+	public CMDAction(String trigger, ParseActionCommand parseAction){
 	}
 
 	public void execute() {

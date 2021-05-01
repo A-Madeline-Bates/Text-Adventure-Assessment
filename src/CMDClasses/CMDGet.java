@@ -1,10 +1,9 @@
 package CMDClasses;
 
-import Parse.CallEntityCMD;
+import Parse.ParseArtefactCommand;
 
 public class CMDGet extends ExecutableCMD implements CMDType{
-	public CMDGet(CallEntityCMD parseTerm){
-		System.out.println(parseTerm.getArtefactPosition() + " " + parseTerm.getArtefactName());
+	public CMDGet(ParseArtefactCommand parseTerm){
 	}
 
 	public void execute() {

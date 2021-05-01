@@ -6,11 +6,11 @@ import ParseExceptions.ArtefactDoesNotExist;
 import ParseExceptions.ParseException;
 import Tokeniser.Tokeniser;
 
-public class CallEntityCMD {
+public class ParseArtefactCommand {
 	int artefactPosition;
 	String artefactName;
 
-	public CallEntityCMD(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
+	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
 		searchDot(commandEnd, entityClass, playerState);
 	}

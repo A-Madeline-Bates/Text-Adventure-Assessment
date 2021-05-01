@@ -1,10 +1,12 @@
 package CMDClasses;
 
+import Parse.ParseLocationCommand;
+
 public class CMDGoto extends ExecutableCMD implements CMDType{
-//	public CMDGoto(MultiWordCMD parseTerm){
-//		System.out.println("in CMDGoto");
-//	}
-//
+	public CMDGoto(ParseLocationCommand parseTerm){
+		System.out.println(parseTerm.getLocationName() + parseTerm.getLocationPosition());
+	}
+
 	public void execute() {
 
 	}

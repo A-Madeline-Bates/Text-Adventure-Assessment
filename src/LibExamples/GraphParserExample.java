@@ -50,6 +50,26 @@ public class GraphParserExample {
             System.out.print("* " + location.getSubgraphs().get(0).getNodes(false).get(0).getAttribute("description") + "\n");
             //location.getSubgraphs().get(0).getNodes(false).get(0).getAttribute() = "An empty room"
 
+            Graph testEdges = subGraphs.get(1);
+            System.out.print("************ " + testEdges.getEdges() + "\n");
+            System.out.println(testEdges.getEdges().get(0).getTarget().getNode().getId().getId());
+            for(int x=0;x<testEdges.getEdges().size(); x++){
+                System.out.println("Hello- in edges");
+                if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase("forest")){
+                    System.out.println("Hello- in forest paths");
+                    for(int y=0;y<testEdges.getEdges().size(); y++){
+                        System.out.println("Hello- looking at forest paths");
+                        if(testEdges.getEdges().get(y).getTarget().getNode().getId().getId().equalsIgnoreCase("start")) {
+                            System.out.println("Hello- forest path found");
+                            System.out.println("source " + x);
+                            System.out.println("target " + y);
+                            break;
+                        }
+                    }
+                }
+            }
+
+
             for(Graph g : subGraphs){
                 System.out.printf("id = %s\n", g.getId().getId()); //"locations" then "paths"
                 ArrayList<Graph> subGraphs1 = g.getSubgraphs(); //down level
