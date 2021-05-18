@@ -2,7 +2,6 @@ package Parse;
 
 import Data.Entities;
 import Data.PlayerState;
-import ParseExceptions.ArtefactDoesNotExist;
 import ParseExceptions.LocationDoesNotExist;
 import ParseExceptions.LocationIsNotAccessible;
 import ParseExceptions.ParseException;
@@ -18,8 +17,11 @@ public class ParseLocationCommand {
 	}
 
 	private void searchDot(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
-		int searchPosition = entityClass.returnLocationPosition(commandEnd);
+		//This find whether the location is in the Dot file
+		entityClass.findLocation(commandEnd);
+		int searchPosition = entityClass.getLocationCoordinate();
 		if(searchPosition != -1){
+			//This finds whether the path is in the dot file attached to the location (i.e, is accessible)
 			if(entityClass.isLocationAccessible(playerState.getCurrentLocationName(), commandEnd)) {
 				//This returns the array position of the artefact we are trying to find.
 				this.locationPosition = searchPosition;

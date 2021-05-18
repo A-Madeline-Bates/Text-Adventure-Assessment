@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public class Entities {
 	ArrayList<Graph> entities;
+	String locationString;
+	int locationInt;
 
 	public Entities(ArrayList<Graph> entities){
 		this.entities = entities;
@@ -37,18 +39,43 @@ public class Entities {
 		return -1;
 	}
 
-	public int returnLocationPosition(String comparisonString){
+	public void findLocation(String comparisonString){
 		ArrayList<Graph> myLocationList = entities.get(0).getSubgraphs().get(0).getSubgraphs();
+		clearLocationString();
+		//If location is found, set our variables
 		for(int i=0; i<myLocationList.size(); i++){
 			if(myLocationList.get(i).getNodes(false).get(0).getAttribute("description").equalsIgnoreCase(comparisonString)) {
-				return i;
+				setLocationString(myLocationList.get(i).getNodes(false).get(0).getId().getId());
+				setLocationCoordinate(i);
 			}
 			//we will also accept a shorter location definition
 			else if(myLocationList.get(i).getNodes(false).get(0).getId().getId().equalsIgnoreCase(comparisonString)){
-				return i;
+				setLocationString(myLocationList.get(i).getNodes(false).get(0).getId().getId());
+				setLocationCoordinate(i);
 			}
 		}
-		return -1;
+		setLocationCoordinate(-1);
+	}
+
+	//This is still a weird work-around
+	private void setLocationString(String pathString){
+		this.locationString = locationString;
+	}
+
+	private void setLocationCoordinate(int locationInt){
+		this.locationInt = locationInt;
+	}
+
+	private String getLocationString(){
+		return locationString;
+	}
+
+	public int getLocationCoordinate(){
+		return locationInt;
+	}
+
+	private void clearLocationString(){
+		this.locationString = "";
 	}
 
 	public boolean isLocationAccessible(String currentLocation, String targetLocation){
@@ -56,7 +83,7 @@ public class Entities {
 		for(int x=0;x<testEdges.getEdges().size(); x++){
 			if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase(currentLocation)){
 				for(int y=0;y<testEdges.getEdges().size(); y++){
-					if(testEdges.getEdges().get(y).getTarget().getNode().getId().getId().equalsIgnoreCase(targetLocation)) {
+					if(testEdges.getEdges().get(y).getTarget().getNode().getId().getId().equalsIgnoreCase(getLocationString())) {
 						return true;
 					}
 				}
