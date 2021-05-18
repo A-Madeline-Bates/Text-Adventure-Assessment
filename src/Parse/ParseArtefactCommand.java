@@ -12,10 +12,10 @@ public class ParseArtefactCommand {
 
 	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
-		searchDot(commandEnd, entityClass, playerState);
+		validateArtefact(commandEnd, entityClass, playerState);
 	}
 
-	private void searchDot(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
+	private void validateArtefact(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
 		int loc = playerState.getCurrentLocation();
 		int searchPosition = entityClass.returnArtefactPosition(commandEnd, loc);
 		if(searchPosition != -1){

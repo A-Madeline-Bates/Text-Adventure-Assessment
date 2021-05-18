@@ -13,10 +13,10 @@ public class ParseLocationCommand {
 
 	public ParseLocationCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
-		validateLocation(commandEnd, entityClass, playerState);
+		validateNewLocation(commandEnd, entityClass, playerState);
 	}
 
-	private void validateLocation(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
+	private void validateNewLocation(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
 		//This find whether the location is in the Dot file
 		entityClass.findLocation(commandEnd);
 		int searchPosition = entityClass.getLocationCoordinate();

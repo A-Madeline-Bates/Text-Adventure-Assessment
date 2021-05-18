@@ -5,7 +5,6 @@ import com.alexmerz.graphviz.objects.Node;
 
 public class CMDLook extends CMDState implements CMDType{
 	Entities entityClass;
-	PlayerState playerState;
 
 	public CMDLook(Entities entityClass, PlayerState playerState){
 		this.entityClass = entityClass;

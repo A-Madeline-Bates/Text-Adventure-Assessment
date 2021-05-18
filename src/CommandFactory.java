@@ -47,11 +47,14 @@ public class CommandFactory {
 	private CMDType multiCmdSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
 		switch (nextToken.toUpperCase()) {
 			case "DROP":
-				return new CMDDrop(entityClass, new ParseInvCommand(playerState, tokeniser));
+				ParseInvCommand parseInv = new ParseInvCommand(playerState, tokeniser);
+				return new CMDDrop(parseInv, entityClass, playerState);
 			case "GET":
-				return new CMDGet(new ParseArtefactCommand(entityClass, playerState, tokeniser));
+				ParseArtefactCommand parseArtefact = new ParseArtefactCommand(entityClass, playerState, tokeniser);
+				return new CMDGet(parseArtefact, entityClass, playerState);
 			case "GOTO":
-				return new CMDGoto(new ParseLocationCommand(entityClass, playerState, tokeniser));
+				ParseLocationCommand parseLocation = new ParseLocationCommand(entityClass, playerState, tokeniser);
+				return new CMDGoto(parseLocation, playerState);
 			default:
 				return findCMDAction(nextToken);
 		}
