@@ -41,32 +41,30 @@ public class Entities {
 
 	public void findLocation(String comparisonString){
 		ArrayList<Graph> myLocationList = entities.get(0).getSubgraphs().get(0).getSubgraphs();
-		clearLocationString();
 		//If location is found, set our variables
 		for(int i=0; i<myLocationList.size(); i++){
 			if(myLocationList.get(i).getNodes(false).get(0).getAttribute("description").equalsIgnoreCase(comparisonString)) {
-				setLocationString(myLocationList.get(i).getNodes(false).get(0).getId().getId());
-				setLocationCoordinate(i);
+				//the location string is always set to be the ID version of the location name, because that is the
+				//version used in the 'path'
+				setLocationInfo(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
+				return;
 			}
 			//we will also accept a shorter location definition
 			else if(myLocationList.get(i).getNodes(false).get(0).getId().getId().equalsIgnoreCase(comparisonString)){
-				setLocationString(myLocationList.get(i).getNodes(false).get(0).getId().getId());
-				setLocationCoordinate(i);
+				setLocationInfo(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
+				return;
 			}
 		}
-		setLocationCoordinate(-1);
+		//If we don't find the location, clear location string and set coordinate to -1
+		setLocationInfo("", -1);
 	}
 
-	//This is still a weird work-around
-	private void setLocationString(String pathString){
+	private void setLocationInfo(String locationString, int locationInt){
 		this.locationString = locationString;
-	}
-
-	private void setLocationCoordinate(int locationInt){
 		this.locationInt = locationInt;
 	}
 
-	private String getLocationString(){
+	public String getLocationString(){
 		return locationString;
 	}
 
@@ -74,16 +72,12 @@ public class Entities {
 		return locationInt;
 	}
 
-	private void clearLocationString(){
-		this.locationString = "";
-	}
-
 	public boolean isLocationAccessible(String currentLocation, String targetLocation){
 		Graph testEdges = entities.get(0).getSubgraphs().get(1);
 		for(int x=0;x<testEdges.getEdges().size(); x++){
 			if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase(currentLocation)){
 				for(int y=0;y<testEdges.getEdges().size(); y++){
-					if(testEdges.getEdges().get(y).getTarget().getNode().getId().getId().equalsIgnoreCase(getLocationString())) {
+					if(testEdges.getEdges().get(y).getTarget().getNode().getId().getId().equalsIgnoreCase(targetLocation)) {
 						return true;
 					}
 				}
