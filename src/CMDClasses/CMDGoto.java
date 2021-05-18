@@ -4,16 +4,17 @@ import Data.PlayerState;
 import Parse.ParseLocationCommand;
 
 public class CMDGoto extends ExecutableCMD implements CMDType{
-	ParseLocationCommand parseTerm;
+	ParseLocationCommand parseLocation;
 
-	public CMDGoto(ParseLocationCommand parseTerm, PlayerState playerState){
-		this.parseTerm = parseTerm;
+	public CMDGoto(ParseLocationCommand parseLocation, PlayerState playerState){
+		this.parseLocation = parseLocation;
 		this.playerState = playerState;
-		System.out.println(parseTerm.getLocationName() + parseTerm.getLocationPosition());
+		System.out.println(parseLocation.getNewLocationName() + " " + parseLocation.getNewLocationPosition());
 	}
 
 	public void execute() {
-		//Change location in playerState
+//		int nextLocation = parseLocation.getNewLocationPosition();
+//		playerState.setCurrentLocation(nextLocation);
 	}
 
 	public String getExitMessage(){

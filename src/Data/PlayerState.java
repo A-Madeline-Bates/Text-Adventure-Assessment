@@ -3,10 +3,10 @@ package Data;
 import java.util.ArrayList;
 
 public class PlayerState {
-	ArrayList<String> inventoryList = new ArrayList<String>();
+	private ArrayList<String> inventoryList = new ArrayList<String>();
 	//following the logic that initial location is always 0- this might be worth changing
-	int currentLocation;
-	String currentLocationName;
+	private int currentLocation;
+	private String currentLocationName;
 
 	//These are both based on big assumptions and need fixing!!
 	public PlayerState(){
@@ -51,9 +51,5 @@ public class PlayerState {
 
 	public String getCurrentLocationName(){
 		return currentLocationName;
-	}
-
-	public void setCurrentLocationName(String currentLocationName){
-		this.currentLocationName = currentLocationName;
 	}
 }

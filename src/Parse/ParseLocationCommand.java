@@ -18,11 +18,11 @@ public class ParseLocationCommand {
 
 	private void validateNewLocation(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
 		//This find whether the location is in the Dot file
-		entityClass.findLocation(commandEnd);
-		int searchPosition = entityClass.getLocationCoordinate();
+		entityClass.findNewLocation(commandEnd);
+		int searchPosition = entityClass.getNewLocationCoordinate();
 		if(searchPosition != -1){
 			//This finds whether there is a path in the dot file attached to the location (i.e, the location is accessible)
-			if(entityClass.isLocationAccessible(playerState.getCurrentLocationName(), entityClass.getLocationString())) {
+			if(entityClass.isNewLocationAccessible(playerState.getCurrentLocationName(), entityClass.getNewLocationString())) {
 				//This returns the array position of the artefact we are trying to find.
 				this.locationPosition = searchPosition;
 				this.locationName = commandEnd;
@@ -34,11 +34,11 @@ public class ParseLocationCommand {
 		}
 	}
 
-	public int getLocationPosition(){
+	public int getNewLocationPosition(){
 		return locationPosition;
 	}
 
-	public String getLocationName(){
+	public String getNewLocationName(){
 		return locationName;
 	}
 }

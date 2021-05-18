@@ -14,9 +14,9 @@ public class Entities {
 		this.entities = entities;
 	}
 
-	public Node getLocationNode(int currentLocation){
-		return entities.get(0).getSubgraphs().get(currentLocation).getSubgraphs().get(0).getNodes(false).get(0);
-	}
+	/********************************************************
+	 **************   SEARCH FOR ARTEFACTS   ****************
+	 ********************************************************/
 
 	public int returnArtefactPosition(String comparisonString, int location){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
@@ -39,40 +39,83 @@ public class Entities {
 		return -1;
 	}
 
-	public void findLocation(String comparisonString){
+	/********************************************************
+	 ************   RETURN FOR LOCATION INFO   **************
+	 ********************************************************/
+
+	public String getLocationName(int location){
+		return entities.get(0).getSubgraphs().get(location).getSubgraphs().get(0).getNodes(false).get(0).getAttribute("description");
+	}
+
+	public String getLocationAttributes(int location){
+		String allArtefacts = "";
+		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
+		for(int i=0; i<myLocationGraphs.size(); i++){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
+				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
+				for(int j=0; j<artefactArray.size(); j++) {
+					if(!artefactArray.get(i).getId().getId().equals("node")) {
+						allArtefacts = allArtefacts + myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description") + "\n";
+					}
+				}
+			}
+		}
+		return allArtefacts;
+	}
+
+	public String getPaths(int location){
+		String locationName = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getId().getId();
+		String allAccessibleLocations = "";
+		Graph testEdges = entities.get(0).getSubgraphs().get(1);
+		for(int x=0;x<testEdges.getEdges().size(); x++){
+			if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase(locationName)){
+				for(int y=0;y<testEdges.getEdges().size(); y++){
+					allAccessibleLocations = allAccessibleLocations + testEdges.getEdges().get(y).getTarget().getNode().getId().getId() + "\n";
+					break;
+				}
+			}
+		}
+		return allAccessibleLocations;
+	}
+
+	/********************************************************
+	 ************   SEARCH FOR NEW LOCATIONS   **************
+	 ********************************************************/
+
+	public void findNewLocation(String comparisonString){
 		ArrayList<Graph> myLocationList = entities.get(0).getSubgraphs().get(0).getSubgraphs();
 		//If location is found, set our variables
 		for(int i=0; i<myLocationList.size(); i++){
 			if(myLocationList.get(i).getNodes(false).get(0).getAttribute("description").equalsIgnoreCase(comparisonString)) {
 				//the location string is always set to be the ID version of the location name, because that is the
 				//version used in the 'path'
-				setLocationInfo(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
+				setNewLocationInfo(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
 				return;
 			}
 			//we will also accept a shorter location definition
 			else if(myLocationList.get(i).getNodes(false).get(0).getId().getId().equalsIgnoreCase(comparisonString)){
-				setLocationInfo(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
+				setNewLocationInfo(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
 				return;
 			}
 		}
 		//If we don't find the location, clear location string and set coordinate to -1
-		setLocationInfo("", -1);
+		setNewLocationInfo("", -1);
 	}
 
-	private void setLocationInfo(String locationString, int locationInt){
+	private void setNewLocationInfo(String locationString, int locationInt){
 		this.locationString = locationString;
 		this.locationInt = locationInt;
 	}
 
-	public String getLocationString(){
+	public String getNewLocationString(){
 		return locationString;
 	}
 
-	public int getLocationCoordinate(){
+	public int getNewLocationCoordinate(){
 		return locationInt;
 	}
 
-	public boolean isLocationAccessible(String currentLocation, String targetLocation){
+	public boolean isNewLocationAccessible(String currentLocation, String targetLocation){
 		Graph testEdges = entities.get(0).getSubgraphs().get(1);
 		for(int x=0;x<testEdges.getEdges().size(); x++){
 			if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase(currentLocation)){

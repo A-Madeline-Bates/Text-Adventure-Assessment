@@ -15,10 +15,12 @@ public class CMDDrop extends ExecutableCMD implements CMDType{
 	}
 
 	public void execute() {
-
+//		String droppedObject = parsedInventory.getInventoryObject();
+//		playerState.consumedFromInventory(droppedObject);
+//		entities.addObjectToLocation(droppedObject);
 	}
 
 	public String getExitMessage(){
-		return "in CMDDrop";
+		return "You dropped a " + parsedInventory.getInventoryObject() + ".";
 	}
 }

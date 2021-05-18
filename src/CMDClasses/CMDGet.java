@@ -5,20 +5,22 @@ import Data.PlayerState;
 import Parse.ParseArtefactCommand;
 
 public class CMDGet extends ExecutableCMD implements CMDType{
-	ParseArtefactCommand parseTerm;
+	ParseArtefactCommand parseArtefact;
 	Entities entity;
 
-	public CMDGet(ParseArtefactCommand parseTerm, Entities entity, PlayerState playerState){
+	public CMDGet(ParseArtefactCommand parseArtefact, Entities entity, PlayerState playerState){
 		this.entity = entity;
-		this.parseTerm = parseTerm;
+		this.parseArtefact = parseArtefact;
 		this.playerState = playerState;
 	}
 
 	public void execute() {
-
+//		String pickedUpObject = parseArtefact.getArtefactName();
+//		playerState.addToInventory(pickedUpObject);
+//		entity.removeObjectFromLocation(pickedUpObject);
 	}
 
 	public String getExitMessage(){
-		return "in CMDGet";
+		return "You picked up a " + parseArtefact.getArtefactName() + ".";
 	}
 }
