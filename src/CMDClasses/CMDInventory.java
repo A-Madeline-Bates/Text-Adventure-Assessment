@@ -6,10 +6,10 @@ public class CMDInventory extends CMDState implements CMDType{
 
 	public CMDInventory(PlayerState playerState){
 		this.playerState = playerState;
-		System.out.println("List: " + playerState.getInventory());
 	}
 
 	public String getExitMessage(){
-		return "in CMDInventory";
+
+		return "In your inventory, you have: " + playerState.getInventory();
 	}
 }

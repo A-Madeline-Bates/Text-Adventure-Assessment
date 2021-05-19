@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PlayerState {
 	private ArrayList<String> inventoryList = new ArrayList<String>();
+
 	//following the logic that initial location is always 0- this might be worth changing
 	private int currentLocation;
 	private String currentLocationName;

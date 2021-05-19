@@ -44,7 +44,7 @@ public class Entities {
 	 ********************************************************/
 
 	public String getLocationName(int location){
-		return entities.get(0).getSubgraphs().get(location).getSubgraphs().get(0).getNodes(false).get(0).getAttribute("description");
+		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
 	}
 
 	public String getLocationAttributes(int location){
@@ -69,10 +69,7 @@ public class Entities {
 		Graph testEdges = entities.get(0).getSubgraphs().get(1);
 		for(int x=0;x<testEdges.getEdges().size(); x++){
 			if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase(locationName)){
-				for(int y=0;y<testEdges.getEdges().size(); y++){
-					allAccessibleLocations = allAccessibleLocations + testEdges.getEdges().get(y).getTarget().getNode().getId().getId() + "\n";
-					break;
-				}
+				allAccessibleLocations = allAccessibleLocations + testEdges.getEdges().get(x).getTarget().getNode().getId().getId() + "\n";
 			}
 		}
 		return allAccessibleLocations;

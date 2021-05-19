@@ -54,7 +54,7 @@ public class CommandFactory {
 				return new CMDGet(parseArtefact, entityClass, playerState);
 			case "GOTO":
 				ParseLocationCommand parseLocation = new ParseLocationCommand(entityClass, playerState, tokeniser);
-				return new CMDGoto(parseLocation, playerState);
+				return new CMDGoto(parseLocation, playerState, entityClass);
 			default:
 				return findCMDAction(nextToken);
 		}
