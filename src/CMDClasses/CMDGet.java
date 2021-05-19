@@ -12,12 +12,14 @@ public class CMDGet extends ExecutableCMD implements CMDType{
 		this.entity = entity;
 		this.parseArtefact = parseArtefact;
 		this.playerState = playerState;
+		execute();
 	}
 
 	public void execute() {
-//		String pickedUpObject = parseArtefact.getArtefactName();
-//		playerState.addToInventory(pickedUpObject);
-//		entity.removeObjectFromLocation(pickedUpObject);
+		String pickedUpObject = parseArtefact.getArtefactName();
+		String pickedUpObjectDescription = parseArtefact.getArtefactDescription();
+		playerState.addToInventory(pickedUpObject, pickedUpObjectDescription);
+		entity.removeObjectFromLocation(playerState.getCurrentLocation(), parseArtefact.getArtefactPosition());
 	}
 
 	public String getExitMessage(){

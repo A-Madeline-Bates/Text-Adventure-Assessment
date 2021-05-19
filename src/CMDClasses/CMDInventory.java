@@ -9,7 +9,6 @@ public class CMDInventory extends CMDState implements CMDType{
 	}
 
 	public String getExitMessage(){
-
 		return "In your inventory, you have: " + playerState.getInventory();
 	}
 }

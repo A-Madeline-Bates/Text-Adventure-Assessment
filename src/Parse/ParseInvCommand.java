@@ -7,6 +7,8 @@ import Tokeniser.Tokeniser;
 
 public class ParseInvCommand {
 	String inventoryObject;
+	String inventoryDescription;
+	int inventoryPosition;
 
 	public ParseInvCommand(PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
@@ -14,8 +16,11 @@ public class ParseInvCommand {
 	}
 
 	private void searchInventory(PlayerState playerState, String commandEnd) throws ParseException {
-		if(playerState.isInInventory(commandEnd)){
-			this.inventoryObject = commandEnd;
+		int inventoryPosition = playerState.findInInventory(commandEnd);
+		if(inventoryPosition != -1){
+			this.inventoryObject = playerState.getInventoryObject(inventoryPosition);
+			this.inventoryDescription = playerState.getInventoryDescription(inventoryPosition);
+			this.inventoryPosition = inventoryPosition;
 		}
 		else{
 			throw new NotInInventory(commandEnd);
@@ -24,5 +29,13 @@ public class ParseInvCommand {
 
 	public String getInventoryObject(){
 		return inventoryObject;
+	}
+
+	public String getInventoryObjectDescription(){
+		return inventoryDescription;
+	}
+
+	public int getInventoryObjectPosition(){
+		return inventoryPosition;
 	}
 }

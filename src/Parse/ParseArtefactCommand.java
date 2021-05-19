@@ -9,6 +9,7 @@ import Tokeniser.Tokeniser;
 public class ParseArtefactCommand {
 	int artefactPosition;
 	String artefactName;
+	String artefactDescription;
 
 	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
@@ -21,7 +22,8 @@ public class ParseArtefactCommand {
 		if(searchPosition != -1){
 			//This returns the array position of the artefact we are trying to find.
 			this.artefactPosition = searchPosition;
-			this.artefactName = commandEnd;
+			this.artefactName = entityClass.getArtefactId();
+			this.artefactDescription = entityClass.getArtefactDescription();
 		} else{
 			throw new ArtefactDoesNotExist(commandEnd);
 		}
@@ -33,5 +35,9 @@ public class ParseArtefactCommand {
 
 	public String getArtefactName(){
 		return artefactName;
+	}
+
+	public String getArtefactDescription(){
+		return artefactDescription;
 	}
 }

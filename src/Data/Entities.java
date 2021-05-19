@@ -1,6 +1,7 @@
 package Data;
 
 import com.alexmerz.graphviz.objects.Graph;
+import com.alexmerz.graphviz.objects.Id;
 import com.alexmerz.graphviz.objects.Node;
 
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ public class Entities {
 	ArrayList<Graph> entities;
 	String locationString;
 	int locationInt;
+	String artefactId;
+	String artefactDescription;
 
 	public Entities(ArrayList<Graph> entities){
 		this.entities = entities;
@@ -26,10 +29,14 @@ public class Entities {
 				for(int j=0; j<artefactArray.size(); j++) {
 					if(!artefactArray.get(i).getId().getId().equals("node")) {
 						if(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)){
+							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
+							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
 							return j;
 						}
 						//we will also accept a shorter artefact definition
 						else if(myLocationGraphs.get(i).getNodes(false).get(j).getId().getId().equalsIgnoreCase(comparisonString)){
+							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
+							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
 							return j;
 						}
 					}
@@ -37,6 +44,14 @@ public class Entities {
 			}
 		}
 		return -1;
+	}
+
+	public String getArtefactId(){
+		return artefactId;
+	}
+
+	public String getArtefactDescription(){
+		return artefactDescription;
 	}
 
 	/********************************************************
@@ -124,5 +139,40 @@ public class Entities {
 			}
 		}
 		return false;
+	}
+
+	/********************************************************
+	 ***********   ADDING AND REMOVING OBJECTS   ************
+	 ********************************************************/
+
+	public void removeObjectFromLocation(int currentLocation, int artefactPosition){
+		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
+		for(int i=0; i<myLocationGraphs.size(); i++){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
+				myLocationGraphs.get(i).getNodes(true).remove(artefactPosition);
+				return;
+			}
+		}
+	}
+
+	public void addObjectToLocation(String droppedObject, String droppedObjectDescription, int currentLocation){
+		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
+		for(int i=0; i<myLocationGraphs.size(); i++){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
+				//Get list of 'artefact' nodes attached to the location
+				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
+				addToArtefactArray(artefactArray, droppedObject, droppedObjectDescription);
+				return;
+			}
+		}
+	}
+
+	private void addToArtefactArray(ArrayList<Node> artefactArray, String droppedObject, String droppedObjectDescription){
+		Id newId = new Id();
+		newId.setId(droppedObject);
+		Node newNode = new Node();
+		newNode.setId(newId);
+		newNode.setAttribute("description", droppedObjectDescription);
+		artefactArray.add(newNode);
 	}
 }

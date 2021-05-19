@@ -12,12 +12,14 @@ public class CMDDrop extends ExecutableCMD implements CMDType{
 		this.entities = entities;
 		this.playerState = playerState;
 		this.parsedInventory = parsedInventory;
+		execute();
 	}
 
 	public void execute() {
-//		String droppedObject = parsedInventory.getInventoryObject();
-//		playerState.consumedFromInventory(droppedObject);
-//		entities.addObjectToLocation(droppedObject);
+		String droppedObject = parsedInventory.getInventoryObject();
+		String droppedObjectDescription = parsedInventory.getInventoryObjectDescription();
+		playerState.consumedFromInventory(parsedInventory.getInventoryObjectPosition());
+		entities.addObjectToLocation(droppedObject, droppedObjectDescription, playerState.getCurrentLocation());
 	}
 
 	public String getExitMessage(){
