@@ -25,4 +25,9 @@ public class Actions {
 		}
 		return -1;
 	}
+
+	public JSONArray getActionSubjects(int position){
+		JSONObject jsonAction = (JSONObject) actions.get(position);
+		return (JSONArray) jsonAction.get("subjects");
+	}
 }

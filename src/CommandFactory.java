@@ -63,7 +63,7 @@ public class CommandFactory {
 	private CMDType findCMDAction(String nextToken, Tokeniser tokeniser) throws ParseException{
 		int actionPosition = actionClass.findAction(nextToken);
 		if(actionPosition != -1) {
-			ParseActionCommand parseAction = new ParseActionCommand(entityClass, playerState, actionPosition, tokeniser);
+			ParseActionCommand parseAction = new ParseActionCommand(actionClass, entityClass, playerState, actionPosition, tokeniser);
 			return new CMDAction(parseAction);
 		}
 		throw new InvalidFirstCommand(nextToken);
