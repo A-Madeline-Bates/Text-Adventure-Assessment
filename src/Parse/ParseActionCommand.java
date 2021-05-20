@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParseActionCommand {
-	private List<Object> subjectInformation = new ArrayList<Object>();
+	private List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
 	int actionPosition;
 
 	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, Tokeniser tokeniser) throws ParseException {
@@ -80,10 +80,10 @@ public class ParseActionCommand {
 	}
 
 	private void addToSubjectArray(String subjectName, int subjectPosition, String locationType){
-		Object[] subjectEntry = new Object[3];
-		subjectEntry[0] = subjectName;
-		subjectEntry[1] = Integer.valueOf(subjectPosition);
-		subjectEntry[2] = locationType;
+		ActionStore subjectEntry = new ActionStore();
+		subjectEntry.setSubjectName(subjectName);
+		subjectEntry.setSubjectPosition(subjectPosition);
+		subjectEntry.setLocationType(locationType);
 		this.subjectInformation.add(subjectEntry);
 	}
 
@@ -100,8 +100,28 @@ public class ParseActionCommand {
 		return actionPosition;
 	}
 
+	public int getSubjectPosition(String subject){
+		for(int i=0; i<subjectInformation.size(); i++){
+			if(subjectInformation.get(i).getSubjectName().equals(subject)){
+				return subjectInformation.get(i).getSubjectPosition();
+			}
+		}
+		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT?
+		return -1;
+	}
+
+	public Object getSubjectLocationType(String subject){
+		for(int i=0; i<subjectInformation.size(); i++){
+			if(subjectInformation.get(i).getSubjectName().equals(subject)){
+				return subjectInformation.get(i).getLocationType();
+			}
+		}
+		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT?
+		return -1;
+	}
+
 	private void initialiseSubjectList(){
-		Object[] subjectEntry = new Object[3];
+		ActionStore subjectEntry = new ActionStore();
 		this.subjectInformation.add(subjectEntry);
 	}
 }
