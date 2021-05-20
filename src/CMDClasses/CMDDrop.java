@@ -23,6 +23,6 @@ public class CMDDrop extends ExecutableCMD implements CMDType{
 	}
 
 	public String getExitMessage(){
-		return "You dropped a " + parsedInventory.getInventoryObject() + ".";
+		return "You dropped a " + parsedInventory.getInventoryObject() + ".\n";
 	}
 }

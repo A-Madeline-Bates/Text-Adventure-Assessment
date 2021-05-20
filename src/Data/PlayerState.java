@@ -14,6 +14,10 @@ public class PlayerState {
 	public PlayerState(){
 		this.currentLocation = 0;
 		this.currentLocationName = "start";
+		ArrayList<String> inventoryEntry = new ArrayList<String>();
+		inventoryEntry.add(null);
+		inventoryEntry.add(null);
+		inventoryList.add(inventoryEntry);
 	}
 
 	public void addToInventory(String object, String description){
@@ -24,7 +28,8 @@ public class PlayerState {
 	}
 
 	public int findInInventory(String object){
-		for (int i=0; i<inventoryList.get(0).size(); i++) {
+		//Starting at 1, to skip first inventory entry, null
+		for (int i=1; i<inventoryList.get(0).size(); i++) {
 			//If input matches inventory object's name or description, provide coordinate
 			if (inventoryList.get(i).get(0).equalsIgnoreCase(object)) {
 				return i;
@@ -48,9 +53,13 @@ public class PlayerState {
 		inventoryList.remove(objectPosition);
 	}
 
-	//This needs to return just the first column
-	public List<List<String>> getInventory(){
-		return inventoryList;
+	public String getInventory(){
+		String invList = "";
+		//Starting at 1, to skip first inventory entry, null
+		for(int i=1; i<inventoryList.size(); i++) {
+			invList = invList + inventoryList.get(i).get(1) + "\n";
+		}
+		return invList;
 	}
 
 	public int getCurrentLocation(){

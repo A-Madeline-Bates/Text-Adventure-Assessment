@@ -69,13 +69,29 @@ public class Entities {
 			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
 				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
 				for(int j=0; j<artefactArray.size(); j++) {
-					if(!artefactArray.get(i).getId().getId().equals("node")) {
+					if(!artefactArray.get(j).getId().getId().equals("node")) {
 						allArtefacts = allArtefacts + myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description") + "\n";
 					}
 				}
 			}
 		}
-		return allArtefacts;
+		return resolveIfEmpty(allArtefacts);
+	}
+
+	public String getLocationFurniture(int location){
+		String allArtefacts = "";
+		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
+		for(int i=0; i<myLocationGraphs.size(); i++){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("furniture")){
+				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
+				for(int j=0; j<artefactArray.size(); j++) {
+					if(!artefactArray.get(j).getId().getId().equals("node")) {
+						allArtefacts = allArtefacts + myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description") + "\n";
+					}
+				}
+			}
+		}
+		return resolveIfEmpty(allArtefacts);
 	}
 
 	public String getPaths(int location){
@@ -87,7 +103,16 @@ public class Entities {
 				allAccessibleLocations = allAccessibleLocations + testEdges.getEdges().get(x).getTarget().getNode().getId().getId() + "\n";
 			}
 		}
-		return allAccessibleLocations;
+		return resolveIfEmpty(allAccessibleLocations);
+	}
+
+	private String resolveIfEmpty(String returnString){
+		if(returnString == ""){
+			return "\n";
+		}
+		else{
+			return returnString;
+		}
 	}
 
 	/********************************************************

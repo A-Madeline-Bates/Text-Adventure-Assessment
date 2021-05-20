@@ -23,6 +23,6 @@ public class CMDGet extends ExecutableCMD implements CMDType{
 	}
 
 	public String getExitMessage(){
-		return "You picked up a " + parseArtefact.getArtefactName() + ".";
+		return "You picked up a " + parseArtefact.getArtefactName() + ".\n";
 	}
 }
