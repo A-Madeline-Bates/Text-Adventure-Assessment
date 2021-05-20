@@ -1,7 +1,5 @@
 package Data;
 
-import CMDClasses.CMDAction;
-import Parse.ParseActionCommand;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -29,5 +27,10 @@ public class Actions {
 	public JSONArray getActionSubjects(int position){
 		JSONObject jsonAction = (JSONObject) actions.get(position);
 		return (JSONArray) jsonAction.get("subjects");
+	}
+
+	public String getMessage(int position){
+		JSONObject jsonAction = (JSONObject) actions.get(position);
+		return (String) jsonAction.get("narration");
 	}
 }

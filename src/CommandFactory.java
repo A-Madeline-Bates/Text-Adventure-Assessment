@@ -64,7 +64,7 @@ public class CommandFactory {
 		int actionPosition = actionClass.findAction(nextToken);
 		if(actionPosition != -1) {
 			ParseActionCommand parseAction = new ParseActionCommand(actionClass, entityClass, playerState, actionPosition, tokeniser);
-			return new CMDAction(parseAction);
+			return new CMDAction(parseAction, actionClass);
 		}
 		throw new InvalidFirstCommand(nextToken);
 	}
