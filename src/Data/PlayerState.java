@@ -14,10 +14,14 @@ public class PlayerState {
 	public PlayerState(){
 		this.currentLocation = 0;
 		this.currentLocationName = "start";
+		initialiseInvList();
+	}
+
+	private void initialiseInvList(){
 		ArrayList<String> inventoryEntry = new ArrayList<String>();
 		inventoryEntry.add(null);
 		inventoryEntry.add(null);
-		inventoryList.add(inventoryEntry);
+		this.inventoryList.add(inventoryEntry);
 	}
 
 	public void addToInventory(String object, String description){
@@ -53,7 +57,7 @@ public class PlayerState {
 		inventoryList.remove(objectPosition);
 	}
 
-	public String getInventory(){
+	public String getInventoryString(){
 		String invList = "";
 		//Starting at 1, to skip first inventory entry, null
 		for(int i=1; i<inventoryList.size(); i++) {

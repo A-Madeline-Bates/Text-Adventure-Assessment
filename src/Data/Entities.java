@@ -46,6 +46,31 @@ public class Entities {
 		return -1;
 	}
 
+	public int returnFurniturePosition(String comparisonString, int location){
+		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
+		for(int i=0; i<myLocationGraphs.size(); i++){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("furniture")){
+				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
+				for(int j=0; j<artefactArray.size(); j++) {
+					if(!artefactArray.get(i).getId().getId().equals("node")) {
+						if(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)){
+							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
+							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
+							return j;
+						}
+						//we will also accept a shorter artefact definition
+						else if(myLocationGraphs.get(i).getNodes(false).get(j).getId().getId().equalsIgnoreCase(comparisonString)){
+							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
+							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
+							return j;
+						}
+					}
+				}
+			}
+		}
+		return -1;
+	}
+
 	public String getArtefactId(){
 		return artefactId;
 	}
@@ -62,7 +87,7 @@ public class Entities {
 		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
 	}
 
-	public String getLocationAttributes(int location){
+	public String getArtefactsString(int location){
 		String allArtefacts = "";
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
@@ -78,7 +103,7 @@ public class Entities {
 		return resolveIfEmpty(allArtefacts);
 	}
 
-	public String getLocationFurniture(int location){
+	public String getFurnitureString(int location){
 		String allArtefacts = "";
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
