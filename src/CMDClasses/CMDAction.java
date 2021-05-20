@@ -3,7 +3,7 @@ import Parse.ParseActionCommand;
 
 public class CMDAction extends ExecutableCMD implements CMDType {
 
-	public CMDAction(String trigger, ParseActionCommand parseAction){
+	public CMDAction(ParseActionCommand parseAction){
 	}
 
 	public void execute() {

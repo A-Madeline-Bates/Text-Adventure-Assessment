@@ -1,6 +1,5 @@
 package CMDClasses;
 import Data.PlayerState;
-import java.util.ArrayList;
 
 public class CMDInventory extends CMDState implements CMDType{
 

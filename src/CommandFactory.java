@@ -56,21 +56,15 @@ public class CommandFactory {
 				ParseLocationCommand parseLocation = new ParseLocationCommand(entityClass, playerState, tokeniser);
 				return new CMDGoto(parseLocation, playerState, entityClass);
 			default:
-				return findCMDAction(nextToken);
+				return findCMDAction(nextToken, tokeniser);
 		}
 	}
 
-	private CMDType findCMDAction(String nextToken) throws ParseException{
-		for(Object action : actionClass.getActionArray()) {
-			JSONObject jsonAction = (JSONObject) action;
-			JSONArray actionTriggers = (JSONArray) jsonAction.get("triggers");
-			for (Object actionTrigger : actionTriggers) {
-				String trigger = (String) actionTrigger;
-				if (nextToken.equals(trigger)) {
-					ParseActionCommand parseAction = new ParseActionCommand(entityClass, playerState);
-					return new CMDAction(trigger, parseAction);
-				}
-			}
+	private CMDType findCMDAction(String nextToken, Tokeniser tokeniser) throws ParseException{
+		int actionPosition = actionClass.findAction(nextToken);
+		if(actionPosition != -1) {
+			ParseActionCommand parseAction = new ParseActionCommand(entityClass, playerState, actionPosition, tokeniser);
+			return new CMDAction(parseAction);
 		}
 		throw new InvalidFirstCommand(nextToken);
 	}
