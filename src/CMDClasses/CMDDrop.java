@@ -19,7 +19,7 @@ public class CMDDrop extends ExecutableCMD implements CMDType{
 		String droppedObject = parsedInventory.getInventoryObject();
 		String droppedObjectDescription = parsedInventory.getInventoryObjectDescription();
 		playerState.consumedFromInventory(parsedInventory.getInventoryObjectPosition());
-		entities.addObjectToLocation(droppedObject, droppedObjectDescription, playerState.getCurrentLocation());
+		entities.addArtefactToLocation(droppedObject, droppedObjectDescription, playerState.getCurrentLocation());
 	}
 
 	public String getExitMessage(){

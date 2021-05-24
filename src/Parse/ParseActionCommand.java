@@ -40,10 +40,12 @@ public class ParseActionCommand {
 	private boolean areSubjectsPresent(JSONArray subjectsArray, PlayerState playerState, Entities entityClass){
 		for (Object o : subjectsArray) {
 			String object = (String) o;
-			if (!checkForFurniture(entityClass, playerState, object)) {
-				if (!checkForArtefacts(entityClass, playerState, object)) {
-					if (!checkForInventory(playerState, object)) {
-						return false;
+			if (!checkForEntity(entityClass, playerState, object, "artefacts")) {
+				if (!checkForEntity(entityClass, playerState, object, "furniture")) {
+					if(!checkForEntity(entityClass, playerState, object, "characters")) {
+						if (!checkForInventory(playerState, object)) {
+							return false;
+						}
 					}
 				}
 			}
@@ -52,19 +54,10 @@ public class ParseActionCommand {
 		return true;
 	}
 
-	private boolean checkForFurniture(Entities entityClass, PlayerState playerState, String object){
-		int position = entityClass.returnFurniturePosition(object, playerState.getCurrentLocation());
+	private boolean checkForEntity(Entities entityClass, PlayerState playerState, String object, String objectType){
+		int position = entityClass.setEntityInfo(object, playerState.getCurrentLocation(), objectType);
 		if(position != -1){
-			addToSubjectArray(entityClass.getArtefactId(), position, "furniture");
-			return true;
-		}
-		return false;
-	}
-
-	private boolean checkForArtefacts(Entities entityClass, PlayerState playerState, String object){
-		int position = entityClass.returnArtefactPosition(object, playerState.getCurrentLocation());
-		if(position != -1){
-			addToSubjectArray(entityClass.getArtefactId(), position, "artefacts");
+			addToSubjectArray(entityClass.getEntityId(), position, objectType);
 			return true;
 		}
 		return false;
@@ -84,13 +77,13 @@ public class ParseActionCommand {
 		subjectEntry.setSubjectName(subjectName);
 		subjectEntry.setPosition(subjectPosition);
 		subjectEntry.setLocationType(locationType);
-		System.out.println(subjectEntry.getSubjectName() + " * " + subjectEntry.getPosition() + " * " + subjectEntry.getLocationType());
 		this.subjectInformation.add(subjectEntry);
 	}
 
 	private boolean isCommandValid(JSONArray subjectsArray, String commandEnd) {
 		for(int i=0; i<subjectsArray.size(); i++){
-			if(subjectsArray.get(i).equals(commandEnd)){
+			String subject = (String) subjectsArray.get(i);
+			if(subject.equalsIgnoreCase(commandEnd)){
 				return true;
 			}
 		}

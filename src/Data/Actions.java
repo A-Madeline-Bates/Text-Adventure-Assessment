@@ -16,7 +16,7 @@ public class Actions {
 			JSONArray actionTriggers = (JSONArray) jsonAction.get("triggers");
 			for (int j=0; j<actionTriggers.size(); j++) {
 				String trigger = (String) actionTriggers.get(j);
-				if (nextToken.equals(trigger)) {
+				if (nextToken.equalsIgnoreCase(trigger)) {
 					return i;
 				}
 			}

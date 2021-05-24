@@ -22,9 +22,6 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 		int actionPosition = parseAction.getActionPosition();
 		consumeItems(actionPosition);
 		createItems(actionPosition);
-		//consume items
-		//create items
-			//if not a location or health, put in inventory
 	}
 
 	/********************************************************
@@ -44,27 +41,23 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 		}
 	}
 
+	//this could be a switch?
 	private void consumeSubject(String object){
 		String locationType = parseAction.getSubjectLocationType(object);
 		if (locationType.equalsIgnoreCase("inventory")) {
 			int invObjectPosition = parseAction.getSubjectPosition(object);
 			playerState.consumedFromInventory(invObjectPosition);
-			System.out.println("Deleting " + object + " from the inventory.");
-		} else if (locationType.equalsIgnoreCase("artefact")) {
-			removeFromLocation(object);
-			System.out.println("Deleting " + object + " from artefacts.");
 		}
-		//otherwise must be furniture
+		//otherwise must be furniture, artefact or character
 		else {
-			removeFromLocation(object);
-			System.out.println("Deleting " + object + " from furniture.");
+			removeFromLocation(object, locationType);
 		}
 	}
 
-	private void removeFromLocation(String object){
+	private void removeFromLocation(String object, String locationType){
 		int objectPosition = parseAction.getSubjectPosition(object);
 		int mapLocation = parseAction.getSubjectPosition(object);
-		entityClass.removeObjectFromLocation(mapLocation, objectPosition);
+		entityClass.removeObjectFromLocation(mapLocation, objectPosition, locationType);
 	}
 
 	/********************************************************
@@ -94,7 +87,6 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 				//There are no descriptions in the json, so the description is just the name of the object
 				playerState.addToInventory(object, object);
 			}
-			System.out.println("Creating " + object);
 		}
 	}
 

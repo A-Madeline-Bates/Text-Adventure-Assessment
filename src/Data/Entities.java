@@ -8,33 +8,33 @@ public class Entities {
 	ArrayList<Graph> entities;
 	String locationString;
 	int locationInt;
-	String artefactId;
-	String artefactDescription;
+	String entityId;
+	String entityDescription;
 
 	public Entities(ArrayList<Graph> entities){
 		this.entities = entities;
 	}
 
 	/********************************************************
-	 **************   SEARCH FOR ARTEFACTS   ****************
+	 **************   SEARCH FOR ENTITIES   ****************
 	 ********************************************************/
 
-	public int returnArtefactPosition(String comparisonString, int location){
+	public int setEntityInfo(String comparisonString, int location, String entityType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
-			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
-				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
-				for(int j=0; j<artefactArray.size(); j++) {
-					if(!artefactArray.get(i).getId().getId().equals("node")) {
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(entityType)){
+				ArrayList<Node> entityArray = myLocationGraphs.get(i).getNodes(true);
+				for(int j=0; j<entityArray.size(); j++) {
+					if(!entityArray.get(j).getId().getId().equals("node")) {
 						if(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)){
-							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
-							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
+							this.entityId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
+							this.entityDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
 							return j;
 						}
-						//we will also accept a shorter artefact definition
+						//we will also accept a shorter entity definition
 						else if(myLocationGraphs.get(i).getNodes(false).get(j).getId().getId().equalsIgnoreCase(comparisonString)){
-							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
-							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
+							this.entityId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
+							this.entityDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
 							return j;
 						}
 					}
@@ -44,37 +44,12 @@ public class Entities {
 		return -1;
 	}
 
-	public int returnFurniturePosition(String comparisonString, int location){
-		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
-		for(int i=0; i<myLocationGraphs.size(); i++){
-			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("furniture")){
-				ArrayList<Node> furnitureArray = myLocationGraphs.get(i).getNodes(true);
-				for(int j=0; j<furnitureArray.size(); j++) {
-					if(!furnitureArray.get(j).getId().getId().equals("node")) {
-						if(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)){
-							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
-							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
-							return j;
-						}
-						//we will also accept a shorter artefact definition
-						else if(myLocationGraphs.get(i).getNodes(false).get(j).getId().getId().equalsIgnoreCase(comparisonString)){
-							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
-							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");
-							return j;
-						}
-					}
-				}
-			}
-		}
-		return -1;
+	public String getEntityId(){
+		return entityId;
 	}
 
-	public String getArtefactId(){
-		return artefactId;
-	}
-
-	public String getArtefactDescription(){
-		return artefactDescription;
+	public String getEntityDescription(){
+		return entityDescription;
 	}
 
 	/********************************************************
@@ -195,17 +170,17 @@ public class Entities {
 	 ***********   ADDING AND REMOVING OBJECTS   ************
 	 ********************************************************/
 
-	public void removeObjectFromLocation(int currentLocation, int artefactPosition){
+	public void removeObjectFromLocation(int currentLocation, int artefactPosition, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
-			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(objectType)){
 				myLocationGraphs.get(i).getNodes(true).remove(artefactPosition);
 				return;
 			}
 		}
 	}
 
-	public void addObjectToLocation(String droppedObject, String droppedObjectDescription, int currentLocation){
+	public void addArtefactToLocation(String droppedObject, String droppedObjectDescription, int currentLocation){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
 			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){

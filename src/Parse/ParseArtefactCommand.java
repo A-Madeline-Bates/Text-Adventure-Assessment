@@ -18,12 +18,12 @@ public class ParseArtefactCommand {
 
 	private void validateArtefact(String commandEnd, Entities entityClass, PlayerState playerState) throws ParseException{
 		int loc = playerState.getCurrentLocation();
-		int searchPosition = entityClass.returnArtefactPosition(commandEnd, loc);
+		int searchPosition = entityClass.setEntityInfo(commandEnd, loc, "artefacts");
 		if(searchPosition != -1){
 			//This returns the array position of the artefact we are trying to find.
 			this.artefactPosition = searchPosition;
-			this.artefactName = entityClass.getArtefactId();
-			this.artefactDescription = entityClass.getArtefactDescription();
+			this.artefactName = entityClass.getEntityId();
+			this.artefactDescription = entityClass.getEntityDescription();
 		} else{
 			throw new ArtefactDoesNotExist(commandEnd);
 		}
