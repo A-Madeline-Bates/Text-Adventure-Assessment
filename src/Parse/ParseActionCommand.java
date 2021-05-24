@@ -118,7 +118,7 @@ public class ParseActionCommand {
 			}
 		}
 		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT?
-		return -1;
+		return "";
 	}
 
 	private void initialiseSubjectList(){
