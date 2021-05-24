@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PlayerState {
 	private List<List<String>> inventoryList = new ArrayList<List<String>>();
-
+	int health;
 	//following the logic that initial location is always 0- this might be worth changing
 	private int currentLocation;
 	private String currentLocationName;
@@ -14,6 +14,8 @@ public class PlayerState {
 	public PlayerState(){
 		this.currentLocation = 0;
 		this.currentLocationName = "start";
+		//we are initially setting health as 3
+		this.health = 3;
 		initialiseInvList();
 	}
 
@@ -33,7 +35,7 @@ public class PlayerState {
 
 	public int findInInventory(String object){
 		//Starting at 1, to skip first inventory entry, null
-		for (int i=1; i<inventoryList.get(0).size(); i++) {
+		for (int i=1; i<inventoryList.size(); i++) {
 			//If input matches inventory object's name or description, provide coordinate
 			if (inventoryList.get(i).get(0).equalsIgnoreCase(object)) {
 				return i;
@@ -76,5 +78,17 @@ public class PlayerState {
 
 	public String getCurrentLocationName(){
 		return currentLocationName;
+	}
+
+	public void addToHealth(){
+		this.health = health + 1;
+	}
+
+	public void removeFromHealth(){
+		this.health = health - 1;
+	}
+
+	public int getHealthLevel(){
+		return health;
 	}
 }

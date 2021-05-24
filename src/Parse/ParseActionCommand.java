@@ -15,7 +15,6 @@ public class ParseActionCommand {
 	int actionPosition;
 
 	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, Tokeniser tokeniser) throws ParseException {
-//		initialiseSubjectList();
 		String commandEnd = tokeniser.getRemainingTokens();
 		validateActionObject(commandEnd, actionPosition, actionsClass, entityClass, playerState);
 	}
@@ -108,7 +107,7 @@ public class ParseActionCommand {
 				return subjectInformation.get(i).getPosition();
 			}
 		}
-		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT?
+		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT? - happens if file contains an error
 		return -1;
 	}
 
@@ -118,12 +117,7 @@ public class ParseActionCommand {
 				return subjectInformation.get(i).getLocationType();
 			}
 		}
-		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT?
+		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT? - happens if file contains an error
 		return "";
 	}
-
-//	private void initialiseSubjectList(){
-//		ActionStore subjectEntry = new ActionStore();
-//		this.subjectInformation.add(subjectEntry);
-//	}
 }

@@ -1,8 +1,6 @@
 package Data;
 
-import com.alexmerz.graphviz.objects.Graph;
-import com.alexmerz.graphviz.objects.Id;
-import com.alexmerz.graphviz.objects.Node;
+import com.alexmerz.graphviz.objects.*;
 
 import java.util.ArrayList;
 
@@ -87,27 +85,11 @@ public class Entities {
 		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
 	}
 
-	public String getArtefactsString(int location){
+	public String getEntityString(int location, String entityType){
 		String allArtefacts = "";
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
-			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("artefacts")){
-				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
-				for(int j=0; j<artefactArray.size(); j++) {
-					if(!artefactArray.get(j).getId().getId().equals("node")) {
-						allArtefacts = allArtefacts + myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description") + "\n";
-					}
-				}
-			}
-		}
-		return resolveIfEmpty(allArtefacts);
-	}
-
-	public String getFurnitureString(int location){
-		String allArtefacts = "";
-		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
-		for(int i=0; i<myLocationGraphs.size(); i++){
-			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("furniture")){
+			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(entityType)){
 				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
 				for(int j=0; j<artefactArray.size(); j++) {
 					if(!artefactArray.get(j).getId().getId().equals("node")) {
@@ -189,6 +171,24 @@ public class Entities {
 			}
 		}
 		return false;
+	}
+
+	public void createPath(String startLocation, String newLocation){
+		ArrayList<Edge> paths = entities.get(0).getSubgraphs().get(1).getEdges();
+		Edge newEdge = new Edge();
+		newEdge.setSource(createPortNode(startLocation));
+		newEdge.setTarget(createPortNode(newLocation));
+		paths.add(newEdge);
+	}
+
+	private PortNode createPortNode(String location){
+		Id newId = new Id();
+		newId.setId(location);
+		Node newNode = new Node();
+		newNode.setId(newId);
+		PortNode newPortNode = new PortNode();
+		newPortNode.setNode(newNode);
+		return newPortNode;
 	}
 
 	/********************************************************
