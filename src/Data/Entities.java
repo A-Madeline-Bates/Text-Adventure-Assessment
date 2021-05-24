@@ -50,9 +50,9 @@ public class Entities {
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
 		for(int i=0; i<myLocationGraphs.size(); i++){
 			if(myLocationGraphs.get(i).getId().getId().equalsIgnoreCase("furniture")){
-				ArrayList<Node> artefactArray = myLocationGraphs.get(i).getNodes(true);
-				for(int j=0; j<artefactArray.size(); j++) {
-					if(!artefactArray.get(i).getId().getId().equals("node")) {
+				ArrayList<Node> furnitureArray = myLocationGraphs.get(i).getNodes(true);
+				for(int j=0; j<furnitureArray.size(); j++) {
+					if(!furnitureArray.get(j).getId().getId().equals("node")) {
 						if(myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)){
 							this.artefactId = myLocationGraphs.get(i).getNodes(false).get(j).getId().getId();
 							this.artefactDescription = myLocationGraphs.get(i).getNodes(false).get(j).getAttribute("description");

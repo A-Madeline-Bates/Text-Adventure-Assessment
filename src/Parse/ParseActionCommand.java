@@ -15,7 +15,7 @@ public class ParseActionCommand {
 	int actionPosition;
 
 	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, Tokeniser tokeniser) throws ParseException {
-		initialiseSubjectList();
+//		initialiseSubjectList();
 		String commandEnd = tokeniser.getRemainingTokens();
 		validateActionObject(commandEnd, actionPosition, actionsClass, entityClass, playerState);
 	}
@@ -85,6 +85,7 @@ public class ParseActionCommand {
 		subjectEntry.setSubjectName(subjectName);
 		subjectEntry.setPosition(subjectPosition);
 		subjectEntry.setLocationType(locationType);
+		System.out.println(subjectEntry.getSubjectName() + " * " + subjectEntry.getPosition() + " * " + subjectEntry.getLocationType());
 		this.subjectInformation.add(subjectEntry);
 	}
 
@@ -103,7 +104,7 @@ public class ParseActionCommand {
 
 	public int getSubjectPosition(String subject){
 		for(int i=0; i<subjectInformation.size(); i++){
-			if(subjectInformation.get(i).getSubjectName().equals(subject)){
+			if(subjectInformation.get(i).getSubjectName().equalsIgnoreCase(subject)){
 				return subjectInformation.get(i).getPosition();
 			}
 		}
@@ -113,7 +114,7 @@ public class ParseActionCommand {
 
 	public String getSubjectLocationType(String subject){
 		for(int i=0; i<subjectInformation.size(); i++){
-			if(subjectInformation.get(i).getSubjectName().equals(subject)){
+			if(subjectInformation.get(i).getSubjectName().equalsIgnoreCase(subject)){
 				return subjectInformation.get(i).getLocationType();
 			}
 		}
@@ -121,8 +122,8 @@ public class ParseActionCommand {
 		return "";
 	}
 
-	private void initialiseSubjectList(){
-		ActionStore subjectEntry = new ActionStore();
-		this.subjectInformation.add(subjectEntry);
-	}
+//	private void initialiseSubjectList(){
+//		ActionStore subjectEntry = new ActionStore();
+//		this.subjectInformation.add(subjectEntry);
+//	}
 }

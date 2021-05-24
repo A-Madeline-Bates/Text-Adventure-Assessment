@@ -10,11 +10,13 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 	public CMDAction(ParseActionCommand parseAction, Actions actionClass){
 		this.parseAction = parseAction;
 		this.actionClass = actionClass;
+		execute();
 	}
 
 	public void execute() {
 		int actionPosition = parseAction.getActionPosition();
 		consumeItems(actionPosition);
+		createItems(actionPosition);
 		//consume items
 		//create items
 			//if not a location or health, put in inventory
@@ -41,7 +43,7 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 	}
 
 	private void createItems(int actionPosition){
-		JSONArray subjectsArray = actionClass.getConsumed(actionPosition);
+		JSONArray subjectsArray = actionClass.getProduced(actionPosition);
 		for (Object o : subjectsArray) {
 			String object = (String) o;
 			System.out.println("Creating " + object);
