@@ -9,7 +9,7 @@ public class ActionStore{
 		this.subjectName = subjectName;
 	}
 
-	public void setSubjectPosition(int subjectPosition){
+	public void setPosition(int subjectPosition){
 		this.subjectPosition = subjectPosition;
 	}
 
@@ -21,7 +21,7 @@ public class ActionStore{
 		return subjectName;
 	}
 
-	public int getSubjectPosition(){
+	public int getPosition(){
 		return subjectPosition;
 	}
 

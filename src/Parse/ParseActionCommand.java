@@ -26,6 +26,7 @@ public class ParseActionCommand {
 		if(areSubjectsPresent(subjectsArray, playerState, entityClass)) {
 			//check whether command end is a subject
 			if(isCommandValid(subjectsArray, commandEnd)){
+				//this is the position of the action we're using in out json- it's previously been validated in commandFactory
 				this.actionPosition = actionPosition;
 			}
 			else{
@@ -82,7 +83,7 @@ public class ParseActionCommand {
 	private void addToSubjectArray(String subjectName, int subjectPosition, String locationType){
 		ActionStore subjectEntry = new ActionStore();
 		subjectEntry.setSubjectName(subjectName);
-		subjectEntry.setSubjectPosition(subjectPosition);
+		subjectEntry.setPosition(subjectPosition);
 		subjectEntry.setLocationType(locationType);
 		this.subjectInformation.add(subjectEntry);
 	}
@@ -103,14 +104,14 @@ public class ParseActionCommand {
 	public int getSubjectPosition(String subject){
 		for(int i=0; i<subjectInformation.size(); i++){
 			if(subjectInformation.get(i).getSubjectName().equals(subject)){
-				return subjectInformation.get(i).getSubjectPosition();
+				return subjectInformation.get(i).getPosition();
 			}
 		}
 		//THIS SHOULDN'T HAPPEN- MAKE MORE ELEGANT?
 		return -1;
 	}
 
-	public Object getSubjectLocationType(String subject){
+	public String getSubjectLocationType(String subject){
 		for(int i=0; i<subjectInformation.size(); i++){
 			if(subjectInformation.get(i).getSubjectName().equals(subject)){
 				return subjectInformation.get(i).getLocationType();

@@ -24,13 +24,23 @@ public class Actions {
 		return -1;
 	}
 
+	public String getMessage(int position){
+		JSONObject jsonAction = (JSONObject) actions.get(position);
+		return (String) jsonAction.get("narration");
+	}
+
 	public JSONArray getActionSubjects(int position){
 		JSONObject jsonAction = (JSONObject) actions.get(position);
 		return (JSONArray) jsonAction.get("subjects");
 	}
 
-	public String getMessage(int position){
+	public JSONArray getConsumed(int position){
 		JSONObject jsonAction = (JSONObject) actions.get(position);
-		return (String) jsonAction.get("narration");
+		return (JSONArray) jsonAction.get("consumed");
+	}
+
+	public JSONArray getProduced(int position){
+		JSONObject jsonAction = (JSONObject) actions.get(position);
+		return (JSONArray) jsonAction.get("produced");
 	}
 }
