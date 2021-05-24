@@ -13,11 +13,12 @@ import java.util.ArrayList;
 
 class StagServer
 {
-    String entityFilename;
-    String actionFilename;
-    Actions actionClass;
-    Entities entityClass;
-    PlayerState playerState;
+    private String entityFilename;
+    private String actionFilename;
+    private Actions actionClass;
+    private Entities entityClass;
+    private PlayerState playerState;
+    private String exitMessage = "";
 
     public static void main(String args[])
     {
@@ -52,24 +53,33 @@ class StagServer
             socket.close();
         } catch(IOException ioe) {
             System.err.println(ioe);
+        } catch(NullPointerException npe) {
+            System.out.println("Connection Lost");
         }
     }
 
     private void processNextCommand(BufferedReader in, BufferedWriter out) throws IOException
     {
         String line = in.readLine();
-        //parse instructions and create command class
         Tokeniser tokeniser = new Tokeniser(line);
+        processCommand(tokeniser);
+        out.write(exitMessage);
+        //clear exitMessage
+        this.exitMessage = "";
+        //This is used for EOF
+        out.write( ((char)4));
+        out.flush();
+    }
+
+    private void processCommand(Tokeniser tokeniser){
         try {
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
-            System.out.println(command.getExitMessage());
+            this.exitMessage = command.getExitMessage();
         } catch(ParseException exception){
-            System.out.println(exception);
+            this.exitMessage = "Error:" + exception;
         }
     }
-
-    //walk through and check the input for action command (it doesn't have to be the first word)
 
     private void createDatabases(){
         this.playerState = new PlayerState();
@@ -89,6 +99,10 @@ class StagServer
     }
 }
 
+//walk through and check the input for action command (it doesn't have to be the first word) !!
+//Maybe add some file check/IO exception stuff?
+
+
 //find "start" location (This starting point is always the first location that is
 // encountered when reading in the "entities" file.)
 
@@ -104,7 +118,6 @@ class StagServer
 //actions array) + whether the player has the correct furniture/artefacts and playerState to do it. This
 //must check ALL instances of that action in the array before saying something is impossible. It will
 //then shuffle items about or add paths based on the result
-
 
 //each location has its own 'playerState' containing all artefacts + anything dropped by a player
 //maybe load all artefacts/furniture to locations at the beginning so that the items aren't reset every time
