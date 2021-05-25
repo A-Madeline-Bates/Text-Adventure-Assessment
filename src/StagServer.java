@@ -1,9 +1,9 @@
-import CMDClasses.CMDType;
-import Data.Actions;
-import Data.Entities;
-import Data.PlayerState;
-import ParseExceptions.ParseException;
-import Tokeniser.Tokeniser;
+import cmdClasses.CMDType;
+import data.Actions;
+import data.Entities;
+import data.PlayerState;
+import parseExceptions.ParseException;
+import tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;
 import org.json.simple.JSONArray;
 
@@ -13,17 +13,18 @@ import java.util.ArrayList;
 
 class StagServer
 {
-    private String entityFilename;
-    private String actionFilename;
+    final String entityFilename;
+    final String actionFilename;
     private Actions actionClass;
     private Entities entityClass;
     private PlayerState playerState;
     private String exitMessage = "";
 
-    public static void main(String args[])
+    public static void main(@SuppressWarnings("CStyleArrayDeclaration") String args[])
     {
         if(args.length != 2) System.out.println("Usage: java StagServer <entity-file> <action-file>");
-        else new StagServer(args[0], args[1], 8888);
+        else //noinspection MagicNumber
+            new StagServer(args[0], args[1], 8888);
     }
 
     public StagServer(String entityFilename, String actionFilename, int portNumber)
@@ -34,6 +35,7 @@ class StagServer
         try {
             ServerSocket ss = new ServerSocket(portNumber);
             System.out.println("Server Listening");
+            //noinspection InfiniteLoopStatement
             while(true) acceptNextConnection(ss);
         } catch(IOException ioe) {
             System.err.println(ioe);
@@ -85,7 +87,6 @@ class StagServer
         this.playerState = new PlayerState();
         createActionClass();
         createEntityClass();
-        new Test();
     }
 
     private void createActionClass(){
@@ -101,7 +102,7 @@ class StagServer
 
 //walk through and check the input for action command (it doesn't have to be the first word) !!
 //Maybe add some file check/IO exception stuff?
-
+//Get Parse errors passed back to main
 
 //find "start" location (This starting point is always the first location that is
 // encountered when reading in the "entities" file.)

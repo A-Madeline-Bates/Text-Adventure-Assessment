@@ -1,8 +1,10 @@
 import java.io.*;
 import java.net.*;
 
+@SuppressWarnings({"UtilityClass", "InfiniteLoopStatement"})
 public class StagClient
 {
+    @SuppressWarnings("CStyleArrayDeclaration")
     public static void main(String args[])
     {
         if(args.length != 1) System.out.println("Usage: java StageClient <player-name>");
@@ -19,7 +21,7 @@ public class StagClient
             String incoming;
             System.out.print("\n" + playerName + ": ");
             String command = commandLine.readLine();
-            Socket socket = new Socket("127.0.0.1", 8888);
+            @SuppressWarnings("MagicNumber") Socket socket = new Socket("127.0.0.1", 8888);
             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out.write(playerName + ": " + command + "\n");

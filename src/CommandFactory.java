@@ -1,15 +1,13 @@
-import CMDClasses.*;
-import Data.*;
-import Parse.*;
-import ParseExceptions.*;
-import Tokeniser.Tokeniser;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import cmdClasses.*;
+import data.*;
+import parse.*;
+import parseExceptions.*;
+import tokeniser.Tokeniser;
 
 public class CommandFactory {
-	Entities entityClass;
-	Actions actionClass;
-	PlayerState playerState;
+	final Entities entityClass;
+	final Actions actionClass;
+	final PlayerState playerState;
 
 	public CommandFactory(Entities entityClass, Actions actionClass, PlayerState playerState){
 		this.entityClass = entityClass;
@@ -18,7 +16,7 @@ public class CommandFactory {
 	}
 
 	//This will act as a factory for instances of CMDType
-	public CMDType createCMD(Tokeniser tokeniser) throws ParseException{
+	public CMDType createCMD(Tokeniser tokeniser) throws ParseException, CommandMissing {
 		String nextToken = tokeniser.getNextToken();
 		if(nextToken == null){
 			throw new CommandMissing();
@@ -60,7 +58,7 @@ public class CommandFactory {
 		}
 	}
 
-	private CMDType findCMDAction(String nextToken, Tokeniser tokeniser) throws ParseException{
+	private CMDType findCMDAction(String nextToken, Tokeniser tokeniser) throws ParseException {
 		int actionPosition = actionClass.findAction(nextToken);
 		if(actionPosition != -1) {
 			ParseActionCommand parseAction = new ParseActionCommand(actionClass, entityClass, playerState, actionPosition, tokeniser);
