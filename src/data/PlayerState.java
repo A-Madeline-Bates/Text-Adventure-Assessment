@@ -5,12 +5,11 @@ import java.util.List;
 
 public class PlayerState {
 	final List<List<String>> inventoryList = new ArrayList<List<String>>();
-	int health;
+	private int health;
 	//following the logic that initial location is always 0- this might be worth changing
 	private int currentLocation;
 	final String currentLocationName;
 
-	//These are both based on big assumptions and need fixing!!
 	public PlayerState(){
 		this.currentLocation = 0;
 		this.currentLocationName = "start";

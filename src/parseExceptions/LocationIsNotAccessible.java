@@ -6,6 +6,6 @@ public class LocationIsNotAccessible extends ParseException {
 	}
 
 	public String toString() {
-		return "There is no available path to location you are trying to access. Location specified was " + token + ".";
+		return "There is no available path to location you are trying to access. Location specified was " + token + ".\n";
 	}
 }

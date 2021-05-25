@@ -7,6 +7,6 @@ public class ActionSubjectMismatch extends ParseException {
 
 	public String toString() {
 		return "The object you are trying to act on is not at your location or in your inventory. " +
-				"Object specified was " + token + ".";
+				"Object specified was " + token + ".\n";
 	}
 }

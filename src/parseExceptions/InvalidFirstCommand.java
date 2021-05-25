@@ -8,6 +8,6 @@ public class InvalidFirstCommand extends ParseException {
 
 	public String toString(){
 		return "Invalid first command. Valid first commands are INVENTORY, GET, DROP, GOTO, LOOK\n" +
-				"or a valid action command. Command used was " + token + ".";
+				"or a valid action command. Command used was " + token + ".\n";
 	}
 }

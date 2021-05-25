@@ -64,7 +64,9 @@ class StagServer
     {
         String line = in.readLine();
         Tokeniser tokeniser = new Tokeniser(line);
+        this.exitMessage = exitMessage + "\n~~~~~~~~~~~~~~~~~~~~~~~\n";
         processCommand(tokeniser);
+        this.exitMessage = exitMessage + "~~~~~~~~~~~~~~~~~~~~~~~";
         out.write(exitMessage);
         //clear exitMessage
         this.exitMessage = "";
@@ -77,9 +79,9 @@ class StagServer
         try {
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
-            this.exitMessage = command.getExitMessage();
+            this.exitMessage = exitMessage + command.getExitMessage();
         } catch(ParseException exception){
-            this.exitMessage = "Error:" + exception;
+            this.exitMessage = exitMessage + "Error: " + exception;
         }
     }
 
@@ -101,33 +103,45 @@ class StagServer
 }
 
 //walk through and check the input for action command (it doesn't have to be the first word) !!
+
 //Maybe add some file check/IO exception stuff?
+
 //Get Parse errors passed back to main
+
+//Paths to other Locations (note: it is possible for paths to be one-way !)
+
+//Note that every game has a "special" location that is the starting point for an adventure. This starting point is
+// always the first location that is encountered when reading in the "entities" file.
+
+//There is another special location called "unplaced" that can be found in the entities file. This location does
+// not appear in the game world, but is rather a container for all of the entities that have no initial location.
+// They need to exist somewhere in the game structure so that they can be defined, but they do not enter the game
+// until an action places then in another location within the game.
 
 //find "start" location (This starting point is always the first location that is
 // encountered when reading in the "entities" file.)
 
-//need an instruction parser
-//maybe create factory for
-//"playerState" (or "inv" for short): lists all of the artefacts currently being carried by the player
-//load up empty 'playerState' array to start
-//"get": picks up a specified artefact from current location and puts it into player's playerState
-//"drop": puts down an artefact from player's playerState and places it into the current location
-//"goto": moves from one location to another (if there is a path between the two)
-//"look": describes the entities in the current location and lists the paths to other locations
-//there will also be ANOTHER class which will cross compare to see if something is a valid action (in the
-//actions array) + whether the player has the correct furniture/artefacts and playerState to do it. This
-//must check ALL instances of that action in the array before saying something is impossible. It will
-//then shuffle items about or add paths based on the result
+//It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
+// different entities. So be careful when storing and accessing actions.
 
-//each location has its own 'playerState' containing all artefacts + anything dropped by a player
-//maybe load all artefacts/furniture to locations at the beginning so that the items aren't reset every time
-//you visit a location. Or maybe edit entities graph itself? When item disappears it moves to 'unplaced'
+//Be sure to make your command interpreter as flexible and robust as possible (to deal with "varied" input from
+// the user !)
 
-//The skeleton StagServer class you have been given includes the code to deal with network communication.
-//You will however be required to deal with reading and writing to the socket stream.
+//Your game should be able to operate with more than just a single player. In order to support this, each incoming
+// command message will begin with a username (to identify which player has issued the command)
+//Note that there is no formal player registration process - when the server encounters a command from a previously
+// unseen user, a new player should be create in the start location of the game.
 
-//For multiplayer, we might need to hold two inventories and two different variables to indicate where the
-//players are?
+//As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
+// a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will
+// increase or decrease a player's health.
+// When a player's health runs out (i.e. reaches zero) they should lose all of the items in their inventory (which are
+// dropped in the location where they ran out of health) and then they should return to the start location. In order
+// to implement these features in your game engine, you should also add a new health command keyword that reports
+// back the player's current health level (so the player can keep track of it).
 
-//STRATEGY design pattern
+// load the correct location at start rather than assuming start = "start"
+
+// Check the style guide + previous feedback
+
+//TEST WITH THE SERVER PROVIDED

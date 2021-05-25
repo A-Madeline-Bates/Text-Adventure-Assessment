@@ -95,6 +95,6 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 	 ********************************************************/
 
 	public String getExitMessage(){
-		return actionClass.getMessage(parseAction.getActionPosition());
+		return actionClass.getMessage(parseAction.getActionPosition()) + "\n";
 	}
 }

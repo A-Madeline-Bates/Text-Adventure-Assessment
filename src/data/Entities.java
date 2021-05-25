@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class Entities {
 	final ArrayList<Graph> entities;
-	String locationString;
-	int locationInt;
-	String entityId;
-	String entityDescription;
+	private String locationString;
+	private int locationInt;
+	private String entityId;
+	private String entityDescription;
 
 	public Entities(ArrayList<Graph> entities){
 		this.entities = entities;
