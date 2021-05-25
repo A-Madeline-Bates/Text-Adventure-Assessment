@@ -37,6 +37,9 @@ public class CommandFactory {
 			case "LOOK":
 				tokeniser.checkForExtra();
 				return new CMDLook(entityClass, playerState);
+			case "HEALTH":
+				tokeniser.checkForExtra();
+				return new CMDHealth(playerState);
 			default:
 				return multiCmdSwitch(nextToken, tokeniser);
 		}

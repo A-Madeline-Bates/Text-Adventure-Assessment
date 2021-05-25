@@ -106,43 +106,35 @@ class StagServer
 }
 
 //Walk through and check the input for action command (it doesn't have to be the first word) !!
-//Make the game input flexible!!
-
-//Get Parse errors passed back to main
+//Be sure to make your command interpreter as flexible and robust as possible (to deal with "varied" input from
+// the user !)
 
 //Note that every game has a "special" location that is the starting point for an adventure. This starting point is
 // always the first location that is encountered when reading in the "entities" file.
+//  load the correct location at start rather than assuming start = "start"
 
 //There is another special location called "unplaced" that can be found in the entities file. This location does
 // not appear in the game world, but is rather a container for all of the entities that have no initial location.
 // They need to exist somewhere in the game structure so that they can be defined, but they do not enter the game
 // until an action places then in another location within the game.
 
-//find "start" location (This starting point is always the first location that is
-// encountered when reading in the "entities" file.)
-
 //It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
 // different entities. So be careful when storing and accessing actions.
-
-//Be sure to make your command interpreter as flexible and robust as possible (to deal with "varied" input from
-// the user !)
 
 //Your game should be able to operate with more than just a single player. In order to support this, each incoming
 // command message will begin with a username (to identify which player has issued the command)
 //Note that there is no formal player registration process - when the server encounters a command from a previously
-// unseen user, a new player should be create in the start location of the game.
+// unseen user, a new player should be created in the start location of the game.
 //A full incoming message might therefore take the form of:
 //                  Simon: open door with key
 
-//As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
+// As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
 // a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will
 // increase or decrease a player's health.
 // When a player's health runs out (i.e. reaches zero) they should lose all of the items in their inventory (which are
 // dropped in the location where they ran out of health) and then they should return to the start location. In order
 // to implement these features in your game engine, you should also add a new health command keyword that reports
 // back the player's current health level (so the player can keep track of it).
-
-// load the correct location at start rather than assuming start = "start"
 
 // Check the style guide + previous feedback
 
