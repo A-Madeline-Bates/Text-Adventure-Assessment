@@ -31,14 +31,17 @@ class StagServer
     {
         this.entityFilename = entityFilename;
         this.actionFilename = actionFilename;
-        createDatabases();
         try {
+            //create our databases from the input files
+            createDatabases();
             ServerSocket ss = new ServerSocket(portNumber);
             System.out.println("Server Listening");
             //noinspection InfiniteLoopStatement
             while(true) acceptNextConnection(ss);
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File not found exception: " + fnfe);
         } catch(IOException ioe) {
-            System.err.println(ioe);
+            System.err.println("IO Exception: " + ioe);
         }
     }
 
@@ -54,7 +57,7 @@ class StagServer
             in.close();
             socket.close();
         } catch(IOException ioe) {
-            System.err.println(ioe);
+            System.err.println("IO Exception: " + ioe);
         } catch(NullPointerException npe) {
             System.out.println("Connection Lost");
         }
@@ -71,7 +74,7 @@ class StagServer
         //clear exitMessage
         this.exitMessage = "";
         //This is used for EOF
-        out.write( ((char)4));
+        out.write(((char)4));
         out.flush();
     }
 
@@ -85,30 +88,27 @@ class StagServer
         }
     }
 
-    private void createDatabases(){
+    private void createDatabases() throws IOException{
         this.playerState = new PlayerState();
         createActionClass();
         createEntityClass();
     }
 
-    private void createActionClass(){
+    private void createActionClass() throws IOException{
         JSONArray actions = new ParseActions(actionFilename).getActions();
         this.actionClass = new Actions(actions);
     }
 
-    private void createEntityClass(){
+    private void createEntityClass() throws IOException{
         ArrayList<Graph> entities = new ParseEntities(entityFilename).getEntities();
         this.entityClass = new Entities(entities);
     }
 }
 
-//walk through and check the input for action command (it doesn't have to be the first word) !!
-
-//Maybe add some file check/IO exception stuff?
+//Walk through and check the input for action command (it doesn't have to be the first word) !!
+//Make the game input flexible!!
 
 //Get Parse errors passed back to main
-
-//Paths to other Locations (note: it is possible for paths to be one-way !)
 
 //Note that every game has a "special" location that is the starting point for an adventure. This starting point is
 // always the first location that is encountered when reading in the "entities" file.
@@ -131,6 +131,8 @@ class StagServer
 // command message will begin with a username (to identify which player has issued the command)
 //Note that there is no formal player registration process - when the server encounters a command from a previously
 // unseen user, a new player should be create in the start location of the game.
+//A full incoming message might therefore take the form of:
+//                  Simon: open door with key
 
 //As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
 // a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will

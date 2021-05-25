@@ -10,18 +10,14 @@ import java.io.IOException;
 public class ParseActions {
 	JSONArray actions;
 
-	public ParseActions(String actionFile){
+	public ParseActions(String actionFile) throws IOException {
 		try{
 			JSONParser parser = new JSONParser();
 			FileReader reader = new FileReader(actionFile);
 			JSONObject actionObject = (JSONObject) parser.parse(reader);
 			this.actions = (JSONArray) actionObject.get("actions");
-		} catch (FileNotFoundException fnfe) {
-			System.out.println(fnfe);
 		} catch (ParseException parse){
-			System.out.println(parse);
-		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Parse exception: " + parse);
 		}
 	}
 
