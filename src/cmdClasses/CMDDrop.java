@@ -1,5 +1,4 @@
 package cmdClasses;
-
 import data.Entities;
 import data.PlayerState;
 import parse.ParseInvCommand;

@@ -6,7 +6,6 @@ import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;
 import org.json.simple.JSONArray;
-
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -83,6 +82,7 @@ class StagServer
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();
+            //CHECK IF DEAD
         } catch(ParseException exception){
             this.exitMessage = exitMessage + "Error: " + exception;
         }

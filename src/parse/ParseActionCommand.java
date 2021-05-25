@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ParseActionCommand {
 	final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
-	int actionPosition;
+	private int actionPosition;
 
 	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();

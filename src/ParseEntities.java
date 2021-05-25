@@ -1,13 +1,11 @@
 import com.alexmerz.graphviz.Parser;
 import com.alexmerz.graphviz.objects.Graph;
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ParseEntities {
-	ArrayList<Graph> graphs;
+	private ArrayList<Graph> graphs;
 
 	public ParseEntities(String entitiesFile) throws IOException {
 		try {

@@ -1,14 +1,13 @@
 package parse;
-
 import data.PlayerState;
 import parseExceptions.NotInInventory;
 import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 
 public class ParseInvCommand {
-	String inventoryObject;
-	String inventoryDescription;
-	int inventoryPosition;
+	private String inventoryObject;
+	private String inventoryDescription;
+	private int inventoryPosition;
 
 	public ParseInvCommand(PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();

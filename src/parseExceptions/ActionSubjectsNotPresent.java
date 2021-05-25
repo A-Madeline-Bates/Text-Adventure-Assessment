@@ -1,5 +1,4 @@
 package parseExceptions;
-
 import org.json.simple.JSONArray;
 
 public class ActionSubjectsNotPresent extends ParseException {

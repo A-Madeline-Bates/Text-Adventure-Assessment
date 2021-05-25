@@ -1,5 +1,4 @@
 package tokeniser;
-
 import parseExceptions.*;
 import java.util.ArrayList;
 import java.util.Arrays;

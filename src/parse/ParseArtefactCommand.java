@@ -1,5 +1,4 @@
 package parse;
-
 import data.Entities;
 import data.PlayerState;
 import parseExceptions.ArtefactDoesNotExist;
@@ -7,9 +6,9 @@ import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 
 public class ParseArtefactCommand {
-	int artefactPosition;
-	String artefactName;
-	String artefactDescription;
+	private int artefactPosition;
+	private String artefactName;
+	private String artefactDescription;
 
 	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();

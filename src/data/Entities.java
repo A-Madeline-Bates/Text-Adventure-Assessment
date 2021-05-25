@@ -1,7 +1,5 @@
 package data;
-
 import com.alexmerz.graphviz.objects.*;
-
 import java.util.ArrayList;
 
 public class Entities {

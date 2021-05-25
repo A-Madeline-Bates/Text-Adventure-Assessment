@@ -1,5 +1,4 @@
 package cmdClasses;
-
 import data.PlayerState;
 
 public class CMDHealth extends CMDState implements CMDType{

@@ -1,5 +1,4 @@
 package parse;
-
 import data.Entities;
 import data.PlayerState;
 import parseExceptions.LocationDoesNotExist;
@@ -8,8 +7,8 @@ import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 
 public class ParseLocationCommand {
-	int locationPosition;
-	String locationName;
+	private int locationPosition;
+	private String locationName;
 
 	public ParseLocationCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
