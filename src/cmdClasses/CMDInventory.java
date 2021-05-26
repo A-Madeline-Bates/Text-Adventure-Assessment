@@ -1,7 +1,7 @@
 package cmdClasses;
 import data.PlayerState;
 
-public class CMDInventory extends CMDState implements CMDType{
+public class CMDInventory extends CMDType{
 
 	public CMDInventory(PlayerState playerState){
 		this.playerState = playerState;

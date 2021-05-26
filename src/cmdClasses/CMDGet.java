@@ -3,7 +3,7 @@ import data.Entities;
 import data.PlayerState;
 import parse.ParseArtefactCommand;
 
-public class CMDGet extends ExecutableCMD implements CMDType{
+public class CMDGet extends ExecutableCMD{
 	final ParseArtefactCommand parseArtefact;
 	final Entities entity;
 

@@ -3,7 +3,7 @@ import data.Entities;
 import data.PlayerState;
 import parse.ParseInvCommand;
 
-public class CMDDrop extends ExecutableCMD implements CMDType{
+public class CMDDrop extends ExecutableCMD{
 	final Entities entities;
 	final ParseInvCommand parsedInventory;
 

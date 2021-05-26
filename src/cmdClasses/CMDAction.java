@@ -5,7 +5,7 @@ import data.PlayerState;
 import parse.ParseActionCommand;
 import org.json.simple.JSONArray;
 
-public class CMDAction extends ExecutableCMD implements CMDType {
+public class CMDAction extends ExecutableCMD {
 	final ParseActionCommand parseAction;
 	final Actions actionClass;
 	final Entities entityClass;
@@ -41,7 +41,6 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 		}
 	}
 
-	//this could be a switch?
 	private void consumeSubject(String object) {
 		String locationType = parseAction.getSubjectLocationType(object);
 		if (locationType.equalsIgnoreCase("inventory")) {

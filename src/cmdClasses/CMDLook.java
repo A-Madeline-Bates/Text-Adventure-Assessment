@@ -2,7 +2,7 @@ package cmdClasses;
 import data.Entities;
 import data.PlayerState;
 
-public class CMDLook extends CMDState implements CMDType{
+public class CMDLook extends CMDType{
 	final Entities entityClass;
 
 	public CMDLook(Entities entityClass, PlayerState playerState){

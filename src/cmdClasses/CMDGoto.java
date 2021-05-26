@@ -3,7 +3,7 @@ import data.Entities;
 import data.PlayerState;
 import parse.ParseLocationCommand;
 
-public class CMDGoto extends ExecutableCMD implements CMDType{
+public class CMDGoto extends ExecutableCMD{
 	final ParseLocationCommand parseLocation;
 	final Entities entityClass;
 

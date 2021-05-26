@@ -1,5 +1,7 @@
 package cmdClasses;
+import data.PlayerState;
 
-public interface CMDType {
-	String getExitMessage();
+public abstract class CMDType {
+	PlayerState playerState;
+	abstract public String getExitMessage();
 }
