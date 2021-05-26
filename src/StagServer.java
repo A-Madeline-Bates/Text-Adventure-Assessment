@@ -19,11 +19,14 @@ class StagServer
     private PlayerState playerState;
     private String exitMessage = "";
 
-    public static void main(@SuppressWarnings("CStyleArrayDeclaration") String args[])
+    public static void main(String args[])
     {
-        if(args.length != 2) System.out.println("Usage: java StagServer <entity-file> <action-file>");
-        else //noinspection MagicNumber
+        if(args.length != 2) {
+            System.out.println("Usage: java StagServer <entity-file> <action-file>");
+        }
+        else {
             new StagServer(args[0], args[1], 8888);
+        }
     }
 
     public StagServer(String entityFilename, String actionFilename, int portNumber)
@@ -137,5 +140,7 @@ class StagServer
 // back the player's current health level (so the player can keep track of it).
 
 // Check the style guide + previous feedback
+// Reduce complexity
+// Shorten method names / make sure all methods start with verb
 
 //TEST WITH THE SERVER PROVIDED

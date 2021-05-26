@@ -38,15 +38,28 @@ public class PlayerState {
 	public int findInInventory(String object){
 		//Starting at 1, to skip first inventory entry, null
 		for (int i=1; i<inventoryList.size(); i++) {
-			//If input matches inventory object's name or description, provide coordinate
-			if (inventoryList.get(i).get(0).equalsIgnoreCase(object)) {
-				return i;
-			}
-			else if (inventoryList.get(i).get(1).equalsIgnoreCase(object)) {
-				return i;
+			//-2 used to specify nothing found yet
+			int searchPosition = checkIdentifier(i, object);
+			if(searchPosition != -2){
+				return searchPosition;
 			}
 		}
+		//-1 used to specify nothing found as the final result
 		return -1;
+	}
+
+	private int checkIdentifier(int i, String object){
+		//If input matches inventory object's name or description, provide coordinate
+		if (inventoryList.get(i).get(0).equalsIgnoreCase(object)) {
+			return i;
+		}
+		else if (inventoryList.get(i).get(1).equalsIgnoreCase(object)) {
+			return i;
+		}
+		else{
+			//-2 used to specify nothing found yet
+			return -2;
+		}
 	}
 
 	public String getInventoryObject(int inventoryPosition){

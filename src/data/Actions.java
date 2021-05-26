@@ -13,14 +13,25 @@ public class Actions {
 		for(int i=0; i<actions.size(); i++){
 			JSONObject jsonAction = (JSONObject) actions.get(i);
 			JSONArray actionTriggers = (JSONArray) jsonAction.get("triggers");
-			for (Object actionTrigger : actionTriggers) {
-				String trigger = (String) actionTrigger;
-				if (nextToken.equalsIgnoreCase(trigger)) {
-					return i;
-				}
+			//-2 used to specify nothing found yet
+			int searchPosition = searchTriggers(actionTriggers, nextToken, i);
+			if(searchPosition != -2){
+				return searchPosition;
 			}
 		}
+		//-1 used to specify nothing found as the final result
 		return -1;
+	}
+
+	private int searchTriggers(JSONArray actionTriggers, String nextToken, int i){
+		for (Object actionTrigger : actionTriggers) {
+			String trigger = (String) actionTrigger;
+			if (nextToken.equalsIgnoreCase(trigger)) {
+				return i;
+			}
+		}
+		//-2 used to specify nothing found yet
+		return -2;
 	}
 
 	public String getMessage(int position){
