@@ -21,10 +21,10 @@ public class CMDGoto extends ExecutableCMD implements CMDType{
 
 	public String getExitMessage(){
 		int currentLocation = playerState.getCurrentLocation();
-		return "You are in " + entityClass.getLocationName(currentLocation) +
+		return "You are in " + entityClass.findLocationDescription(currentLocation) +
 				"\nYou can see: " + entityClass.getEntityString(currentLocation, "artefacts") +
 				entityClass.getEntityString(currentLocation, "furniture") +
 				entityClass.getEntityString(currentLocation, "characters") +
-				"You can access from here: " + entityClass.getPaths(currentLocation);
+				"You can access from here: " + entityClass.getPathsList(currentLocation);
 	}
 }

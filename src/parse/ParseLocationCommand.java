@@ -17,11 +17,11 @@ public class ParseLocationCommand {
 
 	private void validateNewLocation(String commandEnd, Entities entityClass, PlayerState playerState) throws LocationIsNotAccessible, LocationDoesNotExist {
 		//This find whether the location is in the Dot file
-		entityClass.findNewLocation(commandEnd);
-		int searchPosition = entityClass.getNewLocationCoordinate();
+		entityClass.locationSearch(commandEnd);
+		int searchPosition = entityClass.getLocationResultInt();
 		if(searchPosition != -1){
 			//This finds whether there is a path in the dot file attached to the location (i.e, the location is accessible)
-			if(entityClass.isNewLocationAccessible(playerState.getCurrentLocationName(), entityClass.getNewLocationString())) {
+			if(entityClass.isLocationAccessible(playerState.getCurrentLocationName(), entityClass.getLocationResultId())) {
 				//This returns the array position of the artefact we are trying to find.
 				this.locationPosition = searchPosition;
 				this.locationName = commandEnd;

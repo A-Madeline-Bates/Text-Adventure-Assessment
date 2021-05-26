@@ -1,5 +1,6 @@
 import cmdClasses.*;
 import data.*;
+import data.Entities;
 import parse.*;
 import parseExceptions.*;
 import tokeniser.Tokeniser;

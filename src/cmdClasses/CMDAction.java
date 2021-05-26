@@ -57,7 +57,7 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 	private void removeFromLocation(String object, String locationType){
 		int objectPosition = parseAction.getSubjectPosition(object);
 		int mapLocation = parseAction.getSubjectPosition(object);
-		entityClass.removeObjectFromLocation(mapLocation, objectPosition, locationType);
+		entityClass.removeArtefact(mapLocation, objectPosition, locationType);
 	}
 
 	/********************************************************
@@ -68,10 +68,8 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 		JSONArray subjectsArray = actionClass.getActionElement(actionPosition, "produced");
 		for (Object o : subjectsArray) {
 			String object = (String) o;
-			//THIS IS A WEIRD WAY OF GOING ABOUT THINGS
-			entityClass.findNewLocation(object);
-			int locationPosition = entityClass.getNewLocationCoordinate();
-			//
+			entityClass.locationSearch(object);
+			int locationPosition = entityClass.getLocationResultInt();
 			if(object.equalsIgnoreCase("health")){
 				playerState.addToHealth();
 			}
@@ -79,10 +77,8 @@ public class CMDAction extends ExecutableCMD implements CMDType {
 			else if(locationPosition != -1){
 				//getNewLocationString() was set up by us calling findNewLocation earlier. We are using it rather than
 				//object to assure we're using id and not description
-				entityClass.createPath(playerState.getCurrentLocationName(), entityClass.getNewLocationString());
+				entityClass.createPath(playerState.getCurrentLocationName(), entityClass.getLocationResultId());
 			}
-			//must be an object
-			//MAYBE CHANGE THIS
 			else {
 				//There are no descriptions in the json, so the description is just the name of the object
 				playerState.addToInventory(object, object);
