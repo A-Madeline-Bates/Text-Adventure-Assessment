@@ -8,7 +8,6 @@ import tokeniser.Tokeniser;
 
 public class ParseLocationCommand {
 	private int locationPosition;
-	private String locationName;
 
 	public ParseLocationCommand(Entities entityClass, PlayerState playerState, Tokeniser tokeniser) throws ParseException {
 		String commandEnd = tokeniser.getRemainingTokens();
@@ -24,7 +23,6 @@ public class ParseLocationCommand {
 			if(entityClass.isLocationAccessible(playerState.getCurrentLocationName(), entityClass.getLocationResultId())) {
 				//This returns the array position of the artefact we are trying to find.
 				this.locationPosition = searchPosition;
-				this.locationName = commandEnd;
 			} else{
 				throw new LocationIsNotAccessible(commandEnd);
 			}
@@ -35,9 +33,5 @@ public class ParseLocationCommand {
 
 	public int getNewLocationPosition(){
 		return locationPosition;
-	}
-
-	public String getNewLocationName(){
-		return locationName;
 	}
 }

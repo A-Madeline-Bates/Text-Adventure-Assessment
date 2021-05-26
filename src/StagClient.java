@@ -4,10 +4,11 @@ import java.net.*;
 @SuppressWarnings({"UtilityClass", "InfiniteLoopStatement"})
 public class StagClient
 {
-    @SuppressWarnings("CStyleArrayDeclaration")
     public static void main(String args[])
     {
-        if(args.length != 1) System.out.println("Usage: java StageClient <player-name>");
+        if(args.length != 1) {
+            System.out.println("Usage: java StageClient <player-name>");
+        }
         else {
             String playerName = args[0];
             BufferedReader commandLine = new BufferedReader(new InputStreamReader(System.in));

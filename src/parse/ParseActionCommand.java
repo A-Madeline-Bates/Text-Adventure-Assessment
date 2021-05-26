@@ -23,34 +23,46 @@ public class ParseActionCommand {
 		JSONArray subjectsArray = actionsClass.getActionElement(actionPosition, "subjects");
 		//check whether subjects are in either the inventory or location
 		if(areSubjectsPresent(subjectsArray, playerState, entityClass)) {
-			//check whether command end is a subject
-			if(isCommandValid(subjectsArray, commandEnd)){
-				//this is the position of the action we're using in out json- it's previously been validated in commandFactory
-				this.actionPosition = actionPosition;
-			}
-			else{
-				throw new ActionSubjectMismatch(commandEnd);
-			}
+			checkCommandValidity(subjectsArray, commandEnd);
 		}
 		else{
 			throw new ActionSubjectsNotPresent(subjectsArray);
 		}
 	}
 
+	private void checkCommandValidity(JSONArray subjectsArray, String commandEnd) throws ActionSubjectMismatch {
+		//check whether command end is a subject
+		if(isCommandValid(subjectsArray, commandEnd)){
+			//this is the position of the action we're using in out json- it's previously been validated in commandFactory
+			this.actionPosition = actionPosition;
+		}
+		else{
+			throw new ActionSubjectMismatch(commandEnd);
+		}
+	}
+
 	private boolean areSubjectsPresent(JSONArray subjectsArray, PlayerState playerState, Entities entityClass){
 		for (Object o : subjectsArray) {
 			String object = (String) o;
-			if (!checkForEntity(entityClass, playerState, object, "artefacts")) {
-				if (!checkForEntity(entityClass, playerState, object, "furniture")) {
-					if(!checkForEntity(entityClass, playerState, object, "characters")) {
-						if (!checkForInventory(playerState, object)) {
-							return false;
-						}
+			if(!checkEntityTypes(playerState, entityClass, object)){
+				return false;
+			}
+		}
+		//If the loop never returns false, we can conclude that all subjects are present
+		return true;
+	}
+
+	private boolean checkEntityTypes(PlayerState playerState, Entities entityClass, String object){
+		if (!checkForEntity(entityClass, playerState, object, "artefacts")) {
+			if (!checkForEntity(entityClass, playerState, object, "furniture")) {
+				if(!checkForEntity(entityClass, playerState, object, "characters")) {
+					if (!checkForInventory(playerState, object)) {
+						return false;
 					}
 				}
 			}
 		}
-		//If the loop never returns false, we can conclude that all subjects are present
+		//In this instance, true means 'we haven't found an issue yet'
 		return true;
 	}
 

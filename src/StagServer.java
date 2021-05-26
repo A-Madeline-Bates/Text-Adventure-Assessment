@@ -142,5 +142,6 @@ class StagServer
 // Check the style guide + previous feedback
 // Reduce complexity
 // Shorten method names / make sure all methods start with verb
+// Shorten lines!
 
 //TEST WITH THE SERVER PROVIDED
