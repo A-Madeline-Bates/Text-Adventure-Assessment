@@ -82,6 +82,9 @@ class StagServer
 
     private void processCommand(Tokeniser tokeniser){
         try {
+            //HandlePlayer currentPlayer = new HandlePlayer(tokeniser);
+            //currentPlayer.getPlayerState()
+            //copes with "[PERSON]:"
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();
@@ -92,9 +95,9 @@ class StagServer
     }
 
     private void createDatabases() throws IOException{
-        this.playerState = new PlayerState();
         createActionClass();
         createEntityClass();
+        this.playerState = new PlayerState(entityClass.findFirstLocation());
     }
 
     private void createActionClass() throws IOException{

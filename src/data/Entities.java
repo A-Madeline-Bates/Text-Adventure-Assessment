@@ -214,6 +214,10 @@ public class Entities {
 		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
 	}
 
+	public String findFirstLocation(){
+		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(0).getNodes(false).get(0).getId().getId();
+	}
+
 	public String getEntityString(int location, String entityType){
 		StringBuilder allArtefacts = new StringBuilder();
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();

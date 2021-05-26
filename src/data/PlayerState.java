@@ -9,9 +9,9 @@ public class PlayerState {
 	private int currentLocation;
 	final String currentLocationName;
 
-	public PlayerState(){
+	public PlayerState(String firstLocation){
 		this.currentLocation = 0;
-		this.currentLocationName = "start";
+		this.currentLocationName = firstLocation;
 		//we are initially setting health as 3
 		this.health = 3;
 		initialiseInvList();
