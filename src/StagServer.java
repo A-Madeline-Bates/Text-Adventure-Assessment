@@ -16,7 +16,7 @@ class StagServer
     final String actionFilename;
     private Actions actionClass;
     private Entities entityClass;
-    private PlayerState playerState;
+    private PlayerStore playerStore;
     private String exitMessage = "";
 
     public static void main(String args[])
@@ -82,9 +82,7 @@ class StagServer
 
     private void processCommand(Tokeniser tokeniser){
         try {
-            //HandlePlayer currentPlayer = new HandlePlayer(tokeniser);
-            //currentPlayer.getPlayerState()
-            //copes with "[PERSON]:"
+            PlayerState playerState = playerStore.getCurrentPlayer(tokeniser);
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();
@@ -97,7 +95,7 @@ class StagServer
     private void createDatabases() throws IOException{
         createActionClass();
         createEntityClass();
-        this.playerState = new PlayerState(entityClass.findFirstLocation());
+        this.playerStore = new PlayerStore(entityClass.findFirstLocation());
     }
 
     private void createActionClass() throws IOException{

@@ -21,6 +21,17 @@ public class Tokeniser {
 		return token;
 	}
 
+	public String peekNextToken() throws TokenMissing {
+		testArrayPosition();
+		//This will throw an exception if there's not enough words in the command to fulfill what we need
+		String token = tokenList.get(ArrayPosition);
+		return token;
+	}
+
+	public void advanceToken(){
+		ArrayPosition++;
+	}
+
 	public String getRemainingTokens() throws ParseException {
 		testArrayPosition();
 		StringBuilder compositeToken = new StringBuilder();

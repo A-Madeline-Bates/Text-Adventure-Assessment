@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerState {
+	String playerName;
 	final List<List<String>> inventoryList = new ArrayList<List<String>>();
 	private int health;
 	//following the logic that initial location is always 0- this might be worth changing
@@ -15,6 +16,18 @@ public class PlayerState {
 		//we are initially setting health as 3
 		this.health = 3;
 		initialiseInvList();
+	}
+
+	/********************************************************
+	 ***********************   NAME   ***********************
+	 ********************************************************/
+
+	public void setPlayerName(String playerName){
+		this.playerName = playerName;
+	}
+
+	public String getPlayerName(){
+		return playerName;
 	}
 
 	/********************************************************
