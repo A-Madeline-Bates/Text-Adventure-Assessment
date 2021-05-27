@@ -18,7 +18,7 @@ public class CMDGet extends ExecutableCMD{
 		String pickedUpObject = parseArtefact.getArtefactName();
 		String pickedUpObjectDescription = parseArtefact.getArtefactDescription();
 		playerState.addToInventory(pickedUpObject, pickedUpObjectDescription);
-		entity.removeArtefact(playerState.getCurrentLocation(), parseArtefact.getArtefactPosition(), "artefacts");
+		entity.removeObject(playerState.getCurrentLocation(), parseArtefact.getArtefactPosition(), "artefacts");
 	}
 
 	public String getExitMessage(){

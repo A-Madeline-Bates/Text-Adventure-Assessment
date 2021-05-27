@@ -23,14 +23,14 @@ public class ParseActionCommand {
 		JSONArray subjectsArray = actionsClass.getActionElement(actionPosition, "subjects");
 		//check whether subjects are in either the inventory or location
 		if(areSubjectsPresent(subjectsArray, playerState, entityClass)) {
-			checkCommandValidity(subjectsArray, commandEnd);
+			checkCommandValidity(subjectsArray, commandEnd, actionPosition);
 		}
 		else{
 			throw new ActionSubjectsNotPresent(subjectsArray);
 		}
 	}
 
-	private void checkCommandValidity(JSONArray subjectsArray, String commandEnd) throws ActionSubjectMismatch {
+	private void checkCommandValidity(JSONArray subjectsArray, String commandEnd, int actionPosition) throws ActionSubjectMismatch {
 		//check whether command end is a subject
 		if(isCommandValid(subjectsArray, commandEnd)){
 			//this is the position of the action we're using in out json- it's previously been validated in commandFactory
@@ -86,8 +86,11 @@ public class ParseActionCommand {
 
 	private void addToSubjectArray(String subjectName, int subjectPosition, String locationType){
 		ActionStore subjectEntry = new ActionStore();
+		//Id of the subject
 		subjectEntry.setSubjectName(subjectName);
+		//Position in whatever data storage type it's in (i.e artefact, furniture, inventory &c)
 		subjectEntry.setPosition(subjectPosition);
+		//Data storage type (i.e artefact, furniture, inventory &c)
 		subjectEntry.setLocationType(locationType);
 		this.subjectInformation.add(subjectEntry);
 	}
@@ -109,6 +112,7 @@ public class ParseActionCommand {
 	public int getSubjectPosition(String subject){
 		for (ActionStore actionStore : subjectInformation) {
 			if (actionStore.getSubjectName().equalsIgnoreCase(subject)) {
+				//Position in whatever data storage type it's in (i.e artefact, furniture, inventory &c)
 				return actionStore.getPosition();
 			}
 		}
@@ -119,6 +123,7 @@ public class ParseActionCommand {
 	public String getSubjectLocationType(String subject) {
 		for (ActionStore actionStore : subjectInformation) {
 			if (actionStore.getSubjectName().equalsIgnoreCase(subject)) {
+				//get data storage type (i.e artefact, furniture, inventory &c)
 				return actionStore.getLocationType();
 			}
 		}

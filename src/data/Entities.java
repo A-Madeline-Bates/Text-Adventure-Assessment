@@ -175,7 +175,7 @@ public class Entities {
 	 ***********   ADDING AND REMOVING ARTEFACTS   ***********
 	 ********************************************************/
 
-	public void removeArtefact(int currentLocation, int artefactPosition, String objectType){
+	public void removeObject(int currentLocation, int artefactPosition, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
 		for (Graph myLocationGraph : myLocationGraphs) {
 			if (myLocationGraph.getId().getId().equalsIgnoreCase(objectType)) {

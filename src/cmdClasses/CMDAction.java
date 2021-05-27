@@ -44,6 +44,7 @@ public class CMDAction extends ExecutableCMD {
 	private void consumeSubject(String object) {
 		String locationType = parseAction.getSubjectLocationType(object);
 		if (locationType.equalsIgnoreCase("inventory")) {
+			//get position in inventory
 			int invObjectPosition = parseAction.getSubjectPosition(object);
 			playerState.consumedFromInventory(invObjectPosition);
 		}
@@ -55,8 +56,8 @@ public class CMDAction extends ExecutableCMD {
 
 	private void removeFromLocation(String object, String locationType){
 		int objectPosition = parseAction.getSubjectPosition(object);
-		int mapLocation = parseAction.getSubjectPosition(object);
-		entityClass.removeArtefact(mapLocation, objectPosition, locationType);
+		int mapLocation = playerState.getCurrentLocation();
+		entityClass.removeObject(mapLocation, objectPosition, locationType);
 	}
 
 	/********************************************************
