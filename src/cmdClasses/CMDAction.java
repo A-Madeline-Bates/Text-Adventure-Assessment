@@ -80,9 +80,37 @@ public class CMDAction extends ExecutableCMD {
 				entityClass.createPath(playerState.getCurrentLocationName(), entityClass.getLocationResultId());
 			}
 			else {
-				//There are no descriptions in the json, so the description is just the name of the object
-				playerState.addToInventory(object, object);
+				//Otherwise it must be an object- we will need to find this and move it in the entity file
+				addToLocation(object);
 			}
+		}
+	}
+
+	private void addToLocation(String object){
+		//The produced item should be in the 'unplaced' items or somewhere else in the .dot file- we're not
+		// obliged to check for this, so we're assuming it is there.
+		int locationQuantity = entityClass.locationQuantity();
+		for(int i=0; i<locationQuantity; i++){
+			//Check all three entity types
+			foundInEntities(i, object, "furniture");
+			foundInEntities(i, object, "artefacts");
+			foundInEntities(i, object, "characters");
+			//If nothing is found, this would be an error with input file, which we are not obliged to catch.
+			// Therefore we will do nothing.
+		}
+	}
+
+	private void foundInEntities(int i, String object, String locationType){
+		int objectLocation = entityClass.entitySearch(object, i, locationType);
+		if(objectLocation != -1){
+			//These are both set by calling entitySearch
+			String id = entityClass.getEntityId();
+			String description = entityClass.getEntityDescription();
+			//add object to current location
+			entityClass.addObject(id, description, playerState.getCurrentLocation(), locationType);
+			//remove object from previous location- i is the relevant location, and objectLocation is the array
+			//of the object
+			entityClass.removeObject(i, objectLocation, locationType);
 		}
 	}
 

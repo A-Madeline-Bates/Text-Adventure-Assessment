@@ -17,7 +17,7 @@ public class ParseArtefactCommand {
 
 	private void validateArtefact(String commandEnd, Entities entityClass, PlayerState playerState) throws ArtefactDoesNotExist {
 		int loc = playerState.getCurrentLocation();
-		int searchPosition = entityClass.setEntityInfo(commandEnd, loc, "artefacts");
+		int searchPosition = entityClass.entitySearch(commandEnd, loc, "artefacts");
 		if(searchPosition != -1){
 			//This returns the array position of the artefact we are trying to find.
 			this.artefactPosition = searchPosition;

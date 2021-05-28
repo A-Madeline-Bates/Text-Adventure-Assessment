@@ -18,7 +18,7 @@ public class CMDDrop extends ExecutableCMD{
 		String droppedObject = parsedInventory.getInventoryObject();
 		String droppedObjectDescription = parsedInventory.getInventoryObjectDescription();
 		playerState.consumedFromInventory(parsedInventory.getInventoryObjectPosition());
-		entities.addArtefact(droppedObject, droppedObjectDescription, playerState.getCurrentLocation());
+		entities.addObject(droppedObject, droppedObjectDescription, playerState.getCurrentLocation(), "artefacts");
 	}
 
 	public String getExitMessage(){

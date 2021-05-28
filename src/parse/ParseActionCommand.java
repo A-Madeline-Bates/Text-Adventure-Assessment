@@ -67,7 +67,7 @@ public class ParseActionCommand {
 	}
 
 	private boolean checkForEntity(Entities entityClass, PlayerState playerState, String object, String objectType){
-		int position = entityClass.setEntityInfo(object, playerState.getCurrentLocation(), objectType);
+		int position = entityClass.entitySearch(object, playerState.getCurrentLocation(), objectType);
 		if(position != -1){
 			addToSubjectArray(entityClass.getEntityId(), position, objectType);
 			return true;

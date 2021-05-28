@@ -17,7 +17,7 @@ public class Entities {
 	 **************   SEARCH FOR ENTITIES   ****************
 	 ********************************************************/
 
-	public int setEntityInfo(String comparisonString, int location, String entityType){
+	public int entitySearch(String comparisonString, int location, String entityType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
 		for (Graph myLocationGraph : myLocationGraphs) {
 			if (myLocationGraph.getId().getId().equalsIgnoreCase(entityType)) {
@@ -137,6 +137,10 @@ public class Entities {
 		return testEdges.getEdges().get(position).getSource().getNode().getId().getId().equalsIgnoreCase(location);
 	}
 
+	public int locationQuantity(){
+		return  entities.get(0).getSubgraphs().get(0).getSubgraphs().size();
+	}
+
 	/********************************************************
 	 ****************   GET LOCATION RESULTS  ****************
 	 ********************************************************/
@@ -185,25 +189,25 @@ public class Entities {
 		}
 	}
 
-	public void addArtefact(String droppedObject, String droppedObjectDescription, int currentLocation){
+	public void addObject(String droppedObject, String droppedObjectDescription, int currentLocation, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
 		for (Graph myLocationGraph : myLocationGraphs) {
-			if (myLocationGraph.getId().getId().equalsIgnoreCase("artefacts")) {
+			if (myLocationGraph.getId().getId().equalsIgnoreCase(objectType)) {
 				//Get list of 'artefact' nodes attached to the location
-				ArrayList<Node> artefactArray = myLocationGraph.getNodes(true);
-				addArtefactNode(artefactArray, droppedObject, droppedObjectDescription);
+				ArrayList<Node> objectArray = myLocationGraph.getNodes(true);
+				addObjectNode(objectArray, droppedObject, droppedObjectDescription);
 				return;
 			}
 		}
 	}
 
-	private static void addArtefactNode(ArrayList<Node> artefactArray, String droppedObject, String droppedObjectDescription){
+	private static void addObjectNode(ArrayList<Node> objectArray, String droppedObject, String droppedObjectDescription){
 		Id newId = new Id();
 		newId.setId(droppedObject);
 		Node newNode = new Node();
 		newNode.setId(newId);
 		newNode.setAttribute("description", droppedObjectDescription);
-		artefactArray.add(newNode);
+		objectArray.add(newNode);
 	}
 
 	/********************************************************
