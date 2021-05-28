@@ -191,11 +191,14 @@ public class Entities {
 
 	public void addObject(String droppedObject, String droppedObjectDescription, int currentLocation, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
-		for (Graph myLocationGraph : myLocationGraphs) {
-			if (myLocationGraph.getId().getId().equalsIgnoreCase(objectType)) {
+		System.out.println(myLocationGraphs);
+		for (int i=0; i<myLocationGraphs.size(); i++) {
+			System.out.println(myLocationGraphs.get(i).getId().getId() + " " + myLocationGraphs.size());
+			if (myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(objectType)) {
 				//Get list of 'artefact' nodes attached to the location
-				ArrayList<Node> objectArray = myLocationGraph.getNodes(true);
+				ArrayList<Node> objectArray = myLocationGraphs.get(i).getNodes(true);
 				addObjectNode(objectArray, droppedObject, droppedObjectDescription);
+				System.out.println(objectArray);
 				return;
 			}
 		}

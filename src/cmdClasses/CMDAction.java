@@ -103,13 +103,16 @@ public class CMDAction extends ExecutableCMD {
 	private void foundInEntities(int i, String object, String locationType){
 		int objectLocation = entityClass.entitySearch(object, i, locationType);
 		if(objectLocation != -1){
+			System.out.println("Something found :)");
 			//These are both set by calling entitySearch
 			String id = entityClass.getEntityId();
 			String description = entityClass.getEntityDescription();
+			System.out.println(id + " " + description + " " +playerState.getCurrentLocation() + " " + locationType);
 			//add object to current location
 			entityClass.addObject(id, description, playerState.getCurrentLocation(), locationType);
 			//remove object from previous location- i is the relevant location, and objectLocation is the array
 			//of the object
+			System.out.println(i + " " + objectLocation + " " + locationType);
 			entityClass.removeObject(i, objectLocation, locationType);
 		}
 	}
