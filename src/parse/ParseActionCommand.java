@@ -14,31 +14,33 @@ public class ParseActionCommand {
 	final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
 	private int actionPosition;
 
-	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, Tokeniser tokeniser) throws ParseException {
-		String commandEnd = tokeniser.getRemainingTokens();
-		validateActionObject(commandEnd, actionPosition, actionsClass, entityClass, playerState);
+	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, ArrayList<String> commandList) throws ParseException {
+		validateActionObject(commandList, actionPosition, actionsClass, entityClass, playerState);
 	}
 
-	private void validateActionObject(String commandEnd, int actionPosition, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectMismatch, ActionSubjectsNotPresent {
+	private void validateActionObject(ArrayList<String> commandList, int actionPosition, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectMismatch, ActionSubjectsNotPresent {
 		JSONArray subjectsArray = actionsClass.getActionElement(actionPosition, "subjects");
 		//check whether subjects are in either the inventory or location
 		if(areSubjectsPresent(subjectsArray, playerState, entityClass)) {
-			checkCommandValidity(subjectsArray, commandEnd, actionPosition);
+			checkCommandValidity(subjectsArray, commandList, actionPosition);
 		}
 		else{
 			throw new ActionSubjectsNotPresent(subjectsArray);
 		}
 	}
 
-	private void checkCommandValidity(JSONArray subjectsArray, String commandEnd, int actionPosition) throws ActionSubjectMismatch {
-		//check whether command end is a subject
-		if(isCommandValid(subjectsArray, commandEnd)){
-			//this is the position of the action we're using in out json- it's previously been validated in commandFactory
-			this.actionPosition = actionPosition;
+	private void checkCommandValidity(JSONArray subjectsArray, ArrayList<String> commandList, int actionPosition) throws ActionSubjectMismatch {
+		for(String singleToken : commandList) {
+			//check whether the token we're looking at is a subject
+			if (isCommandValid(subjectsArray, singleToken)) {
+				//this is the position of the action we're using in our json- it's previously been validated
+				// in commandFactory
+				this.actionPosition = actionPosition;
+				//If a usable object is found, stop searching
+				return;
+			}
 		}
-		else{
-			throw new ActionSubjectMismatch(commandEnd);
-		}
+		throw new ActionSubjectMismatch(subjectsArray);
 	}
 
 	private boolean areSubjectsPresent(JSONArray subjectsArray, PlayerState playerState, Entities entityClass){

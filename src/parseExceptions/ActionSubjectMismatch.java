@@ -1,12 +1,16 @@
 package parseExceptions;
 
+import org.json.simple.JSONArray;
+
 public class ActionSubjectMismatch extends ParseException {
-	public ActionSubjectMismatch(String token) {
-		this.token = token;
+	JSONArray subjectsArray;
+
+	public ActionSubjectMismatch(JSONArray subjectsArray){
+		this.subjectsArray = subjectsArray;
 	}
 
 	public String toString() {
-		return "The object you are trying to act on is not at your location or in your inventory. " +
-				"Object specified was " + token + ".\n";
+		return "Please specify a valid object that can be acted upon with the action word that you used. Valid" +
+				"subjects are: " + subjectsArray + "\n";
 	}
 }
