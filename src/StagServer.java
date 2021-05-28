@@ -38,7 +38,6 @@ class StagServer
             createDatabases();
             ServerSocket ss = new ServerSocket(portNumber);
             System.out.println("Server Listening");
-            //noinspection InfiniteLoopStatement
             while(true) acceptNextConnection(ss);
         } catch (FileNotFoundException fnfe) {
             System.out.println("File not found exception: " + fnfe);
@@ -82,7 +81,7 @@ class StagServer
 
     private void processCommand(Tokeniser tokeniser){
         try {
-            PlayerState playerState = playerStore.getCurrentPlayer(tokeniser);
+            PlayerState playerState = playerStore.getCurrentPlayer(tokeniser.getNextToken());
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();

@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Tokeniser {
 	final ArrayList<String> tokenList = new ArrayList<>();
 	//we always want to start to position one because position zero contains the username
-	private int ArrayPosition = 1;
+	private int ArrayPosition = 0;
 
 	public Tokeniser(String incomingCommand) {
 		tokenList.addAll(Arrays.asList(incomingCommand.split("\\s+")));
