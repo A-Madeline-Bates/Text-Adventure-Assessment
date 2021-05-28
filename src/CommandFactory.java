@@ -9,11 +9,13 @@ public class CommandFactory {
 	final Entities entityClass;
 	final Actions actionClass;
 	final PlayerState playerState;
+	final PlayerStore playerStore;
 
-	public CommandFactory(Entities entityClass, Actions actionClass, PlayerState playerState){
+	public CommandFactory(Entities entityClass, Actions actionClass, PlayerState playerState, PlayerStore playerStore){
 		this.entityClass = entityClass;
 		this.actionClass = actionClass;
 		this.playerState = playerState;
+		this.playerStore = playerStore;
 	}
 
 	//This will act as a factory for instances of CMDType
@@ -37,7 +39,7 @@ public class CommandFactory {
 				return new CMDInventory(playerState);
 			case "LOOK":
 				tokeniser.checkForExtra();
-				return new CMDLook(entityClass, playerState);
+				return new CMDLook(entityClass, playerState, playerStore);
 			case "HEALTH":
 				tokeniser.checkForExtra();
 				return new CMDHealth(playerState);
@@ -56,7 +58,7 @@ public class CommandFactory {
 				return new CMDGet(parseArtefact, entityClass, playerState);
 			case "GOTO":
 				ParseLocationCommand parseLocation = new ParseLocationCommand(entityClass, playerState, tokeniser);
-				return new CMDGoto(parseLocation, playerState, entityClass);
+				return new CMDGoto(parseLocation, playerState, entityClass, playerStore);
 			default:
 				return findCMDAction(nextToken, tokeniser);
 		}

@@ -1,3 +1,6 @@
+package data;
+
+import com.alexmerz.graphviz.objects.Graph;
 import data.PlayerState;
 import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
@@ -47,5 +50,25 @@ public class PlayerStore {
 		newPlayer.setPlayerName(playerName);
 		playerList.add(newPlayer);
 		return newPlayer;
+	}
+
+	//Lists all the players in the same location as the current player
+	public String findOtherPlayers(int ourLocation){
+		StringBuilder allPlayers = new StringBuilder();
+		for(PlayerState thisPlayer : playerList){
+			if(thisPlayer.getCurrentLocation() == ourLocation){
+				allPlayers.append(thisPlayer.getPlayerName()).append("\n");
+			}
+		}
+		return resolveIfEmpty(allPlayers.toString());
+	}
+
+	private static String resolveIfEmpty(String returnString){
+		if(returnString.equals("")){
+			return "\n";
+		}
+		else{
+			return returnString;
+		}
 	}
 }

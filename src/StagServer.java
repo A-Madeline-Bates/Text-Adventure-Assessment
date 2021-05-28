@@ -2,6 +2,7 @@ import cmdClasses.CMDType;
 import data.Actions;
 import data.Entities;
 import data.PlayerState;
+import data.PlayerStore;
 import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;
@@ -82,7 +83,7 @@ class StagServer
     private void processCommand(Tokeniser tokeniser){
         try {
             PlayerState playerState = playerStore.getCurrentPlayer(tokeniser);
-            CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
+            CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState, playerStore);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();
             //CHECK IF DEAD
@@ -122,9 +123,6 @@ class StagServer
 // more than one word (because the double quotes allow them to be parsed)
 
 //ignore punctuation in commands?
-
-//potentially the username might contain spaces. Look for colon?
-//check multiplayer
 
 // As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
 // a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will

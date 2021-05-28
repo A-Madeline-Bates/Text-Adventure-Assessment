@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerState {
-	String playerName;
-	final List<List<String>> inventoryList = new ArrayList<List<String>>();
+	private String playerName;
+	private final List<List<String>> inventoryList = new ArrayList<List<String>>();
 	private int health;
 	//following the logic that initial location is always 0- this might be worth changing
 	private int currentLocation;
-	final String currentLocationName;
+	private final String currentLocationName;
 
 	public PlayerState(String firstLocation){
 		this.currentLocation = 0;
