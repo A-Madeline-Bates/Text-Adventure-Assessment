@@ -109,11 +109,6 @@ class StagServer
     }
 }
 
-//Walk through and check the input for action command (it doesn't have to be the first word) !!
-//Be sure to make your command interpreter as flexible and robust as possible (to deal with "varied" input from
-// the user !)
-// it should be able to cope with any order
-// One subject needs to be present in a command in order to make it valid
 // Actions can be in two words?
 
 //It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
