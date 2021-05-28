@@ -111,25 +111,31 @@ class StagServer
 //Walk through and check the input for action command (it doesn't have to be the first word) !!
 //Be sure to make your command interpreter as flexible and robust as possible (to deal with "varied" input from
 // the user !)
-
-//Note that every game has a "special" location that is the starting point for an adventure. This starting point is
-// always the first location that is encountered when reading in the "entities" file.
-//  load the correct location at start rather than assuming start = "start"
+// it should be able to cope with any order
+// One subject needs to be present in a command in order to make it valid
+// Actions can be in two words?
 
 //There is another special location called "unplaced" that can be found in the entities file. This location does
 // not appear in the game world, but is rather a container for all of the entities that have no initial location.
 // They need to exist somewhere in the game structure so that they can be defined, but they do not enter the game
 // until an action places then in another location within the game.
+//SORT OUT UNPLACED OBJECTS!
+//ALL PRODUCED ITEMS GO INTO THE LOCATION
+
+//yes - entities are unique and you move them from their current location to the "produced" location. If the
+// current location is unplaced, it comes from there - if it's already in the game somewhere, it is moved from
+// whatever location it is currently at
 
 //It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
 // different entities. So be careful when storing and accessing actions.
 
-//Your game should be able to operate with more than just a single player. In order to support this, each incoming
-// command message will begin with a username (to identify which player has issued the command)
-//Note that there is no formal player registration process - when the server encounters a command from a previously
-// unseen user, a new player should be created in the start location of the game.
-//A full incoming message might therefore take the form of:
-//                  Simon: open door with key
+//entities names cannot be more than one word (it would make the dot file very hard to parse), action trigger can be
+// more than one word (because the double quotes allow them to be parsed)
+
+//ignore punctuation in commands?
+
+//potentially the username might contain spaces. Look for colon?
+//check multiplayer
 
 // As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
 // a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will
@@ -138,6 +144,12 @@ class StagServer
 // dropped in the location where they ran out of health) and then they should return to the start location. In order
 // to implement these features in your game engine, you should also add a new health command keyword that reports
 // back the player's current health level (so the player can keep track of it).
+// A prompt should be provided after a player die, something like "you have died and lose all of your items, return to the start"
+
+//Set it so you can see other players in your location
+// You should include the descriptions in look (otherwise they would never get seen !) as well as the names
+
+//Consume path?
 
 // Check the style guide + previous feedback
 // Reduce complexity
