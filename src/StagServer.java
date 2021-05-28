@@ -135,7 +135,7 @@ class StagServer
 
 // You should include the descriptions in look (otherwise they would never get seen !) as well as the names
 
-//Consume path?
+// Consume path?
 
 // Check the style guide + previous feedback
 // Reduce complexity

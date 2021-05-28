@@ -21,16 +21,11 @@ public class CommandFactory {
 	//This will act as a factory for instances of CMDType
 	public CMDType createCMD(Tokeniser tokeniser) throws ParseException, CommandMissing {
 		String nextToken = tokeniser.getNextToken();
-		if(nextToken == null){
-			throw new CommandMissing();
-		}
-		else{
-			return singleCmdSwitch(nextToken, tokeniser);
-		}
+		return singleCmdSwitch(nextToken, tokeniser);
 	}
 
 	private CMDType singleCmdSwitch(String nextToken, Tokeniser tokeniser) throws ParseException{
-		//This method looks all commands which only want one word of input
+		//This method looks at all commands which only want one word of input
 		//checkForExtra() will throw an assert error if there is extra tokens in the input command
 		switch (nextToken.toUpperCase()) {
 			case "INVENTORY":
