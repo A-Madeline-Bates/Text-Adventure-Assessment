@@ -81,7 +81,7 @@ class StagServer
 
     private void processCommand(Tokeniser tokeniser){
         try {
-            PlayerState playerState = playerStore.getCurrentPlayer(tokeniser.getNextToken());
+            PlayerState playerState = playerStore.getCurrentPlayer(tokeniser);
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();
@@ -114,17 +114,6 @@ class StagServer
 // it should be able to cope with any order
 // One subject needs to be present in a command in order to make it valid
 // Actions can be in two words?
-
-//There is another special location called "unplaced" that can be found in the entities file. This location does
-// not appear in the game world, but is rather a container for all of the entities that have no initial location.
-// They need to exist somewhere in the game structure so that they can be defined, but they do not enter the game
-// until an action places then in another location within the game.
-//SORT OUT UNPLACED OBJECTS!
-//ALL PRODUCED ITEMS GO INTO THE LOCATION
-
-//yes - entities are unique and you move them from their current location to the "produced" location. If the
-// current location is unplaced, it comes from there - if it's already in the game somewhere, it is moved from
-// whatever location it is currently at
 
 //It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
 // different entities. So be careful when storing and accessing actions.
