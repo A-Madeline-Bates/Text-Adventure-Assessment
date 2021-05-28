@@ -133,7 +133,6 @@ class StagServer
 // back the player's current health level (so the player can keep track of it).
 // A prompt should be provided after a player die, something like "you have died and lose all of your items, return to the start"
 
-//Set it so you can see other players in your location
 // You should include the descriptions in look (otherwise they would never get seen !) as well as the names
 
 //Consume path?

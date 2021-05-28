@@ -53,10 +53,11 @@ public class PlayerStore {
 	}
 
 	//Lists all the players in the same location as the current player
-	public String findOtherPlayers(int ourLocation){
+	public String findOtherPlayers(int ourLocation, String ourPlayer){
 		StringBuilder allPlayers = new StringBuilder();
 		for(PlayerState thisPlayer : playerList){
-			if(thisPlayer.getCurrentLocation() == ourLocation){
+			//is the player location matches, but the player doesn't have the same name as us (i.e, is us)
+			if((thisPlayer.getCurrentLocation() == ourLocation) && (!thisPlayer.getPlayerName().equals(ourPlayer))){
 				allPlayers.append(thisPlayer.getPlayerName()).append("\n");
 			}
 		}

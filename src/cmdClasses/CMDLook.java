@@ -19,7 +19,7 @@ public class CMDLook extends CMDType{
 				"\nYou can see: " + entityClass.getEntityString(currentLocation, "artefacts") +
 				entityClass.getEntityString(currentLocation, "furniture") +
 				entityClass.getEntityString(currentLocation, "characters") +
-				playerStore.findOtherPlayers(currentLocation) +
+				playerStore.findOtherPlayers(currentLocation, playerState.getPlayerName()) +
 		"You can access from here: " + entityClass.getPathsList(currentLocation);
 	}
 }
