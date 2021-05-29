@@ -1,27 +1,29 @@
 package data;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import java.util.ArrayList;
 
 public class Actions {
 	final JSONArray actions;
+	private ArrayList<Integer> validActions = new ArrayList<Integer>();
 
 	public Actions(JSONArray actions) {
 		this.actions = actions;
 	}
 
-	public int findAction(String nextToken){
+	public ArrayList<Integer> findAction(String nextToken){
 		for(int i=0; i<actions.size(); i++){
 			JSONObject jsonAction = (JSONObject) actions.get(i);
 			JSONArray actionTriggers = (JSONArray) jsonAction.get("triggers");
 			for (Object actionTrigger : actionTriggers) {
 				String trigger = (String) actionTrigger;
 				if (nextToken.equalsIgnoreCase(trigger)) {
-					return i;
+					//If we've found a valid action position, add it to an array
+					validActions.add(i);
 				}
 			}
 		}
-		//-1 used to specify nothing found as the final result
-		return -1;
+		return validActions;
 	}
 
 	public String getMessage(int position){

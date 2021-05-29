@@ -109,15 +109,16 @@ class StagServer
     }
 }
 
-// Actions can be in two words?
-
 //It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
 // different entities. So be careful when storing and accessing actions.
-
 //entities names cannot be more than one word (it would make the dot file very hard to parse), action trigger can be
 // more than one word (because the double quotes allow them to be parsed)
 
+// You should include the descriptions in look (otherwise they would never get seen !) as well as the names
+
 //ignore punctuation in commands?
+
+// Consume path?
 
 // As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
 // a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will
@@ -127,10 +128,6 @@ class StagServer
 // to implement these features in your game engine, you should also add a new health command keyword that reports
 // back the player's current health level (so the player can keep track of it).
 // A prompt should be provided after a player die, something like "you have died and lose all of your items, return to the start"
-
-// You should include the descriptions in look (otherwise they would never get seen !) as well as the names
-
-// Consume path?
 
 // Check the style guide + previous feedback
 // Reduce complexity

@@ -189,31 +189,31 @@ public class Entities {
 		}
 	}
 
-	public void addObject(String droppedObject, String droppedObjectDescription, int currentLocation, String objectType){
+	public void addObject(String objectID, String objectDesc, int currentLocation, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
 		for (int i=0; i<myLocationGraphs.size(); i++) {
 			if (myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(objectType)) {
 				//Get list of nodes attached to the location which are of our objectType
 				ArrayList<Node> objectArray = myLocationGraphs.get(i).getNodes(true);
-				addObjectNode(objectArray, droppedObject, droppedObjectDescription, "description");
+				addObjectNode(objectArray, objectID, objectDesc, "description");
 				return;
 			}
 		}
 		//If there is not a pre-existing list to add out entity to, we will need to create one (i.e, if we are trying
 		// to add furniture to a location that doesn't already contain furniture, we need to create a furniture list)
-		addObjectType(myLocationGraphs, droppedObject, droppedObjectDescription, objectType);
+		addObjectType(myLocationGraphs, objectID, objectDesc, objectType);
 	}
 
-	private static void addObjectNode(ArrayList<Node> objectArray, String droppedObject, String droppedObjectDescription, String nodeType){
+	private static void addObjectNode(ArrayList<Node> objectArray, String objectID, String objectDesc, String nodeType){
 		Id newId = new Id();
-		newId.setId(droppedObject);
+		newId.setId(objectID);
 		Node newNode = new Node();
 		newNode.setId(newId);
-		newNode.setAttribute(nodeType, droppedObjectDescription);
+		newNode.setAttribute(nodeType, objectDesc);
 		objectArray.add(newNode);
 	}
 
-	private void addObjectType(ArrayList<Graph> myLocationGraphs, String droppedObject, String droppedObjectDescription, String objectType){
+	private void addObjectType(ArrayList<Graph> myLocationGraphs, String objectID, String objectDesc, String objectType){
 		myLocationGraphs = addNewGraph(myLocationGraphs, objectType);
 		//Get location of our new subgraph- it will be last on the list of graphs attached to the location
 		int newGraphLocation = myLocationGraphs.size() - 1;
@@ -222,8 +222,7 @@ public class Entities {
 		//adding shape node to the array
 		addObjectNode(objectArray, "node", getNodeShape(objectType), "shape");
 		//adding our object to the array
-		addObjectNode(objectArray, droppedObject, droppedObjectDescription, "description");
-		System.out.println(myLocationGraphs);
+		addObjectNode(objectArray, objectID, objectDesc, "description");
 		return;
 	}
 

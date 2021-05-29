@@ -73,9 +73,12 @@ public class CommandFactory {
 	}
 
 	private boolean searchActionCmd(String nextToken, ArrayList<String> commandList) throws ParseException {
-		int actionPosition = actionClass.findAction(nextToken);
-		if(actionPosition != -1) {
-			ParseActionCommand parseAction = new ParseActionCommand(actionClass, entityClass, playerState, actionPosition, commandList);
+		//This tries to find a match between the token and the available actions. If the action word "open" appears
+		// twice in the dot file, the array position of both instances will be recorded in the actionPositions array.
+		ArrayList<Integer> actionPositions = actionClass.findAction(nextToken);
+		//If the size of the array is zero, this token isn't a valid action
+		if(actionPositions.size() != 0) {
+			ParseActionCommand parseAction = new ParseActionCommand(actionClass, entityClass, playerState, actionPositions, commandList);
 			this.activeCommand = new CMDAction(parseAction, actionClass, entityClass, playerState);
 			return true;
 		}

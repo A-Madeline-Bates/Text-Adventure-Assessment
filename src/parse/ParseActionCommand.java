@@ -14,22 +14,28 @@ public class ParseActionCommand {
 	final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
 	private int actionPosition;
 
-	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, int actionPosition, ArrayList<String> commandList) throws ParseException {
-		validateActionObject(commandList, actionPosition, actionsClass, entityClass, playerState);
+	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, ArrayList<Integer> actionPositions, ArrayList<String> commandList) throws ParseException {
+		validateActionObject(commandList, actionPositions, actionsClass, entityClass, playerState);
 	}
 
-	private void validateActionObject(ArrayList<String> commandList, int actionPosition, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectMismatch, ActionSubjectsNotPresent {
-		JSONArray subjectsArray = actionsClass.getActionElement(actionPosition, "subjects");
-		//check whether subjects are in either the inventory or location
-		if(areSubjectsPresent(subjectsArray, playerState, entityClass)) {
-			checkCommandValidity(subjectsArray, commandList, actionPosition);
+	private void validateActionObject(ArrayList<String> commandList, ArrayList<Integer> actionPositions, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectMismatch, ActionSubjectsNotPresent {
+		//cycle through possible actionPositions and check that the subjects we would need to execute that action
+		// are present. If yes, check whether one the relevant subjects are mentioned somewhere in the command
+		for(int actionPosition : actionPositions) {
+			JSONArray subjectsArray = actionsClass.getActionElement(actionPosition, "subjects");
+			//check whether subjects are in either the inventory or location
+			if (areSubjectsPresent(subjectsArray, playerState, entityClass)) {
+				if(isCommandValid(subjectsArray, commandList, actionPosition)){
+					return;
+				}
+			}
 		}
-		else{
-			throw new ActionSubjectsNotPresent(subjectsArray);
-		}
+		//if we don't find an action position that returns true for areSubjectsPresent and checkCommandValidity,
+		//throw an error
+		throw new ActionSubjectsNotPresent();
 	}
 
-	private void checkCommandValidity(JSONArray subjectsArray, ArrayList<String> commandList, int actionPosition) throws ActionSubjectMismatch {
+	private boolean isCommandValid(JSONArray subjectsArray, ArrayList<String> commandList, int actionPosition) throws ActionSubjectMismatch {
 		for(String singleToken : commandList) {
 			//check whether the token we're looking at is a subject
 			if (isCommandValid(subjectsArray, singleToken)) {
@@ -37,10 +43,10 @@ public class ParseActionCommand {
 				// in commandFactory
 				this.actionPosition = actionPosition;
 				//If a usable object is found, stop searching
-				return;
+				return true;
 			}
 		}
-		throw new ActionSubjectMismatch(subjectsArray);
+		return false;
 	}
 
 	private boolean areSubjectsPresent(JSONArray subjectsArray, PlayerState playerState, Entities entityClass){
