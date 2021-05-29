@@ -191,26 +191,62 @@ public class Entities {
 
 	public void addObject(String droppedObject, String droppedObjectDescription, int currentLocation, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
-		System.out.println(myLocationGraphs);
 		for (int i=0; i<myLocationGraphs.size(); i++) {
-			System.out.println(myLocationGraphs.get(i).getId().getId() + " " + myLocationGraphs.size());
 			if (myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(objectType)) {
-				//Get list of 'artefact' nodes attached to the location
+				//Get list of nodes attached to the location which are of our objectType
 				ArrayList<Node> objectArray = myLocationGraphs.get(i).getNodes(true);
-				addObjectNode(objectArray, droppedObject, droppedObjectDescription);
-				System.out.println(objectArray);
+				addObjectNode(objectArray, droppedObject, droppedObjectDescription, "description");
 				return;
 			}
 		}
+		//If there is not a pre-existing list to add out entity to, we will need to create one (i.e, if we are trying
+		// to add furniture to a location that doesn't already contain furniture, we need to create a furniture list)
+		addObjectType(myLocationGraphs, droppedObject, droppedObjectDescription, objectType);
 	}
 
-	private static void addObjectNode(ArrayList<Node> objectArray, String droppedObject, String droppedObjectDescription){
+	private static void addObjectNode(ArrayList<Node> objectArray, String droppedObject, String droppedObjectDescription, String nodeType){
 		Id newId = new Id();
 		newId.setId(droppedObject);
 		Node newNode = new Node();
 		newNode.setId(newId);
-		newNode.setAttribute("description", droppedObjectDescription);
+		newNode.setAttribute(nodeType, droppedObjectDescription);
 		objectArray.add(newNode);
+	}
+
+	private void addObjectType(ArrayList<Graph> myLocationGraphs, String droppedObject, String droppedObjectDescription, String objectType){
+		myLocationGraphs = addNewGraph(myLocationGraphs, objectType);
+		//Get location of our new subgraph- it will be last on the list of graphs attached to the location
+		int newGraphLocation = myLocationGraphs.size() - 1;
+		//Get our new graph
+		ArrayList<Node> objectArray = myLocationGraphs.get(newGraphLocation).getNodes(true);
+		//adding shape node to the array
+		addObjectNode(objectArray, "node", getNodeShape(objectType), "shape");
+		//adding our object to the array
+		addObjectNode(objectArray, droppedObject, droppedObjectDescription, "description");
+		System.out.println(myLocationGraphs);
+		return;
+	}
+
+	private ArrayList<Graph> addNewGraph(ArrayList<Graph> myLocationGraphs, String objectType){
+		Graph newGraph = new Graph();
+		Id newId = new Id();
+		newId.setId(objectType);
+		newGraph.setId(newId);
+		myLocationGraphs.add(newGraph);
+		return myLocationGraphs;
+	}
+
+	private String getNodeShape(String objectType){
+		if(objectType.equalsIgnoreCase("furniture")){
+			return "hexagon";
+		}
+		else if(objectType.equalsIgnoreCase("artefacts")){
+			return "diamond";
+		}
+		//must be characters
+		else{
+			return "ellipse";
+		}
 	}
 
 	/********************************************************
