@@ -83,7 +83,7 @@ public class Entities {
 	 ********************************************************/
 
 	//Finds whether a location is in the dot file
-	public void locationSearch(String comparisonString){
+	public void searchLocations(String comparisonString){
 		ArrayList<Graph> myLocationList = entities.get(0).getSubgraphs().get(0).getSubgraphs();
 		//If location is found, set our variables
 		for(int i=0; i<myLocationList.size(); i++){
@@ -132,7 +132,7 @@ public class Entities {
 		return edgeEnd.getNode().getId().getId().equalsIgnoreCase(location);
 	}
 
-	public int locationQuantity(){
+	public int findLocQuantity(){
 		return  entities.get(0).getSubgraphs().get(0).getSubgraphs().size();
 	}
 

@@ -1,6 +1,8 @@
 package parseExceptions;
 
 public class LocationIsNotAccessible extends ParseException {
+	private String token;
+
 	public LocationIsNotAccessible(String token) {
 		this.token = token;
 	}

@@ -17,7 +17,7 @@ public class ParseLocationCommand {
 		//Search every term in the command to see if it matches with the locations
 		for(String singleToken : commandList) {
 			//This find whether the location is in the Dot file
-			entityClass.locationSearch(singleToken);
+			entityClass.searchLocations(singleToken);
 			int searchPosition = entityClass.getLocationResultInt();
 			if (searchPosition != -1) {
 				checkAccessibility(singleToken, searchPosition, entityClass, playerState);

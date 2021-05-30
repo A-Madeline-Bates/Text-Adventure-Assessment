@@ -22,7 +22,7 @@ public class Actions {
 					validActions.add(i);
 				}
 				//Action commands can be composed of two words. This is checking if that is the case.
-				else if(itItTwoPartAction(trigger, commandPosition, commandList)){
+				else if(isItTwoPartAction(trigger, commandPosition, commandList)){
 					validActions.add(i);
 				}
 			}
@@ -30,7 +30,7 @@ public class Actions {
 		return validActions;
 	}
 
-	private static boolean itItTwoPartAction(String trigger, int commandPosition, ArrayList<String> commandList){
+	private static boolean isItTwoPartAction(String trigger, int commandPosition, ArrayList<String> commandList){
 		//This test is to stop us going over the end of the array. If i+1>commandList.size()-1 (the final array
 		// position), that would cause an error. Therefore i must be i<=commandList.size()-2.
 		if(commandPosition > (commandList.size() - 2)){

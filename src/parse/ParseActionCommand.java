@@ -77,7 +77,7 @@ public class ParseActionCommand {
 
 	private boolean checkForLocation(Entities entityClass, PlayerState playerState, String object){
 		//This find whether the location is in the Dot file
-		entityClass.locationSearch(object);
+		entityClass.searchLocations(object);
 		int searchPosition = entityClass.getLocationResultInt();
 		if (searchPosition != -1) {
 			if (entityClass.isLocationAccessible(playerState.getCurrentLocName(), entityClass.getLocationResultId())) {

@@ -65,7 +65,7 @@ public class CMDAction extends ExecutableCMD {
 	}
 
 	private boolean isItLocation(String object){
-		entityClass.locationSearch(object);
+		entityClass.searchLocations(object);
 		int locationPosition = entityClass.getLocationResultInt();
 		if(locationPosition != -1){
 			return true;
@@ -99,18 +99,18 @@ public class CMDAction extends ExecutableCMD {
 	private void addToLocation(String object){
 		//The produced item should be in the 'unplaced' items or somewhere else in the .dot file- we're not
 		// obliged to check for this, so we're assuming it is there.
-		int locationQuantity = entityClass.locationQuantity();
+		int locationQuantity = entityClass.findLocQuantity();
 		for(int i=0; i<locationQuantity; i++){
 			//Check all three entity types
-			foundInEntities(i, object, "furniture");
-			foundInEntities(i, object, "artefacts");
-			foundInEntities(i, object, "characters");
+			findInEntities(i, object, "furniture");
+			findInEntities(i, object, "artefacts");
+			findInEntities(i, object, "characters");
 			//If nothing is found, this would be an error with input file, which we are not obliged to catch.
 			// Therefore we will do nothing.
 		}
 	}
 
-	private void foundInEntities(int i, String object, String locationType){
+	private void findInEntities(int i, String object, String locationType){
 		int objectLocation = entityClass.entitySearch(object, i, locationType);
 		if(objectLocation != -1){
 			//These are both set by calling entitySearch
