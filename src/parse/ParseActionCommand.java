@@ -4,7 +4,6 @@ import data.Actions;
 import data.Entities;
 import data.PlayerState;
 import parseExceptions.*;
-import tokeniser.Tokeniser;
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
@@ -65,13 +64,31 @@ public class ParseActionCommand {
 			if (!checkForEntity(entityClass, playerState, object, "furniture")) {
 				if(!checkForEntity(entityClass, playerState, object, "characters")) {
 					if (!checkForInventory(playerState, object)) {
-						return false;
+						if(!checkForLocation(entityClass, playerState, object)) {
+							return false;
+						}
 					}
 				}
 			}
 		}
 		//In this instance, true means 'we haven't found an issue yet'
 		return true;
+	}
+
+	private boolean checkForLocation(Entities entityClass, PlayerState playerState, String object){
+		//This find whether the location is in the Dot file
+		entityClass.locationSearch(object);
+		int searchPosition = entityClass.getLocationResultInt();
+		if (searchPosition != -1) {
+			if (entityClass.isLocationAccessible(playerState.getCurrentLocationName(), entityClass.getLocationResultId())) {
+				//In this instance saving the location's information isn't very useful, because when we come to
+				// executing we'll work with paths and not locations, but we'll save the information for consistency
+				// anyway
+				addToSubjectArray(entityClass.getEntityId(), searchPosition, "location");
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean checkForEntity(Entities entityClass, PlayerState playerState, String object, String objectType){

@@ -40,7 +40,6 @@
             "produced": ["shovel"],
             "narration": "You pay the elf your silver coin and he produces a shovel"
         },
-
         {
             "triggers": ["bridge"],
             "subjects": ["log", "river"],
@@ -64,6 +63,5 @@
             "produced": ["lumberjack"],
             "narration": "You blow the horn and as if by magic, a lumberjack appears !"
         }
-
     ]
 }

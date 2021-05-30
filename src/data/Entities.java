@@ -174,7 +174,7 @@ public class Entities {
 
 	public void removePath(String startLocation, String endLocation){
 		ArrayList<Edge> testEdges = entities.get(0).getSubgraphs().get(1).getEdges();
-		for(int x=0;x<testEdges.size(); x++){
+		for(int x=0; x<testEdges.size(); x++){
 			if(matchEndsOfPath(testEdges, x, startLocation, "source")){
 				if(matchEndsOfPath(testEdges, x, endLocation, "target")) {
 					testEdges.remove(x);
