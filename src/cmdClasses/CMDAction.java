@@ -6,9 +6,9 @@ import parse.ParseActionCommand;
 import org.json.simple.JSONArray;
 
 public class CMDAction extends ExecutableCMD {
-	final ParseActionCommand parseAction;
-	final Actions actionClass;
-	final Entities entityClass;
+	private final ParseActionCommand parseAction;
+	private final Actions actionClass;
+	private final Entities entityClass;
 
 	public CMDAction(ParseActionCommand parseAction, Actions actionClass, Entities entityClass, PlayerState playerState){
 		this.parseAction = parseAction;

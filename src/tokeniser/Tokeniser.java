@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tokeniser {
-	final ArrayList<String> tokenList = new ArrayList<>();
+	private final ArrayList<String> tokenList = new ArrayList<>();
 	private ArrayList<String> commandList;
 	private int arrayPosition = 0;
 

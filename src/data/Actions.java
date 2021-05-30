@@ -4,7 +4,7 @@ import org.json.simple.JSONObject;
 import java.util.ArrayList;
 
 public class Actions {
-	final JSONArray actions;
+	private final JSONArray actions;
 	private ArrayList<Integer> validActions = new ArrayList<Integer>();
 
 	public Actions(JSONArray actions) {

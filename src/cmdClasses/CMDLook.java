@@ -4,7 +4,7 @@ import data.PlayerState;
 import data.PlayerStore;
 
 public class CMDLook extends CMDType{
-	final Entities entityClass;
+	private final Entities entityClass;
 	private final PlayerStore playerStore;
 
 	public CMDLook(Entities entityClass, PlayerState playerState, PlayerStore playerStore){

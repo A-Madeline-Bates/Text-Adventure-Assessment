@@ -1,7 +1,4 @@
 package data;
-
-import com.alexmerz.graphviz.objects.Graph;
-import data.PlayerState;
 import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 
@@ -9,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerStore {
-	final List<PlayerState> playerList = new ArrayList<PlayerState>();
-	String firstLocation;
+	private final List<PlayerState> playerList = new ArrayList<PlayerState>();
+	private String firstLocation;
 
 	public PlayerStore(String firstLocation){
 		this.firstLocation = firstLocation;

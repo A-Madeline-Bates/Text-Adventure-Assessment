@@ -3,7 +3,7 @@ package parseExceptions;
 import org.json.simple.JSONArray;
 
 public class ActionSubjectMismatch extends ParseException {
-	JSONArray subjectsArray;
+	private JSONArray subjectsArray;
 
 	public ActionSubjectMismatch(JSONArray subjectsArray){
 		this.subjectsArray = subjectsArray;

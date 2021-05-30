@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParseActionCommand {
-	final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
+	private final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
 	private int actionPosition;
 
 	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, ArrayList<Integer> actionPositions, ArrayList<String> commandList) throws ParseException {

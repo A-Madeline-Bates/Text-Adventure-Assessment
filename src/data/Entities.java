@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class Entities {
-	final ArrayList<Graph> entities;
+	private final ArrayList<Graph> entities;
 	private String locationId;
 	private int locationInt;
 	private String entityId;

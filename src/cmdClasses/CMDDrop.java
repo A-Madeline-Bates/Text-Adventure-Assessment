@@ -4,8 +4,8 @@ import data.PlayerState;
 import parse.ParseInvCommand;
 
 public class CMDDrop extends ExecutableCMD{
-	final Entities entities;
-	final ParseInvCommand parsedInventory;
+	private final Entities entities;
+	private final ParseInvCommand parsedInventory;
 
 	public CMDDrop(ParseInvCommand parsedInventory, Entities entities, PlayerState playerState){
 		this.entities = entities;

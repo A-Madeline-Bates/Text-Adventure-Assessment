@@ -5,9 +5,9 @@ import data.PlayerStore;
 import parse.ParseLocationCommand;
 
 public class CMDGoto extends ExecutableCMD{
-	final ParseLocationCommand parseLocation;
-	final Entities entityClass;
-	final PlayerStore playerStore;
+	private final ParseLocationCommand parseLocation;
+	private final Entities entityClass;
+	private final PlayerStore playerStore;
 
 	public CMDGoto(ParseLocationCommand parseLocation, PlayerState playerState, Entities entityClass, PlayerStore playerStore){
 		this.parseLocation = parseLocation;

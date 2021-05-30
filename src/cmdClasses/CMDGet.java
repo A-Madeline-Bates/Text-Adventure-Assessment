@@ -4,8 +4,8 @@ import data.PlayerState;
 import parse.ParseArtefactCommand;
 
 public class CMDGet extends ExecutableCMD{
-	final ParseArtefactCommand parseArtefact;
-	final Entities entity;
+	private final ParseArtefactCommand parseArtefact;
+	private final Entities entity;
 
 	public CMDGet(ParseArtefactCommand parseArtefact, Entities entity, PlayerState playerState){
 		this.entity = entity;
