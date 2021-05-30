@@ -112,10 +112,8 @@ public class Entities {
 	public boolean isLocationAccessible(String currentLocation, String targetLocation){
 		Graph testEdges = entities.get(0).getSubgraphs().get(1);
 		for(int x=0;x<testEdges.getEdges().size(); x++){
-			if(matchEndOfPath(testEdges, x, currentLocation)){
-				//In this instance, false means 'we haven't found a match yet'
-				//If we find a match searchOurTargets() will return true, and we can return true
-				if(searchOurTargets(testEdges, targetLocation)){
+			if(matchEndsOfPath(testEdges, x, currentLocation, "source")){
+				if(matchEndsOfPath(testEdges, x, targetLocation, "target")) {
 					return true;
 				}
 			}
@@ -123,19 +121,17 @@ public class Entities {
 		return false;
 	}
 
-	private boolean searchOurTargets(Graph testEdges, String targetLocation){
-		for(int y=0;y<testEdges.getEdges().size(); y++){
-			if(matchEndOfPath(testEdges, y, targetLocation)) {
-				return true;
-			}
+	//matches a path with a string location name- returns true if there is a match
+	private boolean matchEndsOfPath(Graph testEdges, int position, String location, String type){
+		PortNode edgeEnd;
+		if(type.equalsIgnoreCase("source")){
+			edgeEnd = testEdges.getEdges().get(position).getSource();
 		}
-		//In this instance, false means 'we haven't found a match yet'
-		return false;
-	}
-
-	//matches a path with a string location name- returns true is there is a match
-	private boolean matchEndOfPath(Graph testEdges, int position, String location){
-		return testEdges.getEdges().get(position).getSource().getNode().getId().getId().equalsIgnoreCase(location);
+		//Must be target
+		else{
+			edgeEnd = testEdges.getEdges().get(position).getTarget();
+		}
+		return edgeEnd.getNode().getId().getId().equalsIgnoreCase(location);
 	}
 
 	public int locationQuantity(){
@@ -174,6 +170,17 @@ public class Entities {
 		PortNode newPortNode = new PortNode();
 		newPortNode.setNode(newNode);
 		return newPortNode;
+	}
+
+	public void removePath(String startLocation, String endLocation){
+		Graph testEdges = entities.get(0).getSubgraphs().get(1);
+		for(int x=0;x<testEdges.getEdges().size(); x++){
+			if(matchEndsOfPath(testEdges, x, startLocation, "source")){
+				if(matchEndsOfPath(testEdges, x, endLocation, "target")) {
+					testEdges.getEdges().remove(x);
+				}
+			}
+		}
 	}
 
 	/********************************************************

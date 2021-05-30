@@ -35,7 +35,11 @@ public class CMDAction extends ExecutableCMD {
 			if(object.equalsIgnoreCase("health")){
 				playerState.removeFromHealth();
 			}
+			else if(isItLocation(object)){
+				entityClass.removePath(playerState.getCurrentLocationName(), entityClass.getLocationResultId());
+			}
 			else {
+				//Otherwise it must be an object
 				consumeSubject(object);
 			}
 		}
@@ -60,6 +64,15 @@ public class CMDAction extends ExecutableCMD {
 		entityClass.removeObject(mapLocation, objectPosition, locationType);
 	}
 
+	private boolean isItLocation(String object){
+		entityClass.locationSearch(object);
+		int locationPosition = entityClass.getLocationResultInt();
+		if(locationPosition != -1){
+			return true;
+		}
+		return false;
+	}
+
 	/********************************************************
 	 *******************   CREATE ITEMS   *******************
 	 ********************************************************/
@@ -68,13 +81,10 @@ public class CMDAction extends ExecutableCMD {
 		JSONArray subjectsArray = actionClass.getActionElement(actionPosition, "produced");
 		for (Object o : subjectsArray) {
 			String object = (String) o;
-			entityClass.locationSearch(object);
-			int locationPosition = entityClass.getLocationResultInt();
 			if(object.equalsIgnoreCase("health")){
 				playerState.addToHealth();
 			}
-			//if locationPosition doesn't return -1, it must be a location
-			else if(locationPosition != -1){
+			else if(isItLocation(object)){
 				//getNewLocationString() was set up by us calling findNewLocation earlier. We are using it rather than
 				//object to assure we're using id and not description
 				entityClass.createPath(playerState.getCurrentLocationName(), entityClass.getLocationResultId());
