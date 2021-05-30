@@ -110,8 +110,8 @@ public class Entities {
 	}
 
 	public boolean isLocationAccessible(String currentLocation, String targetLocation){
-		Graph testEdges = entities.get(0).getSubgraphs().get(1);
-		for(int x=0;x<testEdges.getEdges().size(); x++){
+		ArrayList<Edge> testEdges = entities.get(0).getSubgraphs().get(1).getEdges();
+		for(int x=0; x<testEdges.size(); x++){
 			if(matchEndsOfPath(testEdges, x, currentLocation, "source")){
 				if(matchEndsOfPath(testEdges, x, targetLocation, "target")) {
 					return true;
@@ -122,14 +122,14 @@ public class Entities {
 	}
 
 	//matches a path with a string location name- returns true if there is a match
-	private boolean matchEndsOfPath(Graph testEdges, int position, String location, String type){
+	private boolean matchEndsOfPath(ArrayList<Edge> testEdges, int position, String location, String type){
 		PortNode edgeEnd;
 		if(type.equalsIgnoreCase("source")){
-			edgeEnd = testEdges.getEdges().get(position).getSource();
+			edgeEnd = testEdges.get(position).getSource();
 		}
 		//Must be target
 		else{
-			edgeEnd = testEdges.getEdges().get(position).getTarget();
+			edgeEnd = testEdges.get(position).getTarget();
 		}
 		return edgeEnd.getNode().getId().getId().equalsIgnoreCase(location);
 	}
@@ -173,11 +173,12 @@ public class Entities {
 	}
 
 	public void removePath(String startLocation, String endLocation){
-		Graph testEdges = entities.get(0).getSubgraphs().get(1);
-		for(int x=0;x<testEdges.getEdges().size(); x++){
+		ArrayList<Edge> testEdges = entities.get(0).getSubgraphs().get(1).getEdges();
+		for(int x=0;x<testEdges.size(); x++){
 			if(matchEndsOfPath(testEdges, x, startLocation, "source")){
 				if(matchEndsOfPath(testEdges, x, endLocation, "target")) {
-					testEdges.getEdges().remove(x);
+					testEdges.remove(x);
+					return;
 				}
 			}
 		}
