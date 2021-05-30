@@ -20,6 +20,7 @@ public class CMDGoto extends ExecutableCMD{
 	public void execute() {
 		int nextLocation = parseLocation.getNewLocationPosition();
 		playerState.setCurrentLocation(nextLocation);
+		playerState.setCurrentLocationName(entityClass.findLocationId(nextLocation));
 	}
 
 	public String getExitMessage(){

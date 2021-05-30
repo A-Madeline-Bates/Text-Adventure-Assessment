@@ -2,23 +2,22 @@ import data.Entities;
 import data.PlayerState;
 
 public class CheckForDeath {
-	private final boolean isDead;
+	private boolean isDead;
 
 	public CheckForDeath(Entities entityClass, PlayerState playerState){
+		this.isDead = false;
 		if(playerState.getHealthLevel()<=0){
 			dropAllItems(entityClass, playerState);
 			returnToStart(entityClass, playerState);
+			playerState.returnFullHealth();
 			this.isDead = true;
-		}
-		//Not dead
-		else{
-			this.isDead = false;
 		}
 	}
 
-	private void dropAllItems(Entities entityClass, PlayerState playerState){
+	private static void dropAllItems(Entities entityClass, PlayerState playerState){
 		int invSize = playerState.getInventorySize();
-		for(int i=0; i<invSize; i++){
+		//i is one due to a stupid inventory quirk- fix !!!!!
+		for(int i=(invSize-1); i>=1; i--){
 			String droppedObject = playerState.getInventoryObject(i);
 			String droppedObjectDesc = playerState.getInventoryDescription(i);
 			playerState.consumedFromInventory(i);

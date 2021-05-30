@@ -131,6 +131,10 @@ public class PlayerState {
 		this.health = health - 1;
 	}
 
+	public void returnFullHealth(){
+		this.health=3;
+	}
+
 	public int getHealthLevel(){
 		return health;
 	}

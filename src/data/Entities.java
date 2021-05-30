@@ -112,10 +112,9 @@ public class Entities {
 	public boolean isLocationAccessible(String currentLocation, String targetLocation){
 		ArrayList<Edge> testEdges = entities.get(0).getSubgraphs().get(1).getEdges();
 		for(int x=0; x<testEdges.size(); x++){
-			if(matchEndsOfPath(testEdges, x, currentLocation, "source")){
-				if(matchEndsOfPath(testEdges, x, targetLocation, "target")) {
-					return true;
-				}
+			if(matchEndsOfPath(testEdges, x, currentLocation, "source") &&
+				matchEndsOfPath(testEdges, x, targetLocation, "target")) {
+				return true;
 			}
 		}
 		return false;
@@ -175,11 +174,10 @@ public class Entities {
 	public void removePath(String startLocation, String endLocation){
 		ArrayList<Edge> testEdges = entities.get(0).getSubgraphs().get(1).getEdges();
 		for(int x=0; x<testEdges.size(); x++){
-			if(matchEndsOfPath(testEdges, x, startLocation, "source")){
-				if(matchEndsOfPath(testEdges, x, endLocation, "target")) {
-					testEdges.remove(x);
-					return;
-				}
+			if(matchEndsOfPath(testEdges, x, startLocation, "source") &&
+					matchEndsOfPath(testEdges, x, endLocation, "target")) {
+				testEdges.remove(x);
+				return;
 			}
 		}
 	}
@@ -260,6 +258,10 @@ public class Entities {
 	/********************************************************
 	 ***************   RETURN DISPLAY TEXT    ****************
 	 ********************************************************/
+
+	public String findLocationId(int location){
+		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getId().getId();
+	}
 
 	public String findLocationDescription(int location){
 		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
