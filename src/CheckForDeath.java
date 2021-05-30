@@ -15,19 +15,19 @@ public class CheckForDeath {
 	}
 
 	private static void dropAllItems(Entities entityClass, PlayerState playerState){
-		int invSize = playerState.getInventorySize();
+		int invSize = playerState.getInvSize();
 		//i is one due to a stupid inventory quirk- fix !!!!!
 		for(int i=(invSize-1); i>=1; i--){
-			String droppedObject = playerState.getInventoryObject(i);
-			String droppedObjectDesc = playerState.getInventoryDescription(i);
-			playerState.consumedFromInventory(i);
+			String droppedObject = playerState.getInvObject(i);
+			String droppedObjectDesc = playerState.getInvDesc(i);
+			playerState.consumeFromInv(i);
 			entityClass.addObject(droppedObject, droppedObjectDesc, playerState.getCurrentLocation(), "artefacts");
 		}
 	}
 
 	private static void returnToStart(Entities entityClass, PlayerState playerState){
 		playerState.setCurrentLocation(0);
-		playerState.setCurrentLocationName(entityClass.findFirstLocation());
+		playerState.setCurrentLocName(entityClass.findFirstLocation());
 	}
 
 	public String getExitMessage(){

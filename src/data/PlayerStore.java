@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PlayerStore {
 	private final List<PlayerState> playerList = new ArrayList<PlayerState>();
-	private String firstLocation;
+	private final String firstLocation;
 
 	public PlayerStore(String firstLocation){
 		this.firstLocation = firstLocation;
@@ -25,7 +25,7 @@ public class PlayerStore {
 		return createPlayer(playerName);
 	}
 
-	private static String findValidName(Tokeniser tokeniser) throws ParseException {
+	private static String findValidName(Tokeniser tokeniser) throws parseExceptions.TokenMissing {
 		StringBuilder fullName = new StringBuilder();
 		while(true) {
 			String playerName = tokeniser.getNextToken();
@@ -37,7 +37,7 @@ public class PlayerStore {
 				return fullName.toString();
 			}
 			else{
-				fullName.append(playerName + " ");
+				fullName.append(playerName).append(" ");
 			}
 		}
 	}

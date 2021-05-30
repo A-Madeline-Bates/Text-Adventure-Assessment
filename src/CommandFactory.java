@@ -1,6 +1,5 @@
 import cmdClasses.*;
 import data.*;
-import data.Entities;
 import parse.*;
 import parseExceptions.*;
 import tokeniser.Tokeniser;
@@ -22,7 +21,7 @@ public class CommandFactory {
 	}
 
 	//This will act as a factory for instances of CMDType
-	public CMDType createCMD(Tokeniser tokeniser) throws ParseException, CommandMissing {
+	public CMDType createCMD(Tokeniser tokeniser) throws ParseException {
 		tokeniser.createCommandList();
 		ArrayList<String> commandList = tokeniser.getCommandList();
 		for(int i=0; i<commandList.size(); i++) {
@@ -72,7 +71,7 @@ public class CommandFactory {
 		}
 	}
 
-	private boolean searchActionCmd(int i, ArrayList<String> commandList) throws ParseException {
+	private boolean searchActionCmd(int i, ArrayList<String> commandList) throws ActionSubjectsNotPresent {
 		//This tries to find a match between the token and the available actions. If the action word "open" appears
 		// twice in the dot file, the array position of both instances will be recorded in the actionPositions array.
 		ArrayList<Integer> actionPositions = actionClass.findAction(i, commandList);

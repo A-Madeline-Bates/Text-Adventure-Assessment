@@ -15,13 +15,13 @@ public class CMDDrop extends ExecutableCMD{
 	}
 
 	public void execute() {
-		String droppedObject = parsedInventory.getInventoryObject();
-		String droppedObjectDescription = parsedInventory.getInventoryObjectDescription();
-		playerState.consumedFromInventory(parsedInventory.getInventoryObjectPosition());
-		entities.addObject(droppedObject, droppedObjectDescription, playerState.getCurrentLocation(), "artefacts");
+		String droppedObject = parsedInventory.getInvObject();
+		String droppedObjectDesc = parsedInventory.getInvObjectDesc();
+		playerState.consumeFromInv(parsedInventory.getInvObjectPosition());
+		entities.addObject(droppedObject, droppedObjectDesc, playerState.getCurrentLocation(), "artefacts");
 	}
 
 	public String getExitMessage(){
-		return "You dropped a " + parsedInventory.getInventoryObject() + ".\n";
+		return "You dropped a " + parsedInventory.getInvObject() + ".\n";
 	}
 }

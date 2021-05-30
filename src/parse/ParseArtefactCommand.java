@@ -2,7 +2,6 @@ package parse;
 import data.Entities;
 import data.PlayerState;
 import parseExceptions.ArtefactDoesNotExist;
-import parseExceptions.ParseException;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,7 @@ public class ParseArtefactCommand {
 	private String artefactName;
 	private String artefactDescription;
 
-	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, ArrayList<String> commandList) throws ParseException {
+	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, ArrayList<String> commandList) throws ArtefactDoesNotExist {
 		validateArtefact(commandList, entityClass, playerState);
 	}
 
@@ -41,7 +40,7 @@ public class ParseArtefactCommand {
 		return artefactName;
 	}
 
-	public String getArtefactDescription(){
+	public String getArtefactDesc(){
 		return artefactDescription;
 	}
 }

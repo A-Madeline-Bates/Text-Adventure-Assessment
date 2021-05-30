@@ -30,13 +30,13 @@ public class CMDAction extends ExecutableCMD {
 
 	private void consumeItems(int actionPosition){
 		JSONArray subjectsArray = actionClass.getActionElement(actionPosition, "consumed");
-		for (Object o : subjectsArray) {
-			String object = (String) o;
+		for (Object obj : subjectsArray) {
+			String object = (String) obj;
 			if(object.equalsIgnoreCase("health")){
 				playerState.removeFromHealth();
 			}
 			else if(isItLocation(object)){
-				entityClass.removePath(playerState.getCurrentLocationName(), entityClass.getLocationResultId());
+				entityClass.removePath(playerState.getCurrentLocName(), entityClass.getLocationResultId());
 			}
 			else {
 				//Otherwise it must be an object
@@ -46,11 +46,11 @@ public class CMDAction extends ExecutableCMD {
 	}
 
 	private void consumeSubject(String object) {
-		String locationType = parseAction.getSubjectLocationType(object);
+		String locationType = parseAction.getSubjectStore(object);
 		if (locationType.equalsIgnoreCase("inventory")) {
 			//get position in inventory
 			int invObjectPosition = parseAction.getSubjectPosition(object);
-			playerState.consumedFromInventory(invObjectPosition);
+			playerState.consumeFromInv(invObjectPosition);
 		}
 		//otherwise must be furniture, artefact or character
 		else {
@@ -79,15 +79,15 @@ public class CMDAction extends ExecutableCMD {
 
 	private void createItems(int actionPosition){
 		JSONArray subjectsArray = actionClass.getActionElement(actionPosition, "produced");
-		for (Object o : subjectsArray) {
-			String object = (String) o;
+		for (Object obj : subjectsArray) {
+			String object = (String) obj;
 			if(object.equalsIgnoreCase("health")){
 				playerState.addToHealth();
 			}
 			else if(isItLocation(object)){
 				//getNewLocationString() was set up by us calling findNewLocation earlier. We are using it rather than
 				//object to assure we're using id and not description
-				entityClass.createPath(playerState.getCurrentLocationName(), entityClass.getLocationResultId());
+				entityClass.createPath(playerState.getCurrentLocName(), entityClass.getLocationResultId());
 			}
 			else {
 				//Otherwise it must be an object- we will need to find this and move it in the entity file

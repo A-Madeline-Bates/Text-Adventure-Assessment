@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Actions {
 	private final JSONArray actions;
-	private ArrayList<Integer> validActions = new ArrayList<Integer>();
+	private final ArrayList<Integer> validActions = new ArrayList<Integer>();
 
 	public Actions(JSONArray actions) {
 		this.actions = actions;
@@ -30,7 +30,7 @@ public class Actions {
 		return validActions;
 	}
 
-	private boolean itItTwoPartAction(String trigger, int commandPosition, ArrayList<String> commandList){
+	private static boolean itItTwoPartAction(String trigger, int commandPosition, ArrayList<String> commandList){
 		//This test is to stop us going over the end of the array. If i+1>commandList.size()-1 (the final array
 		// position), that would cause an error. Therefore i must be i<=commandList.size()-2.
 		if(commandPosition > (commandList.size() - 2)){

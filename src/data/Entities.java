@@ -1,7 +1,6 @@
 package data;
 import com.alexmerz.graphviz.objects.*;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Entities {
 	private final ArrayList<Graph> entities;
@@ -37,7 +36,7 @@ public class Entities {
 		ArrayList<Node> entityArray = myLocationGraph.getNodes(true);
 		for (int j = 0; j < entityArray.size(); j++) {
 			//-3 used to specify nothing found yet
-			int positionResult = checkEntityIdentifiers(myLocationGraph, j, comparisonString);
+			int positionResult = matchEntityStrings(myLocationGraph, j, comparisonString);
 			if(positionResult != -3){
 				return positionResult;
 			}
@@ -46,7 +45,7 @@ public class Entities {
 		return -2;
 	}
 
-	private int checkEntityIdentifiers(Graph myLocationGraph, int j, String comparisonString){
+	private int matchEntityStrings(Graph myLocationGraph, int j, String comparisonString){
 		if (myLocationGraph.getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)) {
 			setEntityVariables(myLocationGraph, j);
 			return j;
@@ -121,7 +120,7 @@ public class Entities {
 	}
 
 	//matches a path with a string location name- returns true if there is a match
-	private boolean matchEndsOfPath(ArrayList<Edge> testEdges, int position, String location, String type){
+	private static boolean matchEndsOfPath(ArrayList<Edge> testEdges, int position, String location, String type){
 		PortNode edgeEnd;
 		if(type.equalsIgnoreCase("source")){
 			edgeEnd = testEdges.get(position).getSource();
@@ -198,10 +197,10 @@ public class Entities {
 
 	public void addObject(String objectID, String objectDesc, int currentLocation, String objectType){
 		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
-		for (int i=0; i<myLocationGraphs.size(); i++) {
-			if (myLocationGraphs.get(i).getId().getId().equalsIgnoreCase(objectType)) {
+		for (Graph myLocationGraph : myLocationGraphs) {
+			if (myLocationGraph.getId().getId().equalsIgnoreCase(objectType)) {
 				//Get list of nodes attached to the location which are of our objectType
-				ArrayList<Node> objectArray = myLocationGraphs.get(i).getNodes(true);
+				ArrayList<Node> objectArray = myLocationGraph.getNodes(true);
 				addObjectNode(objectArray, objectID, objectDesc, "description");
 				return;
 			}
@@ -220,8 +219,8 @@ public class Entities {
 		objectArray.add(newNode);
 	}
 
-	private void addObjectType(ArrayList<Graph> myLocationGraphs, String objectID, String objectDesc, String objectType){
-		myLocationGraphs = addNewGraph(myLocationGraphs, objectType);
+	private static void addObjectType(ArrayList<Graph> myLocationGraphs, String objectID, String objectDesc, String objectType){
+		addNewGraph(myLocationGraphs, objectType);
 		//Get location of our new subgraph- it will be last on the list of graphs attached to the location
 		int newGraphLocation = myLocationGraphs.size() - 1;
 		//Get our new graph
@@ -230,19 +229,17 @@ public class Entities {
 		addObjectNode(objectArray, "node", getNodeShape(objectType), "shape");
 		//adding our object to the array
 		addObjectNode(objectArray, objectID, objectDesc, "description");
-		return;
 	}
 
-	private ArrayList<Graph> addNewGraph(ArrayList<Graph> myLocationGraphs, String objectType){
+	private static void addNewGraph(ArrayList<Graph> myLocationGraphs, String objectType){
 		Graph newGraph = new Graph();
 		Id newId = new Id();
 		newId.setId(objectType);
 		newGraph.setId(newId);
 		myLocationGraphs.add(newGraph);
-		return myLocationGraphs;
 	}
 
-	private String getNodeShape(String objectType){
+	private static String getNodeShape(String objectType){
 		if(objectType.equalsIgnoreCase("furniture")){
 			return "hexagon";
 		}
@@ -263,7 +260,7 @@ public class Entities {
 		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getId().getId();
 	}
 
-	public String findLocationDescription(int location){
+	public String findLocationDesc(int location){
 		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
 	}
 
@@ -290,14 +287,14 @@ public class Entities {
 
 	public String getPathsList(int location){
 		String locationName = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getId().getId();
-		StringBuilder allAccessibleLocations = new StringBuilder();
+		StringBuilder allLocations = new StringBuilder();
 		Graph testEdges = entities.get(0).getSubgraphs().get(1);
 		for(int x=0;x<testEdges.getEdges().size(); x++){
 			if(testEdges.getEdges().get(x).getSource().getNode().getId().getId().equalsIgnoreCase(locationName)){
-				allAccessibleLocations.append(testEdges.getEdges().get(x).getTarget().getNode().getId().getId()).append("\n");
+				allLocations.append(testEdges.getEdges().get(x).getTarget().getNode().getId().getId()).append("\n");
 			}
 		}
-		return resolveIfEmpty(allAccessibleLocations.toString());
+		return resolveIfEmpty(allLocations.toString());
 	}
 
 	private static String resolveIfEmpty(String returnString){

@@ -15,7 +15,7 @@ public class CMDLook extends CMDType{
 
 	public String getExitMessage(){
 		int currentLocation = playerState.getCurrentLocation();
-		return "You are in " + entityClass.findLocationDescription(currentLocation) +
+		return "You are in " + entityClass.findLocationDesc(currentLocation) +
 				"\nYou can see: \n" + entityClass.getEntityString(currentLocation, "artefacts") +
 				entityClass.getEntityString(currentLocation, "furniture") +
 				entityClass.getEntityString(currentLocation, "characters") +

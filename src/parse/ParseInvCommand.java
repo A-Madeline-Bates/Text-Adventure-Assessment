@@ -1,7 +1,6 @@
 package parse;
 import data.PlayerState;
 import parseExceptions.NotInInventory;
-import parseExceptions.ParseException;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ public class ParseInvCommand {
 	private String inventoryDescription;
 	private int inventoryPosition;
 
-	public ParseInvCommand(PlayerState playerState, ArrayList<String> commandList) throws ParseException {
+	public ParseInvCommand(PlayerState playerState, ArrayList<String> commandList) throws NotInInventory {
 		searchInventory(playerState, commandList);
 	}
 
@@ -19,8 +18,8 @@ public class ParseInvCommand {
 		for(String singleToken : commandList) {
 			int inventoryPosition = playerState.findInInventory(singleToken);
 			if (inventoryPosition != -1) {
-				this.inventoryObject = playerState.getInventoryObject(inventoryPosition);
-				this.inventoryDescription = playerState.getInventoryDescription(inventoryPosition);
+				this.inventoryObject = playerState.getInvObject(inventoryPosition);
+				this.inventoryDescription = playerState.getInvDesc(inventoryPosition);
 				this.inventoryPosition = inventoryPosition;
 				//If an object is found in the inventory, stop searching
 				return;
@@ -30,15 +29,15 @@ public class ParseInvCommand {
 		throw new NotInInventory();
 	}
 
-	public String getInventoryObject(){
+	public String getInvObject(){
 		return inventoryObject;
 	}
 
-	public String getInventoryObjectDescription(){
+	public String getInvObjectDesc(){
 		return inventoryDescription;
 	}
 
-	public int getInventoryObjectPosition(){
+	public int getInvObjectPosition(){
 		return inventoryPosition;
 	}
 }

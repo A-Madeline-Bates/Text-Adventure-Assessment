@@ -74,19 +74,19 @@ public class PlayerState {
 		}
 	}
 
-	public String getInventoryObject(int inventoryPosition){
+	public String getInvObject(int inventoryPosition){
 		return inventoryList.get(inventoryPosition).get(0);
 	}
 
-	public String getInventoryDescription(int inventoryPosition){
+	public String getInvDesc(int inventoryPosition){
 		return inventoryList.get(inventoryPosition).get(1);
 	}
 
-	public void consumedFromInventory(int objectPosition){
+	public void consumeFromInv(int objectPosition){
 		inventoryList.remove(objectPosition);
 	}
 
-	public String getInventoryString(){
+	public String getInvString(){
 		StringBuilder invList = new StringBuilder();
 		//Starting at 1, to skip first inventory entry, null
 		for(int i=1; i<inventoryList.size(); i++) {
@@ -95,7 +95,7 @@ public class PlayerState {
 		return invList.toString();
 	}
 
-	public int getInventorySize(){
+	public int getInvSize(){
 		return inventoryList.size();
 	}
 
@@ -111,11 +111,11 @@ public class PlayerState {
 		this.currentLocation = currentLocation;
 	}
 
-	public String getCurrentLocationName(){
+	public String getCurrentLocName(){
 		return currentLocationName;
 	}
 
-	public void setCurrentLocationName(String currentLocationName){
+	public void setCurrentLocName(String currentLocationName){
 		this.currentLocationName = currentLocationName;
 	}
 

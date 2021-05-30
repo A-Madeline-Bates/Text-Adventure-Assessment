@@ -13,11 +13,11 @@ public class ParseActionCommand {
 	private final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
 	private int actionPosition;
 
-	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, ArrayList<Integer> actionPositions, ArrayList<String> commandList) throws ParseException {
+	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, ArrayList<Integer> actionPositions, ArrayList<String> commandList) throws ActionSubjectsNotPresent {
 		validateActionObject(commandList, actionPositions, actionsClass, entityClass, playerState);
 	}
 
-	private void validateActionObject(ArrayList<String> commandList, ArrayList<Integer> actionPositions, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectMismatch, ActionSubjectsNotPresent {
+	private void validateActionObject(ArrayList<String> commandList, ArrayList<Integer> actionPositions, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectsNotPresent {
 		//cycle through possible actionPositions and check that the subjects we would need to execute that action
 		// are present. If yes, check whether one the relevant subjects are mentioned somewhere in the command
 		for(int actionPosition : actionPositions) {
@@ -34,7 +34,7 @@ public class ParseActionCommand {
 		throw new ActionSubjectsNotPresent();
 	}
 
-	private boolean isCommandValid(JSONArray subjectsArray, ArrayList<String> commandList, int actionPosition) throws ActionSubjectMismatch {
+	private boolean isCommandValid(JSONArray subjectsArray, ArrayList<String> commandList, int actionPosition) {
 		for(String singleToken : commandList) {
 			//check whether the token we're looking at is a subject
 			if (isCommandValid(subjectsArray, singleToken)) {
@@ -80,7 +80,7 @@ public class ParseActionCommand {
 		entityClass.locationSearch(object);
 		int searchPosition = entityClass.getLocationResultInt();
 		if (searchPosition != -1) {
-			if (entityClass.isLocationAccessible(playerState.getCurrentLocationName(), entityClass.getLocationResultId())) {
+			if (entityClass.isLocationAccessible(playerState.getCurrentLocName(), entityClass.getLocationResultId())) {
 				//In this instance saving the location's information isn't very useful, because when we come to
 				// executing we'll work with paths and not locations, but we'll save the information for consistency
 				// anyway
@@ -103,7 +103,7 @@ public class ParseActionCommand {
 	private boolean checkForInventory(PlayerState playerState, String object){
 		int position = playerState.findInInventory(object);
 		if(position != -1){
-			addToSubjectArray(playerState.getInventoryObject(position), position, "inventory");
+			addToSubjectArray(playerState.getInvObject(position), position, "inventory");
 			return true;
 		}
 		return false;
@@ -145,7 +145,7 @@ public class ParseActionCommand {
 		return -1;
 	}
 
-	public String getSubjectLocationType(String subject) {
+	public String getSubjectStore(String subject) {
 		for (ActionStore actionStore : subjectInformation) {
 			if (actionStore.getSubjectName().equalsIgnoreCase(subject)) {
 				//get data storage type (i.e artefact, furniture, inventory &c)

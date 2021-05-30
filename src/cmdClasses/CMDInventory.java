@@ -7,6 +7,6 @@ public class CMDInventory extends CMDType{
 	}
 
 	public String getExitMessage(){
-		return "In your inventory, you have: " + playerState.getInventoryString() + "\n";
+		return "In your inventory, you have: " + playerState.getInvString() + "\n";
 	}
 }

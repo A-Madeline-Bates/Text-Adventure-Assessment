@@ -16,7 +16,7 @@ public class Tokeniser {
 	}
 
 	//Used to access player names
-	public String getNextToken() throws ParseException {
+	public String getNextToken() throws TokenMissing {
 		testArrayPosition();
 		//This will throw an exception if there's not enough words in the command to fulfill what we need
 		String token = tokenList.get(arrayPosition);
@@ -34,8 +34,8 @@ public class Tokeniser {
 	public void createCommandList(){
 		int nameEnd = arrayPosition-1;
 		ArrayList<String> commandList = new ArrayList<>(tokenList);
-		for(int i=nameEnd; i>=0; i--){
-			commandList.remove(i);
+		if (nameEnd >= 0) {
+			commandList.subList(0, nameEnd + 1).clear();
 		}
 		this.commandList = commandList;
 	}

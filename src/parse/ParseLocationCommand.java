@@ -3,14 +3,13 @@ import data.Entities;
 import data.PlayerState;
 import parseExceptions.LocationDoesNotExist;
 import parseExceptions.LocationIsNotAccessible;
-import parseExceptions.ParseException;
 
 import java.util.ArrayList;
 
 public class ParseLocationCommand {
 	private int locationPosition;
 
-	public ParseLocationCommand(Entities entityClass, PlayerState playerState, ArrayList<String> commandList) throws ParseException {
+	public ParseLocationCommand(Entities entityClass, PlayerState playerState, ArrayList<String> commandList) throws LocationIsNotAccessible, LocationDoesNotExist {
 		validateNewLocation(commandList, entityClass, playerState);
 	}
 
@@ -32,7 +31,7 @@ public class ParseLocationCommand {
 
 	private void checkAccessibility(String singleToken, int searchPosition, Entities entityClass, PlayerState playerState) throws LocationIsNotAccessible {
 		//This finds whether there is a path in the dot file attached to the location (i.e, the location is accessible)
-		if (entityClass.isLocationAccessible(playerState.getCurrentLocationName(),  entityClass.getLocationResultId())) {
+		if (entityClass.isLocationAccessible(playerState.getCurrentLocName(),  entityClass.getLocationResultId())) {
 			//This returns the array position of the artefact we are trying to find.
 			this.locationPosition = searchPosition;
 		} else {
@@ -40,7 +39,7 @@ public class ParseLocationCommand {
 		}
 	}
 
-	public int getNewLocationPosition(){
+	public int getNewLocationInt(){
 		return locationPosition;
 	}
 }

@@ -18,14 +18,14 @@ public class CMDGoto extends ExecutableCMD{
 	}
 
 	public void execute() {
-		int nextLocation = parseLocation.getNewLocationPosition();
+		int nextLocation = parseLocation.getNewLocationInt();
 		playerState.setCurrentLocation(nextLocation);
-		playerState.setCurrentLocationName(entityClass.findLocationId(nextLocation));
+		playerState.setCurrentLocName(entityClass.findLocationId(nextLocation));
 	}
 
 	public String getExitMessage(){
 		int currentLocation = playerState.getCurrentLocation();
-		return "You are in " + entityClass.findLocationDescription(currentLocation) +
+		return "You are in " + entityClass.findLocationDesc(currentLocation) +
 				"\nYou can see: \n" + entityClass.getEntityString(currentLocation, "artefacts") +
 				entityClass.getEntityString(currentLocation, "furniture") +
 				entityClass.getEntityString(currentLocation, "characters") +
