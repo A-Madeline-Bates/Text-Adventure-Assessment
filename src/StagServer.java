@@ -109,13 +109,6 @@ class StagServer
     }
 }
 
-//entities names cannot be more than one word (it would make the dot file very hard to parse), action trigger can be
-// more than one word (because the double quotes allow them to be parsed)
-
-// You should include the descriptions in look (otherwise they would never get seen !) as well as the names
-
-//ignore punctuation in commands?
-
 // Consume path?
 
 // As an extension to the basic game, you might like to add a "health level" feature. Each player should start with

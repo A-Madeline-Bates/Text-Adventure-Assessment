@@ -1,6 +1,7 @@
 package data;
 import com.alexmerz.graphviz.objects.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Entities {
 	final ArrayList<Graph> entities;
@@ -267,9 +268,10 @@ public class Entities {
 			if (myLocationGraph.getId().getId().equalsIgnoreCase(entityType)) {
 				ArrayList<Node> artefactArray = myLocationGraph.getNodes(true);
 				for (int j = 0; j < artefactArray.size(); j++) {
-					if (!artefactArray.get(j).getId().getId().equals("node")) {
-						allArtefacts.append(myLocationGraph.getNodes(false).get(j).getAttribute("description")).append("\n");
-					}
+					//Add item ID
+					allArtefacts.append(artefactArray.get(j).getId().getId().toUpperCase()).append(" : ");
+					//Add item description
+					allArtefacts.append(myLocationGraph.getNodes(false).get(j).getAttribute("description")).append("\n");
 				}
 			}
 		}
