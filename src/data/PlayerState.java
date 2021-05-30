@@ -6,9 +6,8 @@ public class PlayerState {
 	private String playerName;
 	private final List<List<String>> inventoryList = new ArrayList<List<String>>();
 	private int health;
-	//following the logic that initial location is always 0- this might be worth changing
 	private int currentLocation;
-	private final String currentLocationName;
+	private String currentLocationName;
 
 	public PlayerState(String firstLocation){
 		this.currentLocation = 0;
@@ -96,6 +95,10 @@ public class PlayerState {
 		return invList.toString();
 	}
 
+	public int getInventorySize(){
+		return inventoryList.size();
+	}
+
 	/********************************************************
 	 ********************   LOCATION   *********************
 	 ********************************************************/
@@ -110,6 +113,10 @@ public class PlayerState {
 
 	public String getCurrentLocationName(){
 		return currentLocationName;
+	}
+
+	public void setCurrentLocationName(String currentLocationName){
+		this.currentLocationName = currentLocationName;
 	}
 
 	/********************************************************

@@ -86,6 +86,8 @@ class StagServer
             CommandFactory factory = new CommandFactory(entityClass, actionClass, playerState, playerStore);
             CMDType command = factory.createCMD(tokeniser);
             this.exitMessage = exitMessage + command.getExitMessage();
+            CheckForDeath deathCheck = new CheckForDeath(entityClass, playerState);
+            this.exitMessage = exitMessage + deathCheck.getExitMessage();
             //CHECK IF DEAD
         } catch(ParseException exception){
             this.exitMessage = exitMessage + "Error: " + exception;
@@ -109,8 +111,6 @@ class StagServer
     }
 }
 
-// Consume path?
-
 // As an extension to the basic game, you might like to add a "health level" feature. Each player should start with
 // a health level of 3. Consumption of "Poisons & Potions" or interaction with beneficial or dangerous characters will
 // increase or decrease a player's health.
@@ -120,6 +120,7 @@ class StagServer
 // back the player's current health level (so the player can keep track of it).
 // A prompt should be provided after a player die, something like "you have died and lose all of your items, return to the start"
 
+// Make everything private
 // Check the style guide + previous feedback
 // Reduce complexity
 // Shorten method names / make sure all methods start with verb
