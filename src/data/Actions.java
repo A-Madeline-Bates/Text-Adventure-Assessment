@@ -11,19 +11,36 @@ public class Actions {
 		this.actions = actions;
 	}
 
-	public ArrayList<Integer> findAction(String nextToken){
+	public ArrayList<Integer> findAction(int commandPosition, ArrayList<String> commandList){
 		for(int i=0; i<actions.size(); i++){
 			JSONObject jsonAction = (JSONObject) actions.get(i);
 			JSONArray actionTriggers = (JSONArray) jsonAction.get("triggers");
 			for (Object actionTrigger : actionTriggers) {
 				String trigger = (String) actionTrigger;
-				if (nextToken.equalsIgnoreCase(trigger)) {
+				if (commandList.get(commandPosition).equalsIgnoreCase(trigger)) {
 					//If we've found a valid action position, add it to an array
+					validActions.add(i);
+				}
+				//Action commands can be composed of two words. This is checking if that is the case.
+				else if(itItTwoPartAction(trigger, commandPosition, commandList)){
 					validActions.add(i);
 				}
 			}
 		}
 		return validActions;
+	}
+
+	private boolean itItTwoPartAction(String trigger, int commandPosition, ArrayList<String> commandList){
+		//This test is to stop us going over the end of the array. If i+1>commandList.size()-1 (the final array
+		// position), that would cause an error. Therefore i must be i<=commandList.size()-2.
+		if(commandPosition > (commandList.size() - 2)){
+			return false;
+		}
+		String comparisonString = commandList.get(commandPosition) + " " + commandList.get(commandPosition+1);
+		if(comparisonString.equals(trigger)) {
+			return true;
+		}
+		return false;
 	}
 
 	public String getMessage(int position){

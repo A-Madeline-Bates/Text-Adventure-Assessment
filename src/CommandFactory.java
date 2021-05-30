@@ -25,8 +25,8 @@ public class CommandFactory {
 	public CMDType createCMD(Tokeniser tokeniser) throws ParseException, CommandMissing {
 		tokeniser.createCommandList();
 		ArrayList<String> commandList = tokeniser.getCommandList();
-		for(String singleToken : commandList) {
-			if(searchCmd(singleToken, commandList)){
+		for(int i=0; i<commandList.size(); i++) {
+			if(searchCmd(i, commandList)){
 				return this.activeCommand;
 			}
 		}
@@ -34,10 +34,10 @@ public class CommandFactory {
 		throw new InvalidFirstCommand();
 	}
 
-	private boolean searchCmd(String nextToken, ArrayList<String> commandList) throws ParseException{
+	private boolean searchCmd(int i, ArrayList<String> commandList) throws ParseException{
 		//This method looks at all commands which only want one word of input
 		//checkForExtra() will throw an assert error if there is extra tokens in the input command
-		switch (nextToken.toUpperCase()) {
+		switch (commandList.get(i).toUpperCase()) {
 			case "INVENTORY":
 			case "INV":
 				this.activeCommand = new CMDInventory(playerState);
@@ -49,12 +49,12 @@ public class CommandFactory {
 				this.activeCommand = new CMDHealth(playerState);
 				return true;
 			default:
-				return searchMultiCmd(nextToken, commandList);
+				return searchMultiCmd(i, commandList);
 		}
 	}
 
-	private boolean searchMultiCmd(String nextToken, ArrayList<String> commandList) throws ParseException{
-		switch (nextToken.toUpperCase()) {
+	private boolean searchMultiCmd(int i, ArrayList<String> commandList) throws ParseException{
+		switch (commandList.get(i).toUpperCase()) {
 			case "DROP":
 				ParseInvCommand parseInv = new ParseInvCommand(playerState, commandList);
 				this.activeCommand = new CMDDrop(parseInv, entityClass, playerState);
@@ -68,14 +68,14 @@ public class CommandFactory {
 				this.activeCommand = new CMDGoto(parseLocation, playerState, entityClass, playerStore);
 				return true;
 			default:
-				return searchActionCmd(nextToken, commandList);
+				return searchActionCmd(i, commandList);
 		}
 	}
 
-	private boolean searchActionCmd(String nextToken, ArrayList<String> commandList) throws ParseException {
+	private boolean searchActionCmd(int i, ArrayList<String> commandList) throws ParseException {
 		//This tries to find a match between the token and the available actions. If the action word "open" appears
 		// twice in the dot file, the array position of both instances will be recorded in the actionPositions array.
-		ArrayList<Integer> actionPositions = actionClass.findAction(nextToken);
+		ArrayList<Integer> actionPositions = actionClass.findAction(i, commandList);
 		//If the size of the array is zero, this token isn't a valid action
 		if(actionPositions.size() != 0) {
 			ParseActionCommand parseAction = new ParseActionCommand(actionClass, entityClass, playerState, actionPositions, commandList);

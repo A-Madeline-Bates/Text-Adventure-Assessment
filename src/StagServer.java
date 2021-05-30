@@ -109,8 +109,6 @@ class StagServer
     }
 }
 
-//It is worth noting that action names are NOT unique - for example there may be multiple "open" actions that act on
-// different entities. So be careful when storing and accessing actions.
 //entities names cannot be more than one word (it would make the dot file very hard to parse), action trigger can be
 // more than one word (because the double quotes allow them to be parsed)
 
