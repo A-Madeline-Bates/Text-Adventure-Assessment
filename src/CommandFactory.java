@@ -79,6 +79,7 @@ public class CommandFactory {
 		if(actionPositions.size() != 0) {
 			ParseActionCMD parseAction = new ParseActionCMD(actions, entities, playerState, actionPositions, commands);
 			this.activeCommand = new CMDAction(parseAction, actions, entities, playerState);
+			actions.resetActionArr();
 			return true;
 		}
 		return false;

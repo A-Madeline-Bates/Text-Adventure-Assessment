@@ -8,7 +8,7 @@ public class NoPathErr extends ParseException {
 	}
 
 	public String toString() {
-		return "There is no available path to location you are trying to access. Location specified was "
+		return "There is no available path to location you are trying to access.\nLocation specified was "
 				+ token + ".\n";
 	}
 }

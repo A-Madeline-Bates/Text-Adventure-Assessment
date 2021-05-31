@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Actions {
 	private final JSONArray actions;
-	private final ArrayList<Integer> validActions = new ArrayList<Integer>();
+	private ArrayList<Integer> validActions = new ArrayList<Integer>();
 
 	public Actions(JSONArray actions) {
 		this.actions = actions;
@@ -48,5 +48,9 @@ public class Actions {
 	public JSONArray getActionElement(int position, String elementType){
 		JSONObject jsonAction = (JSONObject) actions.get(position);
 		return (JSONArray) jsonAction.get(elementType);
+	}
+
+	public void resetActionArr(){
+		this.validActions = new ArrayList<Integer>();
 	}
 }
