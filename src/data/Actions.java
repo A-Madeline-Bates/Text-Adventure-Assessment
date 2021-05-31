@@ -37,10 +37,7 @@ public class Actions {
 			return false;
 		}
 		String comparisonString = commandList.get(commandPosition) + " " + commandList.get(commandPosition+1);
-		if(comparisonString.equals(trigger)) {
-			return true;
-		}
-		return false;
+		return comparisonString.equals(trigger);
 	}
 
 	public String getMessage(int position){

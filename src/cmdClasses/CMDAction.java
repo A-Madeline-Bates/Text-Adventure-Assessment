@@ -5,7 +5,7 @@ import data.PlayerState;
 import parse.ParseActionCMD;
 import org.json.simple.JSONArray;
 
-public class CMDAction extends ExecutableCMD {
+public class CMDAction extends CMDType implements ExecutableCMD {
 	private final ParseActionCMD parseAction;
 	private final Actions actionClass;
 	private final Entities entityClass;

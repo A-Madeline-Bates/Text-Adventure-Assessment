@@ -111,9 +111,7 @@ class StagServer
     }
 }
 
-// Check the style guide + previous feedback
-// Reduce complexity
-// Shorten lines!
 //Refactor to make some classes smaller?
+//Dry code?
 //TEST
 //TEST WITH THE SERVER PROVIDED

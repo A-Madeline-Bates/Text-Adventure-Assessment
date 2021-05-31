@@ -4,7 +4,7 @@ import data.PlayerState;
 import data.PlayerStore;
 import parse.ParseLocationCMD;
 
-public class CMDGoto extends ExecutableCMD{
+public class CMDGoto extends CMDType implements ExecutableCMD {
 	private final ParseLocationCMD parseLocation;
 	private final Entities entities;
 	private final PlayerStore playStore;
