@@ -105,13 +105,12 @@ class StagServer
         this.actionClass = new Actions(actions);
     }
 
-    private void createEntityClass() throws IOException{
+    private void createEntityClass() throws FileNotFoundException {
         ArrayList<Graph> entities = new ParseEntities(entityFilename).getEntities();
         this.entityClass = new Entities(entities);
     }
 }
 
-//Refactor to make some classes smaller?
 //Dry code?
 //TEST
 //TEST WITH THE SERVER PROVIDED

@@ -1,7 +1,7 @@
 package parseExceptions;
 
 public class NoPathErr extends ParseException {
-	private String token;
+	private final String token;
 
 	public NoPathErr(String token) {
 		this.token = token;

@@ -205,7 +205,7 @@ public class Entities {
 			if (locationSubgraph.getId().getId().equalsIgnoreCase(objType)) {
 				//Get list of nodes attached to the location which are of our objType
 				ArrayList<Node> objArray = locationSubgraph.getNodes(true);
-				addObjectNode(objArray, objID, objDesc, "description");
+				addObjectNode(objArray, objID, objDesc);
 				return;
 			}
 		}
@@ -214,23 +214,23 @@ public class Entities {
 		addObjectType(locationGraph, objID, objDesc, objType);
 	}
 
-	private static void addObjectNode(ArrayList<Node> objArray, String objID, String objDesc, String nodeType){
+	private static void addObjectNode(ArrayList<Node> objArray, String objID, String objDesc){
 		Id newId = new Id();
 		newId.setId(objID);
 		Node newNode = new Node();
 		newNode.setId(newId);
-		newNode.setAttribute(nodeType, objDesc);
+		newNode.setAttribute("description", objDesc);
 		objArray.add(newNode);
 	}
 
-	private void addObjectType(Graph locationGraph,String objID,String objDesc,String objType){
+	private static void addObjectType(Graph locationGraph, String objID, String objDesc, String objType){
 		addNewGraph(locationGraph, objType);
 		ArrayList<Graph> myLocationGraphs = locationGraph.getSubgraphs();
 		//Get location of our new subgraph- it will be last on the list of graphs attached to the location
 		int newGraphLocation = myLocationGraphs.size() - 1;
 		//Get our new graph
 		ArrayList<Node> objArray = myLocationGraphs.get(newGraphLocation).getNodes(true);
-		addObjectNode(objArray, objID, objDesc, "description");
+		addObjectNode(objArray, objID, objDesc);
 	}
 
 	private static void addNewGraph(Graph locationGraph, String objType){
@@ -240,19 +240,6 @@ public class Entities {
 		newId.setId(objType);
 		newSubgraph.setId(newId);
 		locationGraph.addSubgraph(newSubgraph);
-	}
-
-	private static String getNodeShape(String objType){
-		if(objType.equalsIgnoreCase("furniture")){
-			return "hexagon";
-		}
-		else if(objType.equalsIgnoreCase("artefacts")){
-			return "diamond";
-		}
-		//must be characters
-		else{
-			return "ellipse";
-		}
 	}
 
 	private ArrayList<Graph> getLocationGraphs(int currentLocation){

@@ -16,7 +16,6 @@ public class CheckForDeath {
 
 	private static void dropAllItems(Entities entityClass, PlayerState playerState){
 		int invSize = playerState.getInvSize();
-		//i is one due to a stupid inventory quirk- fix !!!!!
 		for(int i=(invSize-1); i>=1; i--){
 			String objectID = playerState.getInvObject(i);
 			String objectDesc = playerState.getInvDesc(i);

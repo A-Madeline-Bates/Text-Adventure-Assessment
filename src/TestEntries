@@ -1,0 +1,121 @@
+
+//GENERIC ERRORS
+
+//nonsense
+[BLANK]
+.
+ghjk
+invinv
+//lower case
+inv
+inventory
+look
+health
+goto
+get
+drop
+hit
+cut
+//upper case
+INV
+INVENTORY
+LOOK
+HEALTH
+GOTO FOREST
+GET KEY
+DROP KEY
+HIT ELF
+FIGHT ELF
+//in longer line
+vgchek hgj inv fghfjhf fghj
+vgchek hgj inventory fghfjhf fghj
+vgchek hgj look fghfjhf fghj
+vgchek hgj health fghfjhf fghj
+vgchek hgj goto forest fghfjhf fghj
+vgchek hgj get key fghfjhf fghj
+vgchek hgj drop key fghfjhf fghj
+vgchek hgj open key fghfjhf fghj
+vgchek hgj open door fghfjhf fghj
+//subject and verb separate
+vgchek hgj goto ghkj forest fghfjhf fghj
+vgchek hgj get ghkj key fghfjhf fghj
+vgchek hgj drop ghkj key fghfjhf fghj
+vgchek hgj open ghkj key fghfjhf fghj
+vgchek hgj open ghkj door fghfjhf fghj
+//subject before verb
+vgchek forest hgj goto ghkj fghfjhf fghj
+vgchek key hgj get ghkj fghfjhf fghj
+vgchek key hgj drop ghkj fghfjhf fghj
+vgchek key hgj open ghkj fghfjhf fghj
+vgchek door hgj open ghkj fghfjhf fghj
+//punctuation
+vgchek hgj .inv, fghfjhf fghj
+vgchek hgj .inventory, fghfjhf fghj
+vgchek hgj .look, fghfjhf fghj
+vgchek hgj .health, fghfjhf fghj
+vgchek hgj .goto, forest fghfjhf fghj
+vgchek hgj .get key, fghfjhf fghj
+vgchek hgj .drop, key fghfjhf fghj
+vgchek hgj .open, key fghfjhf fghj
+vgchek hgj .open door, fghfjhf fghj
+//multi cmd
+inv goto
+inventory get
+look inv
+health inv
+goto forest inv
+get key inv
+drop key inv
+hit elf inv
+cut elf inv
+
+// SPECIALISED ERRORS
+
+//INV
+[picking up many items]
+
+//LOOK
+[check look again entities]
+
+//HEALTH
+[dying, checking items are dropped]
+[taking potion, checking health improves]
+[taking damage, checking health decreases]
+
+//GOTO
+goto cellar
+goto cabin
+goto forest
+goto riverbank
+goto cabin [from riverbank]
+goto unplaced
+goto clearing [from forest]
+[unlocking and testing cellar]
+[unlocking and testing clearing]
+[goto location by description]
+[goto location by description capitalised]
+
+//GET
+[picking up many items]
+[picking up inaccessible items]
+[picking up furniture items]
+[picking up character items]
+[picking up location]
+[get items by description]
+[get items by description capitalised]
+
+//DROP
+[dropping items not in inv]
+[drop items by description]
+[drop items by description capitalised]
+
+//ACTIONS
+[do action by description]
+[do action by description capitalised]
+[object action mismatch]
+[try all actions]
+[summon lumberjack in multiple locations]
+
+//MULTIPLAYER
+[check door that's opened opens for all players]
+[check can see other player]

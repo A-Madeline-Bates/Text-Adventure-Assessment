@@ -1,5 +1,5 @@
 package data;
-import parseExceptions.ParseException;
+import parseExceptions.TokenMissing;
 import tokeniser.Tokeniser;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class PlayerStore {
 		this.firstLocation = firstLocation;
 	}
 
-	public PlayerState getCurrentPlayer(Tokeniser tokeniser) throws ParseException {
+	public PlayerState getCurrentPlayer(Tokeniser tokeniser) throws TokenMissing {
 		String playerName = findValidName(tokeniser);
 		//search through the player list we have stored
 		for(PlayerState thisPlayer : playerList){

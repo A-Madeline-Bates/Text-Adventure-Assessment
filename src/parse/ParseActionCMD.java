@@ -66,9 +66,7 @@ public class ParseActionCMD {
 			if (!checkForEntity(entities, playerState, object, "furniture")) {
 				if(!checkForEntity(entities, playerState, object, "characters")) {
 					if (!checkForInventory(playerState, object)) {
-						if(!checkForLocation(entities, playerState, object)) {
-							return false;
-						}
+						return checkForLocation(entities, playerState, object);
 					}
 				}
 			}
