@@ -1,4 +1,4 @@
-package parse;
+package parseCommands;
 
 public class ActionStore{
 	private String subjectName;

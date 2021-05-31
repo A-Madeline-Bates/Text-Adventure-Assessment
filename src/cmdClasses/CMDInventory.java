@@ -1,5 +1,5 @@
 package cmdClasses;
-import data.PlayerState;
+import dataStorage.PlayerState;
 
 public class CMDInventory extends CMDType{
 	public CMDInventory(PlayerState playerState){

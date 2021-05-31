@@ -1,7 +1,7 @@
 package cmdClasses;
-import data.Entities;
-import data.PlayerState;
-import parse.ParseInvCMD;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
+import parseCommands.ParseInvCMD;
 
 public class CMDDrop extends CMDType implements ExecutableCMD {
 	private final Entities entities;

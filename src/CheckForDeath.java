@@ -1,5 +1,5 @@
-import data.Entities;
-import data.PlayerState;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
 
 public class CheckForDeath {
 	private boolean isDead;

@@ -1,8 +1,8 @@
 import cmdClasses.CMDType;
-import data.Actions;
-import data.Entities;
-import data.PlayerState;
-import data.PlayerStore;
+import dataStorage.Actions;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
+import dataStorage.PlayerStore;
 import parseExceptions.ParseException;
 import tokeniser.Tokeniser;
 import com.alexmerz.graphviz.objects.Graph;

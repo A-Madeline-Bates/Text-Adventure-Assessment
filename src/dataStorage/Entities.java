@@ -1,4 +1,4 @@
-package data;
+package dataStorage;
 import com.alexmerz.graphviz.objects.*;
 import java.util.ArrayList;
 

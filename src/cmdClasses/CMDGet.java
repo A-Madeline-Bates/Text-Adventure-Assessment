@@ -1,7 +1,7 @@
 package cmdClasses;
-import data.Entities;
-import data.PlayerState;
-import parse.ParseArtefactCMD;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
+import parseCommands.ParseArtefactCMD;
 
 public class CMDGet extends CMDType implements ExecutableCMD {
 	private final ParseArtefactCMD parseArtefact;

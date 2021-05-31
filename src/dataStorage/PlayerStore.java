@@ -1,4 +1,4 @@
-package data;
+package dataStorage;
 import parseExceptions.TokenMissing;
 import tokeniser.Tokeniser;
 

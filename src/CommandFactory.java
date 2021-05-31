@@ -1,6 +1,6 @@
 import cmdClasses.*;
-import data.*;
-import parse.*;
+import dataStorage.*;
+import parseCommands.*;
 import parseExceptions.*;
 import tokeniser.Tokeniser;
 

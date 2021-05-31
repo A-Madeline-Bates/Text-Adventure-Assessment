@@ -1,6 +1,6 @@
-package parse;
-import data.Entities;
-import data.PlayerState;
+package parseCommands;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
 import parseExceptions.LocationDoesNotExist;
 import parseExceptions.NoPathErr;
 

@@ -1,5 +1,5 @@
 package cmdClasses;
-import data.PlayerState;
+import dataStorage.PlayerState;
 
 public abstract class CMDType {
 	PlayerState playerState;

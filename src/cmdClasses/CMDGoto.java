@@ -1,8 +1,8 @@
 package cmdClasses;
-import data.Entities;
-import data.PlayerState;
-import data.PlayerStore;
-import parse.ParseLocationCMD;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
+import dataStorage.PlayerStore;
+import parseCommands.ParseLocationCMD;
 
 public class CMDGoto extends CMDType implements ExecutableCMD {
 	private final ParseLocationCMD parseLocation;

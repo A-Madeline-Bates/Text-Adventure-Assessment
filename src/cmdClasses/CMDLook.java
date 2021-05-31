@@ -1,7 +1,7 @@
 package cmdClasses;
-import data.Entities;
-import data.PlayerState;
-import data.PlayerStore;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
+import dataStorage.PlayerStore;
 
 public class CMDLook extends CMDType{
 	private final Entities entityClass;

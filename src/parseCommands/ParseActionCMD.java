@@ -1,8 +1,8 @@
-package parse;
+package parseCommands;
 
-import data.Actions;
-import data.Entities;
-import data.PlayerState;
+import dataStorage.Actions;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
 import parseExceptions.*;
 import org.json.simple.JSONArray;
 

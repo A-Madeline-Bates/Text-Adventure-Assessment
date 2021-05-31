@@ -1,5 +1,5 @@
-package parse;
-import data.PlayerState;
+package parseCommands;
+import dataStorage.PlayerState;
 import parseExceptions.NotInInventory;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package cmdClasses;
-import data.Actions;
-import data.Entities;
-import data.PlayerState;
-import parse.ParseActionCMD;
+import dataStorage.Actions;
+import dataStorage.Entities;
+import dataStorage.PlayerState;
+import parseCommands.ParseActionCMD;
 import org.json.simple.JSONArray;
 
 public class CMDAction extends CMDType implements ExecutableCMD {
