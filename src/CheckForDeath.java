@@ -18,16 +18,17 @@ public class CheckForDeath {
 		int invSize = playerState.getInvSize();
 		//i is one due to a stupid inventory quirk- fix !!!!!
 		for(int i=(invSize-1); i>=1; i--){
-			String droppedObject = playerState.getInvObject(i);
-			String droppedObjectDesc = playerState.getInvDesc(i);
+			String objectID = playerState.getInvObject(i);
+			String objectDesc = playerState.getInvDesc(i);
 			playerState.consumeFromInv(i);
-			entityClass.addObject(droppedObject, droppedObjectDesc, playerState.getCurrentLocation(), "artefacts");
+			entityClass.addObject(objectID, objectDesc, playerState.getCurrentLocation(), "artefacts");
 		}
 	}
 
 	private static void returnToStart(Entities entityClass, PlayerState playerState){
 		playerState.setCurrentLocation(0);
-		playerState.setCurrentLocName(entityClass.findFirstLocation());
+		//Set to name of first location
+		playerState.setCurrentLocName(entityClass.findLocationId(0));
 	}
 
 	public String getExitMessage(){

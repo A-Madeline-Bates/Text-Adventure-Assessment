@@ -18,7 +18,7 @@ public class Entities {
 	 ********************************************************/
 
 	public int entitySearch(String comparisonString, int location, String entityType){
-		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
+		ArrayList<Graph> myLocationGraphs = getLocationGraphs(location);
 		for (Graph myLocationGraph : myLocationGraphs) {
 			if (myLocationGraph.getId().getId().equalsIgnoreCase(entityType)) {
 				//-2 used to specify nothing found yet
@@ -46,12 +46,13 @@ public class Entities {
 	}
 
 	private int matchEntityStrings(Graph myLocationGraph, int j, String comparisonString){
-		if (myLocationGraph.getNodes(false).get(j).getAttribute("description").equalsIgnoreCase(comparisonString)) {
+		Node locationNode = myLocationGraph.getNodes(false).get(j);
+		if (locationNode.getAttribute("description").equalsIgnoreCase(comparisonString)) {
 			setEntityVariables(myLocationGraph, j);
 			return j;
 		}
 		//we will also accept a shorter entity definition
-		else if (myLocationGraph.getNodes(false).get(j).getId().getId().equalsIgnoreCase(comparisonString)) {
+		else if (locationNode.getId().getId().equalsIgnoreCase(comparisonString)) {
 			setEntityVariables(myLocationGraph, j);
 			return j;
 		}
@@ -87,17 +88,19 @@ public class Entities {
 		ArrayList<Graph> myLocationList = entities.get(0).getSubgraphs().get(0).getSubgraphs();
 		//If location is found, set our variables
 		for(int i=0; i<myLocationList.size(); i++){
-			if(myLocationList.get(i).getNodes(false).get(0).getAttribute("description").equalsIgnoreCase(comparisonString)) {
-				setLocationResult(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
+			Node locationNode = myLocationList.get(i).getNodes(false).get(0);
+			if(locationNode.getAttribute("description").equalsIgnoreCase(comparisonString)) {
+				setLocationResult(locationNode.getId().getId(), i);
 				return;
 			}
 			//we will also accept a shorter location definition
-			else if(myLocationList.get(i).getNodes(false).get(0).getId().getId().equalsIgnoreCase(comparisonString)){
-				setLocationResult(myLocationList.get(i).getNodes(false).get(0).getId().getId(), i);
+			else if(locationNode.getId().getId().equalsIgnoreCase(comparisonString)){
+				setLocationResult(locationNode.getId().getId(), i);
 				return;
 			}
 		}
-		//If we don't find the location, clear location string and set coordinate to -1 to indicate that it doesn't exist
+		//If we don't find the location, clear location string and set coordinate to -1 to indicate
+		// that it doesn't exist
 		setLocationResult("", -1);
 	}
 
@@ -185,65 +188,65 @@ public class Entities {
 	 ***********   ADDING AND REMOVING ARTEFACTS   ***********
 	 ********************************************************/
 
-	public void removeObject(int currentLocation, int artefactPosition, String objectType){
-		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
+	public void removeObject(int currentLocation, int artefactPosition, String objType){
+		ArrayList<Graph> myLocationGraphs = getLocationGraphs(currentLocation);
 		for (Graph myLocationGraph : myLocationGraphs) {
-			if (myLocationGraph.getId().getId().equalsIgnoreCase(objectType)) {
+			if (myLocationGraph.getId().getId().equalsIgnoreCase(objType)) {
 				myLocationGraph.getNodes(true).remove(artefactPosition);
 				return;
 			}
 		}
 	}
 
-	public void addObject(String objectID, String objectDesc, int currentLocation, String objectType){
-		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
+	public void addObject(String objID, String objDesc, int currentLocation, String objType){
+		ArrayList<Graph> myLocationGraphs = getLocationGraphs(currentLocation);
 		for (Graph myLocationGraph : myLocationGraphs) {
-			if (myLocationGraph.getId().getId().equalsIgnoreCase(objectType)) {
-				//Get list of nodes attached to the location which are of our objectType
-				ArrayList<Node> objectArray = myLocationGraph.getNodes(true);
-				addObjectNode(objectArray, objectID, objectDesc, "description");
+			if (myLocationGraph.getId().getId().equalsIgnoreCase(objType)) {
+				//Get list of nodes attached to the location which are of our objType
+				ArrayList<Node> objArray = myLocationGraph.getNodes(true);
+				addObjectNode(objArray, objID, objDesc, "description");
 				return;
 			}
 		}
 		//If there is not a pre-existing list to add out entity to, we will need to create one (i.e, if we are trying
 		// to add furniture to a location that doesn't already contain furniture, we need to create a furniture list)
-		addObjectType(myLocationGraphs, objectID, objectDesc, objectType);
+		addObjectType(myLocationGraphs, objID, objDesc, objType);
 	}
 
-	private static void addObjectNode(ArrayList<Node> objectArray, String objectID, String objectDesc, String nodeType){
+	private static void addObjectNode(ArrayList<Node> objArray, String objID, String objDesc, String nodeType){
 		Id newId = new Id();
-		newId.setId(objectID);
+		newId.setId(objID);
 		Node newNode = new Node();
 		newNode.setId(newId);
-		newNode.setAttribute(nodeType, objectDesc);
-		objectArray.add(newNode);
+		newNode.setAttribute(nodeType, objDesc);
+		objArray.add(newNode);
 	}
 
-	private static void addObjectType(ArrayList<Graph> myLocationGraphs, String objectID, String objectDesc, String objectType){
-		addNewGraph(myLocationGraphs, objectType);
+	private static void addObjectType(ArrayList<Graph> myLocationGraphs,String objID,String objDesc,String objType){
+		addNewGraph(myLocationGraphs, objType);
 		//Get location of our new subgraph- it will be last on the list of graphs attached to the location
 		int newGraphLocation = myLocationGraphs.size() - 1;
 		//Get our new graph
-		ArrayList<Node> objectArray = myLocationGraphs.get(newGraphLocation).getNodes(true);
+		ArrayList<Node> objArray = myLocationGraphs.get(newGraphLocation).getNodes(true);
 		//adding shape node to the array
-		addObjectNode(objectArray, "node", getNodeShape(objectType), "shape");
-		//adding our object to the array
-		addObjectNode(objectArray, objectID, objectDesc, "description");
+		addObjectNode(objArray, "node", getNodeShape(objType), "shape");
+		//adding our obj to the array
+		addObjectNode(objArray, objID, objDesc, "description");
 	}
 
-	private static void addNewGraph(ArrayList<Graph> myLocationGraphs, String objectType){
+	private static void addNewGraph(ArrayList<Graph> myLocationGraphs, String objType){
 		Graph newGraph = new Graph();
 		Id newId = new Id();
-		newId.setId(objectType);
+		newId.setId(objType);
 		newGraph.setId(newId);
 		myLocationGraphs.add(newGraph);
 	}
 
-	private static String getNodeShape(String objectType){
-		if(objectType.equalsIgnoreCase("furniture")){
+	private static String getNodeShape(String objType){
+		if(objType.equalsIgnoreCase("furniture")){
 			return "hexagon";
 		}
-		else if(objectType.equalsIgnoreCase("artefacts")){
+		else if(objType.equalsIgnoreCase("artefacts")){
 			return "diamond";
 		}
 		//must be characters
@@ -252,33 +255,37 @@ public class Entities {
 		}
 	}
 
+	private ArrayList<Graph> getLocationGraphs(int currentLocation){
+		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(currentLocation).getSubgraphs();
+	}
+
 	/********************************************************
 	 ***************   RETURN DISPLAY TEXT    ****************
 	 ********************************************************/
 
 	public String findLocationId(int location){
-		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getId().getId();
+		Graph locationGraph = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location);
+		return locationGraph.getNodes(false).get(0).getId().getId();
 	}
 
 	public String findLocationDesc(int location){
-		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getAttribute("description");
-	}
-
-	public String findFirstLocation(){
-		return entities.get(0).getSubgraphs().get(0).getSubgraphs().get(0).getNodes(false).get(0).getId().getId();
+		Graph locationGraph = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location);
+		return locationGraph.getNodes(false).get(0).getAttribute("description");
 	}
 
 	public String getEntityString(int location, String entityType){
 		StringBuilder allArtefacts = new StringBuilder();
-		ArrayList<Graph> myLocationGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
-		for (Graph myLocationGraph : myLocationGraphs) {
+		ArrayList<Graph> locGraphs = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getSubgraphs();
+		for (Graph myLocationGraph : locGraphs) {
 			if (myLocationGraph.getId().getId().equalsIgnoreCase(entityType)) {
 				ArrayList<Node> artefactArray = myLocationGraph.getNodes(true);
 				for (int j = 0; j < artefactArray.size(); j++) {
 					//Add item ID
-					allArtefacts.append(artefactArray.get(j).getId().getId().toUpperCase()).append(" : ");
+					String entityID = artefactArray.get(j).getId().getId().toUpperCase();
+					allArtefacts.append(entityID).append(" : ");
 					//Add item description
-					allArtefacts.append(myLocationGraph.getNodes(false).get(j).getAttribute("description")).append("\n");
+					String entityDesc = myLocationGraph.getNodes(false).get(j).getAttribute("description");
+					allArtefacts.append(entityDesc).append("\n");
 				}
 			}
 		}
@@ -286,7 +293,7 @@ public class Entities {
 	}
 
 	public String getPathsList(int location){
-		String locationName = entities.get(0).getSubgraphs().get(0).getSubgraphs().get(location).getNodes(false).get(0).getId().getId();
+		String locationName = findLocationId(location);
 		StringBuilder allLocations = new StringBuilder();
 		Graph testEdges = entities.get(0).getSubgraphs().get(1);
 		for(int x=0;x<testEdges.getEdges().size(); x++){

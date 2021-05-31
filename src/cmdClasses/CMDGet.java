@@ -1,13 +1,13 @@
 package cmdClasses;
 import data.Entities;
 import data.PlayerState;
-import parse.ParseArtefactCommand;
+import parse.ParseArtefactCMD;
 
 public class CMDGet extends ExecutableCMD{
-	private final ParseArtefactCommand parseArtefact;
+	private final ParseArtefactCMD parseArtefact;
 	private final Entities entity;
 
-	public CMDGet(ParseArtefactCommand parseArtefact, Entities entity, PlayerState playerState){
+	public CMDGet(ParseArtefactCMD parseArtefact, Entities entity, PlayerState playerState){
 		this.entity = entity;
 		this.parseArtefact = parseArtefact;
 		this.playerState = playerState;

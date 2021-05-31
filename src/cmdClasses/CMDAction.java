@@ -2,15 +2,15 @@ package cmdClasses;
 import data.Actions;
 import data.Entities;
 import data.PlayerState;
-import parse.ParseActionCommand;
+import parse.ParseActionCMD;
 import org.json.simple.JSONArray;
 
 public class CMDAction extends ExecutableCMD {
-	private final ParseActionCommand parseAction;
+	private final ParseActionCMD parseAction;
 	private final Actions actionClass;
 	private final Entities entityClass;
 
-	public CMDAction(ParseActionCommand parseAction, Actions actionClass, Entities entityClass, PlayerState playerState){
+	public CMDAction(ParseActionCMD parseAction, Actions actionClass, Entities entityClass, PlayerState playerState){
 		this.parseAction = parseAction;
 		this.actionClass = actionClass;
 		this.entityClass = entityClass;

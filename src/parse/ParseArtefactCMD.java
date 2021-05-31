@@ -5,16 +5,18 @@ import parseExceptions.ArtefactDoesNotExist;
 
 import java.util.ArrayList;
 
-public class ParseArtefactCommand {
+public class ParseArtefactCMD {
 	private int artefactPosition;
 	private String artefactName;
 	private String artefactDescription;
 
-	public ParseArtefactCommand(Entities entityClass, PlayerState playerState, ArrayList<String> commandList) throws ArtefactDoesNotExist {
+	public ParseArtefactCMD(Entities entityClass, PlayerState playerState, ArrayList<String> commandList)
+			throws ArtefactDoesNotExist {
 		validateArtefact(commandList, entityClass, playerState);
 	}
 
-	private void validateArtefact(ArrayList<String> commandList, Entities entityClass, PlayerState playerState) throws ArtefactDoesNotExist {
+	private void validateArtefact(ArrayList<String> commandList, Entities entityClass, PlayerState playerState)
+			throws ArtefactDoesNotExist {
 		int location = playerState.getCurrentLocation();
 		//Search every term in the command to see if it matches with the artefacts at the location
 		for(String singleToken : commandList) {

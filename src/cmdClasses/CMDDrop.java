@@ -1,13 +1,13 @@
 package cmdClasses;
 import data.Entities;
 import data.PlayerState;
-import parse.ParseInvCommand;
+import parse.ParseInvCMD;
 
 public class CMDDrop extends ExecutableCMD{
 	private final Entities entities;
-	private final ParseInvCommand parsedInventory;
+	private final ParseInvCMD parsedInventory;
 
-	public CMDDrop(ParseInvCommand parsedInventory, Entities entities, PlayerState playerState){
+	public CMDDrop(ParseInvCMD parsedInventory, Entities entities, PlayerState playerState){
 		this.entities = entities;
 		this.playerState = playerState;
 		this.parsedInventory = parsedInventory;

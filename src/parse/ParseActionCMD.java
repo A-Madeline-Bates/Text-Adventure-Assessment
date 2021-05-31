@@ -9,21 +9,23 @@ import org.json.simple.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParseActionCommand {
+public class ParseActionCMD {
 	private final List<ActionStore> subjectInformation = new ArrayList<ActionStore>();
 	private int actionPosition;
 
-	public ParseActionCommand(Actions actionsClass, Entities entityClass, PlayerState playerState, ArrayList<Integer> actionPositions, ArrayList<String> commandList) throws ActionSubjectsNotPresent {
-		validateActionObject(commandList, actionPositions, actionsClass, entityClass, playerState);
+	public ParseActionCMD(Actions actions, Entities entities, PlayerState playerState, ArrayList<Integer> actionArr,
+						  ArrayList<String> commandList) throws ActionSubjectErr {
+		validateAction(commandList, actionArr, actions, entities, playerState);
 	}
 
-	private void validateActionObject(ArrayList<String> commandList, ArrayList<Integer> actionPositions, Actions actionsClass, Entities entityClass, PlayerState playerState) throws ActionSubjectsNotPresent {
-		//cycle through possible actionPositions and check that the subjects we would need to execute that action
+	private void validateAction(ArrayList<String> commandList, ArrayList<Integer> actionArr, Actions actions,
+								Entities entities, PlayerState playerState) throws ActionSubjectErr {
+		//cycle through possible actionArr and check that the subjects we would need to execute that action
 		// are present. If yes, check whether one the relevant subjects are mentioned somewhere in the command
-		for(int actionPosition : actionPositions) {
-			JSONArray subjectsArray = actionsClass.getActionElement(actionPosition, "subjects");
+		for(int actionPosition : actionArr) {
+			JSONArray subjectsArray = actions.getActionElement(actionPosition, "subjects");
 			//check whether subjects are in either the inventory or location
-			if (areSubjectsPresent(subjectsArray, playerState, entityClass)) {
+			if (areSubjectsPresent(subjectsArray, playerState, entities)) {
 				if(isCommandValid(subjectsArray, commandList, actionPosition)){
 					return;
 				}
@@ -31,7 +33,7 @@ public class ParseActionCommand {
 		}
 		//if we don't find an action position that returns true for areSubjectsPresent and checkCommandValidity,
 		//throw an error
-		throw new ActionSubjectsNotPresent();
+		throw new ActionSubjectErr();
 	}
 
 	private boolean isCommandValid(JSONArray subjectsArray, ArrayList<String> commandList, int actionPosition) {
@@ -48,10 +50,10 @@ public class ParseActionCommand {
 		return false;
 	}
 
-	private boolean areSubjectsPresent(JSONArray subjectsArray, PlayerState playerState, Entities entityClass){
+	private boolean areSubjectsPresent(JSONArray subjectsArray, PlayerState playerState, Entities entities){
 		for (Object o : subjectsArray) {
 			String object = (String) o;
-			if(!checkEntityTypes(playerState, entityClass, object)){
+			if(!checkEntityTypes(playerState, entities, object)){
 				return false;
 			}
 		}
@@ -59,12 +61,12 @@ public class ParseActionCommand {
 		return true;
 	}
 
-	private boolean checkEntityTypes(PlayerState playerState, Entities entityClass, String object){
-		if (!checkForEntity(entityClass, playerState, object, "artefacts")) {
-			if (!checkForEntity(entityClass, playerState, object, "furniture")) {
-				if(!checkForEntity(entityClass, playerState, object, "characters")) {
+	private boolean checkEntityTypes(PlayerState playerState, Entities entities, String object){
+		if (!checkForEntity(entities, playerState, object, "artefacts")) {
+			if (!checkForEntity(entities, playerState, object, "furniture")) {
+				if(!checkForEntity(entities, playerState, object, "characters")) {
 					if (!checkForInventory(playerState, object)) {
-						if(!checkForLocation(entityClass, playerState, object)) {
+						if(!checkForLocation(entities, playerState, object)) {
 							return false;
 						}
 					}
@@ -75,26 +77,26 @@ public class ParseActionCommand {
 		return true;
 	}
 
-	private boolean checkForLocation(Entities entityClass, PlayerState playerState, String object){
+	private boolean checkForLocation(Entities entities, PlayerState playerState, String object){
 		//This find whether the location is in the Dot file
-		entityClass.searchLocations(object);
-		int searchPosition = entityClass.getLocationResultInt();
+		entities.searchLocations(object);
+		int searchPosition = entities.getLocationResultInt();
 		if (searchPosition != -1) {
-			if (entityClass.isLocationAccessible(playerState.getCurrentLocName(), entityClass.getLocationResultId())) {
+			if (entities.isLocationAccessible(playerState.getCurrentLocName(), entities.getLocationResultId())) {
 				//In this instance saving the location's information isn't very useful, because when we come to
 				// executing we'll work with paths and not locations, but we'll save the information for consistency
 				// anyway
-				addToSubjectArray(entityClass.getEntityId(), searchPosition, "location");
+				addToSubjectArray(entities.getEntityId(), searchPosition, "location");
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean checkForEntity(Entities entityClass, PlayerState playerState, String object, String objectType){
-		int position = entityClass.entitySearch(object, playerState.getCurrentLocation(), objectType);
+	private boolean checkForEntity(Entities entities, PlayerState playerState, String object, String objectType){
+		int position = entities.entitySearch(object, playerState.getCurrentLocation(), objectType);
 		if(position != -1){
-			addToSubjectArray(entityClass.getEntityId(), position, objectType);
+			addToSubjectArray(entities.getEntityId(), position, objectType);
 			return true;
 		}
 		return false;
@@ -141,7 +143,8 @@ public class ParseActionCommand {
 				return actionStore.getPosition();
 			}
 		}
-		//If we reach this point there has been an error in our files- however, we're not required to catch these errors
+		//If we reach this point there has been an error in our files- however, we're not required to
+		// catch these errors
 		return -1;
 	}
 
@@ -152,7 +155,8 @@ public class ParseActionCommand {
 				return actionStore.getLocationType();
 			}
 		}
-		//If we reach this point there has been an error in our files- however, we're not required to catch these errors
+		//If we reach this point there has been an error in our files- however, we're not required to
+		// catch these errors
 		return "";
 	}
 }

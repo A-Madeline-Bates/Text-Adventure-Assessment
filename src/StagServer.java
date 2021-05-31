@@ -88,7 +88,6 @@ class StagServer
             this.exitMessage = exitMessage + command.getExitMessage();
             CheckForDeath deathCheck = new CheckForDeath(entityClass, playerState);
             this.exitMessage = exitMessage + deathCheck.getExitMessage();
-            //CHECK IF DEAD
         } catch(ParseException exception){
             this.exitMessage = exitMessage + "Error: " + exception;
         }
@@ -97,7 +96,8 @@ class StagServer
     private void createDatabases() throws IOException{
         createActionClass();
         createEntityClass();
-        this.playerStore = new PlayerStore(entityClass.findFirstLocation());
+        //Set to name of first location
+        this.playerStore = new PlayerStore(entityClass.findLocationId(0));
     }
 
     private void createActionClass() throws IOException{
@@ -113,7 +113,7 @@ class StagServer
 
 // Check the style guide + previous feedback
 // Reduce complexity
-// Shorten method names / make sure all methods start with verb
 // Shorten lines!
-
+//Refactor to make some classes smaller?
+//TEST
 //TEST WITH THE SERVER PROVIDED

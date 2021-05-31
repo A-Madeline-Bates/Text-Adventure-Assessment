@@ -4,12 +4,12 @@ import parseExceptions.NotInInventory;
 
 import java.util.ArrayList;
 
-public class ParseInvCommand {
+public class ParseInvCMD {
 	private String inventoryObject;
 	private String inventoryDescription;
 	private int inventoryPosition;
 
-	public ParseInvCommand(PlayerState playerState, ArrayList<String> commandList) throws NotInInventory {
+	public ParseInvCMD(PlayerState playerState, ArrayList<String> commandList) throws NotInInventory {
 		searchInventory(playerState, commandList);
 	}
 
