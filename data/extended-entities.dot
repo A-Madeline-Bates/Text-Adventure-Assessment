@@ -91,10 +91,8 @@ digraph layout {
         cabin -> forest;
         forest -> cabin;
         cellar -> cabin;
-        cabin -> cellar;
         forest -> riverbank
         riverbank -> forest
         clearing -> riverbank
     }
-
 }
